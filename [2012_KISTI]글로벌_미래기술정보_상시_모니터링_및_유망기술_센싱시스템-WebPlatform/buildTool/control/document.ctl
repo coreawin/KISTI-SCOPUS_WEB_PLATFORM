@@ -1,0 +1,37 @@
+LOAD DATA 
+INFILE './document.txt' 
+BADFILE './document.bad'
+DISCARDFILE './document.dsc'
+
+INTO TABLE "B_SCOPUS_DOCUMENT"
+APPEND
+
+FIELDS TERMINATED BY X'9'
+trailing nullcols
+  (EID
+, 
+   TITLE CHAR(65535)
+, 
+   ABSTRACT  CHAR(65535)
+, 
+   PUBLICATION_YEAR
+, 
+   PUBLICATION_MONTH
+, 
+   VOLUMN
+, 
+   ISSUE
+, 
+   PAGE
+, 
+   SOURCE_ID
+, 
+   DOI
+, 
+   REF_COUNT
+,
+   CITATION_TYPE   
+,  
+   CIT_COUNT
+)
+

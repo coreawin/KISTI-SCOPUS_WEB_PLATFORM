@@ -1,0 +1,428 @@
+@charset "utf-8";
+
+/*-------------------------------------------------------
+Layout Style Sheet (for 2011 Nano_Admin)
+
+version: 1
+author:chy
+email:hyppoddo@topquardrant.co.kr 
+--------------------------------------------------------*/
+
+
+/* common
+------------------------------------------------------------------------------------ */
+html {_overflow-y:scroll; _overflow-x:auto; height:100%;}
+img {border:0 none;}
+form, fieldset {border:0 none; font-family:Arial Unicode MS, Arial,'Trebuchet MS',"Malgun Gothic" "맑은 고딕";}
+select {border:1px solid #b0b0b0; font-size:12px; color:#6C6C6C; background-color:#fff; font-family:Arial Unicode MS, Arial,'Trebuchet MS',"Malgun Gothic" "맑은 고딕";}
+option.c1 {margin:5px; padding:10px; background:#1b448e url(http://...gif) no-repeat 0 0; font-family:Arial Unicode MS, Arial,'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#FFF; font-size:12px; font-weight:bold; height:20px; line-height:2em;}
+address, caption, em {font-weight:normal; font-style:normal;}
+acronym, abbr {cursor:help; letter-spacing:0; border-bottom:1px dotted #000; /* fix opera bug */}
+.accessibility, .blind, legend {position:absolute; width:0; height:0; font-size:0; overflow:hidden; visibility:hidden;}
+caption {display:none;}
+/*.png {_behavior:url(/css/iepngfix.htc);}*/
+h1, h2, h3, h4, h5, h6 {font-family:Arial Unicode MS, Arial,'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic", "Lucida Grande";}
+li {list-style:none; font-family:Arial Unicode MS, Arial,'Trebuchet MS',"Malgun Gothic" "맑은 고딕";}
+textarea {/*overflow:auto;*/ border:1px solid #DBDBDB; font-size:12px; font-family:Arial Unicode MS, Arial,'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#6C6C6C; line-height:1.4;}
+p {list-style-image:none; list-style-position:outside; list-style-type:none; border:0px; margin-bottom:0px; margin-top:0px; padding:0px; font-family:Arial Unicode MS, Arial,'Trebuchet MS',"Malgun Gothic" "맑은 고딕";}
+/*input { border:1px solid #d9d9d9; width:180px; height:14px; font-size:12px; background:#f9f9f9;color:#222;padding-top:3px; vertical-align:middle;}*/
+a:link, a:visited  { color:#5f5f5f; text-decoration:none; }
+a:hover, a:active  { color:#005eb8; text-decoration:none; }
+
+
+/* anchor
+a,
+a:link,
+a:visited { color:#b4c3e3; text-decoration:none; }
+a:hover,
+a:active,
+a:focus { color:#2d75cc; text-decoration:none; background-color:#eee; font-weight:bold; padding:2px 2px;}
+
+a.link { color:#06c; text-decoration:underline; }
+a.link:hover,
+a.link:focus { color:#0CA445; } */
+
+
+/* scrollbar
+------------------------------------------------------------------------------------ */
+/*
+body{
+scrollbar-highlight-color: #f3f3f3;
+scrollbar-shadow-color: #a1a1a1;
+scrollbar-arrow-color: #8c8c8c;
+scrollbar-face-color:#FFFFFF;
+scrollbar-3dlight-color: #FFFFFF;
+scrollbar-darkshadow-color: #FFFFFF;
+scrollbar-track-color: #FFFFFF;
+font-family:Arial Unicode MS, Arial,'Trebuchet MS',"Malgun Gothic" "맑은 고딕";
+}		
+*/
+	
+/* layout
+------------------------------------------------------------------------------------ */
+body {font-size:12px; line-height:1.7; text-align:left; margin:0; padding:0; font-family:Arial Unicode MS, Arial,'Trebuchet MS',"Malgun Gothic" "맑은 고딕";}
+#wrap {float:left; position:relative; width:100%; margin:0 auto; padding:0px; text-align:left;}	
+	#container {*zoom:1; z-index: 0}
+	#container:after {content:" "; display:block; height:0; clear:both;}
+		#content {float:left; width:960px; overflow:hidden; padding:15px 15px; font-family:Arial Unicode MS, Arial,'Trebuchet MS', "Malgun Gothic" "맑은 고딕";!important; font-size:12px;!important;}
+		#content2 {float:left; width:100%; overflow:hidden; padding:0px 0px; font-family:Arial Unicode MS, Arial,'Trebuchet MS', "Malgun Gothic" "맑은 고딕";!important; font-size:12px;!important;}
+		#content_login {width:762px; height:387px; overflow:hidden; padding:0px 0px; background:url(../images/nn_login.jpg) no-repeat 0 0; font-family:Arial Unicode MS, Arial,Arial, verdana, helvetica, sans-serif, 'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; !important; font-size:12px;!important;}
+		#content2_login1 {width:100%; overflow:hidden; padding:0px 0px; background:url(../images/nn_c_bg.png) no-repeat 0 0; font-family:Arial Unicode MS, Arial,Arial, verdana, helvetica, sans-serif, 'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; !important; font-size:12px;!important;}
+		#content_login ul li {height:27px;}
+		#content_login_foot {overflow:hidden; padding:0px 0px; width:752px; font-size:11px; text-align:right; font-family:Arial Unicode MS, Arial,'Trebuchet MS',"Malgun Gothic" "맑은 고딕";!important; font-size:11px;!important;}		
+		#footer {text-align:left; font-size:11px; margin-top:10px; border-top:3px solid #e5e4e4; padding-bottom:20px; font-family:Arial Unicode MS, Arial,'Trebuchet MS',"Malgun Gothic" "맑은 고딕";}	
+		
+/* header
+------------------------------------------------------------------------------------ */
+#top_area {position:relative;}
+#header {width:100%; height:25px; left:0px; top:0px; z-index:1;}
+#header h1 {display:inline; position:absolute; top:-16px; left:15px;}
+#header2 {width:100%; height:93px; background:url(../images/nn_topbg1.gif) repeat-x; left:0px; top:0px; z-index:1;}
+#header2 h1 {display:inline; position:absolute; top:-16px; left:15px;}
+
+#tnb {float:right; padding:0 15px 0 0;}
+#tnb li {float:left;}
+#tnb a, a.link, a:visited {color:#4c689e; text-decoration:none;}
+#tnb a:hover, a:active {color:#4c689e; text-decoration:underline;}
+
+/*
+ gnb
+------------------------------------------------------------------------------------ 
+#gnb {position:absolute; left:20px; top:55px; width:960px; height:30px; line-height:normal; padding:0; border:0 none; letter-spacing:-0.1px; overflow:hidden;}
+#gnb img {vertical-align:top;}
+
+#gnb #gnb01, #gnb #gnb02, #gnb #gnb03, #gnb #gnb04, #gnb #gnb05, #gnb #gnb06, #gnb #gnb07, #gnb #gnb08, #gnb #gnb09 {position:absolute; top:0px; z-index:10;}
+#gnb #gnb01 {width:160px; left:0;}
+#gnb #gnb02 {width:110px; left:100px;}
+#gnb #gnb03 {width:190px; left:200px;}
+#gnb #gnb04 {width:160px; left:300px;}
+#gnb #gnb05 {width:160px; left:400px;}
+#gnb #gnb06 {width:160px; left:525px; font-size:11.5px; top:3px;}
+#gnb #gnb07 {width:200px; left:615px; font-size:11.5px; top:3px;}
+#gnb #gnb08 {width:200px; left:690px; font-size:11.5px; top:3px;}
+#gnb #gnb09 {width:200px; left:490px; top:-10px;}
+
+#gnb ul {display: block; line-height:normal; border:0; padding-top:16px;} 
+#gnb li {line-height:normal; padding:0; border:0; margin:0; font-size:15px;}
+#gnb li li {line-height:normal; padding:0; border:0; margin:0; font-size:13px;}
+#gnb #gnb01_nav {position:relative; float:left; display:block; width:500px; margin-left:-20px; margin-top:7px;}
+#gnb #gnb01_nav li {float:left; margin-right:10px;}
+#gnb #gnb02_nav {position:relative; float:left; display:block; width:600px; margin-left:-55px; margin-top:7px;}
+#gnb #gnb02_nav li {float:left; margin-right:10px;}
+#gnb #gnb03_nav  {position:relative; float:left; display:block; width:600px; margin-left:-40px; margin-top:7px; letter-spacing:-1px;}
+#gnb #gnb03_nav li {float:left; margin-right:10px;}
+#gnb #gnb04_nav {position:relative; float:left; display:block; width:200px; margin-left:-40px; margin-top:7px;}
+#gnb #gnb04_nav li {float:left; margin-right:10px;}
+#gnb #gnb05_nav {position:relative; float:left; display:block; width:300px; margin-left:-40px; margin-top:7px;}
+#gnb #gnb05_nav li {float:left; margin-right:10px;}
+#gnb #gnb06_nav {position:relative; float:left; display:block; width:500px; margin-left:-40px; margin-top:7px;}
+#gnb #gnb06_nav li {float:left; margin-right:10px;}
+
+#gnb #gnb01_nav a, #gnb #gnb02_nav a, #gnb #gnb03_nav a, #gnb #gnb04_nav a, #gnb #gnb05_nav a, #gnb #gnb06_nav a {color:#000;}
+
+#gnb a, a:link, a:visited {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#b4c3e3; text-decoration:none;}
+#gnb a:hover, a:active {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#2d75cc; text-decoration:none; background-color:#eee; font-weight:bold; padding:2px 2px;}
+*/
+/*#gnb a.link { font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#06c; text-decoration:underline; }
+#gnb a.link:hover, a.link:focus { font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#0CA445; }*/
+
+.c1 {font-family:Arial Unicode MS, Arial,'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#2d75cc; text-decoration:none; background-color:#eee; font-weight:bold; padding:2px 2px;}
+.c2 {font-family:Arial Unicode MS, Arial,'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#000; text-decoration:none; background-color:#eee; font-weight:bold; padding:2px 2px;}
+
+
+/* contents
+------------------------------------------------------------------------------------ */
+/*#content .search {width:960px; height:50px; font-size:12px; border:0px solid #dcdcdc; margin:0 0 10px 0; background:url(../images/nn_search_bg.gif) no-repeat; }*/
+#content .search {z-index:-1; font-family:Arial Unicode MS, Arial,'Trebuchet MS', "Malgun Gothic", "맑은 고딕"; width:960px; height:40px; font-size:12px; border:0px solid #dcdcdc; margin:0 0 10px 0; border:1px solid #a5b8ff; background:#f2f2f2;}
+/*#content .search td {padding:0px 15px 0px 15px;}
+#content .search .tit {font-family: 'Trebuchet MS', "Malgun Gothic", "맑은 고딕"; font-size:17px; font-weight:bold; color:rgb(45,45,45);}
+#content .search .e-tit {font-family:'Trebuchet MS', "Malgun Gothic", "맑은 고딕"; font-size:13px; font-weight:bold; color:#FFF;}*/
+/*#content2 .search {width:98%; height:50px; font-size:12px; border:0px solid #dcdcdc; margin:0 0 0px 0; background:url(../images/nn_search_bg2.gif) repeat-x;}*/
+/*#content2 .search {width:98%; height:50px; font-size:12px; border:0px solid #dcdcdc; margin:0 0 0px 0; background:url(./fading_background_7.png) repeat;}
+#content2 .search td {padding:0px 0px 0px 0px;}
+#content2 .search .tit {font-family:'Trebuchet MS', "Malgun Gothic", "맑은 고딕"; font-size:17px; font-weight:bold; color:rgb(45,45,45); padding:0px 0px 0px 10px;}
+#content2 .search .e-tit {font-family:'Trebuchet MS', "Malgun Gothic", "맑은 고딕"; font-size:13px; font-weight:bold; color:#FFF; padding:0px 10px 0px 10px;}
+*/
+#content .Table {font-family:'Trebuchet MS', "Malgun Gothic", "맑은 고딕"; float:left; width:960px; font-size:12px; border:1px solid #a5b8ff; margin:10px 0 0 0; background:#f2f2f2;}
+#content .Table1 {font-family:'Trebuchet MS', "Malgun Gothic", "맑은 고딕"; width:940px; font-size:12px; color:#FFF; border:0px solid #a5b8ff; margin:0px 0 0 0; padding:10px 0px 0px 0px; background:#f2f2f2; vertical-align:middle;}
+#content .Table1 td {font-family:'Trebuchet MS', "Malgun Gothic", "맑은 고딕"; margin:3px; padding:3px 3px; vertical-align:middle;}
+#content .Table1 .txt {color:#000; vertical-align:middle; text-align:center;}
+#content .Table1 .txt1 {color:#000; vertical-align:middle; text-align:left; padding:5px 0px 5px 10px;}
+#content .Table1 .txt2 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:13px; font-weight:bold; color:#000; vertical-align:middle;}
+#content .Table1 .txt3 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:13px; font-weight:bold; color:#000; vertical-align:middle; text-align:left; padding:5px 0px 5px 10px;}
+#content .Table1_1 {float:left; width:940px; font-size:12px; border:0px solid #a5b8ff; margin:0px 0 0 0; padding:10px 0px 10px 5px; vertical-align:middle;}
+#content .Table1_1 .bt {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:12px; font-weight:bold; color:#000; vertical-align:middle;}
+#content .Table1_1 .bt1 {border:1px solid #2d4458; background:#526b83 url(../images/nn_search_bt_bg.gif) repeat-x; height:19px; text-decoration:none; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#FFF;}
+#content .Table1_1 .bt2 {border:1px solid #a6a6a6; background:#f9f8fb url(../images/nn_search_bt_bg2.gif) repeat-x; height:19px; text-decoration:none; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#000;}
+#content .Table1_1 .txt {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#228aee; vertical-align:middle; text-align:left; padding:0px 0px 5px 0px;}
+#content .Table1_1 .txt1 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:14px; font-weight:bold; color:#000; vertical-align:middle; text-align:left; padding:0px 0px 0px 5px;}
+#content .Table1_1 .txt2 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#3c3c3c; vertical-align:middle; text-align:left;}
+#content .Table1_1 .txt3 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:12px; color:#3c3c3c; vertical-align:middle; text-align:left;}
+#content .Table1_3 {width:95%; font-size:12px; border:1px solid #b1cfec; background-color:#d3e7fa; margin:0px 0 5px 0; padding:5px 5px 5px 5px; vertical-align:middle;}
+#content .Table1_3 .txt1 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:12px; color:#3c3c3c; vertical-align:middle; text-align:left;}
+#content .Table1_3 .txt2 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:12px; color:#3c3c3c; vertical-align:middle; text-align:left; padding:0px 0px 0px 10px;}
+#content .Table1_4 {width:540px; font-size:12px; border:0px solid #a5b8ff; margin:0px 0 0 0; padding:10px 0px 10px 5px; vertical-align:middle;}
+#content .Table1_4 .txt3 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:12px; color:#3c3c3c; vertical-align:middle; text-align:left;}
+#content .Table1_5 {width:350px; font-size:12px; border:0px solid #a5b8ff; margin:0px 0 0 0; padding:10px 0px 10px 5px; vertical-align:middle;}
+#content .Table1_5 .txt3 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:12px; color:#3c3c3c; vertical-align:middle; text-align:left;}
+#content .Table1_6 {width:570px; font-size:12px; border:1px solid #a5b8ff; margin:10px 0 0 0; background:#f2f2f2;}
+#content .Table1_7 {float:right; width:380px; font-size:12px; border:1px solid #a5b8ff; margin:10px 0 0 0; background:#f2f2f2;}
+#content .Table2 {float:left; width:475px; font-size:12px; border:1px solid #a5b8ff; margin:10px 0 0 0; background:#f2f2f2;}
+#content .Table2_1 {width:455px; font-size:12px; border:0px solid #a5b8ff; margin:0px 0 0 0; padding:10px 0px 10px 5px; vertical-align:middle;}
+#content .Table2_1 .bt1 {border:1px solid #2d4458; background:#526b83 url(../images/nn_search_bt_bg.gif) repeat-x; height:19px; text-decoration:none; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#FFF;}
+#content .Table2_1 .bt2 {border:1px solid #a6a6a6; background:#f9f8fb url(../images/nn_search_bt_bg2.gif) repeat-x; height:19px; text-decoration:none; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#000;}
+#content .Table2_1 .txt {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#228aee; vertical-align:middle; text-align:left; padding:0px 0px 5px 0px;}
+#content .Table2_1 .txt2 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#3c3c3c; vertical-align:middle; text-align:left;}
+#content .Table3 {float:right; width:475px; font-size:12px; border:1px solid #a5b8ff; margin:10px 0 0 0; background:#f2f2f2;}
+#content .Table3_1 {width:455px; font-size:12px; border:0px solid #a5b8ff; margin:0px 0 0 0; padding:10px 0px 10px 5px; vertical-align:middle;}
+#content .Table3_1 .bt1 {border:1px solid #2d4458; background:#526b83 url(../images/nn_search_bt_bg.gif) repeat-x; height:19px; text-decoration:none; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#FFF;}
+#content .Table3_1 .bt2 {border:1px solid #a6a6a6; background:#f9f8fb url(../images/nn_search_bt_bg2.gif) repeat-x; height:19px; text-decoration:none; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#000;}
+#content .Table3_1 .txt {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#228aee; vertical-align:middle; text-align:left; padding:0px 0px 5px 0px;}
+#content .Table3_1 .txt2 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#3c3c3c; vertical-align:middle; text-align:left;}
+#content .Table4 {width:440px; font-size:12px; border:1px solid #DBDBDB; background-color:#FFF; color:#6C6C6C; line-height:1.2; margin:0px 0 0 0; padding:2px 0px 5px 5px; vertical-align:middle;}
+#content .Table5 {float:left; width:960px; font-size:12px; color:#6C6C6C; border:1px solid #a5b8ff; margin:0px 0 0 0;}
+#content .Table5 th {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", Arial, verdana, helvetica, sans-serif; color:#2277e0; text-align:center;}
+#content .Table5 td {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", Arial, verdana, helvetica, sans-serif; color:#6C6C6C; text-align:center;}
+#content .Table6 {float:left; width:960px; font-size:12px; border:1px solid #a5b8ff; margin:5px 0 0 0; background:#f2f2f2;}
+#content .Table7 {width:470px; font-size:12px; color:#6C6C6C; border:1px solid #a5b8ff; margin:0px 0 0 0;}
+#content .Table7 th {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#2277e0; text-align:center;}
+#content .Table7 td {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#6C6C6C; text-align:center;}
+#content .Table8 {width:960px; font-size:12px; border:1px solid #a5b8ff; margin:10px 0 5px 0; background:#f2f2f2;}
+#content .Table8_1 {width:90%; font-size:12px; border:0px solid #a5b8ff; margin:0px 0px 0 0; padding:5px 0px 5px 5px; vertical-align:middle;}
+#content .Table8_1 .txt {font-size:14px; font-weight:bold; color:#000; vertical-align:middle; text-align:left; padding:0px 0px 0px 15px;}
+#content .Table9 {float:left; width:960px; font-size:12px; border:1px solid #a5b8ff; margin:10px 0 0 0; background:#f2f2f2;}
+
+#content .ct {width:960px; font-size:12px; border:0px solid #DBDBDB; margin:0px; padding:0px; vertical-align:middle;}
+#content .Table12 {width:960px; font-size:12px; border-top:1px #dcdcdc solid; border-right:1px #dcdcdc solid; margin:0px;}
+#content .Table12 th {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕" !important; padding:3px 5px; background-color:#dcf0f7; border-bottom:1px #dcdcdc solid;  border-left:1px #dcdcdc solid; color:#25405b; text-align:center;}
+#content .Table12 td {border-bottom:1px #dcdcdc solid; border-left:1px #dcdcdc solid; color:#434343; vertical-align:middle;}
+#content .Table12 .txt {color:#000; text-decoration:underline;}
+#content .Table12 .txt3 {padding:5px 5px; color:#25405b; font-weight:bold; text-align:center;}
+#content .Table12 .txt3_1 {padding:3px 5px;}
+#content .Table12 .txt4 {padding:3px 5px; background-color:#ecf8ff; color:#2277e0; text-align:center;}
+#content .Table12 .txt5 {padding:2px 2px; color:#2a87d5;}
+#content .Table12 .txt5_1 {padding:2px 2px; color:#005eac; text-align:center;}
+#content .Table12 .txt6 {padding:2px 2px; text-align:center;}
+#content .Table12 a:link, a:visited {color:#005eb8; text-decoration:underline;}
+#content .Table12 a:hover, a:active {color:#005eb8; text-decoration:underline;}
+#content .Table13 {width:100%; font-size:12px; border-top:0px #dcdcdc solid; border-right:0px #dcdcdc solid; margin:0px;}
+#content .Table13 th {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; !important; padding:3px 5px; background-color:#dcf0f7; border-bottom:1px #dcdcdc solid;  border-left:0px #dcdcdc solid; color:#25405b; text-align:center;}
+#content .Table13 td {padding:5px 5px; border-bottom:1px #dcdcdc solid; border-left:0px #dcdcdc solid; color:#434343; vertical-align:middle;}
+#content .Table13 .txt {color:#000; text-decoration:underline;}
+#content .Table13 .txt3 {padding:5px 5px; color:#25405b; font-weight:bold; text-align:center;}
+#content .Table13 .txt3_1 {padding:2px 2px; color:#25405b; font-weight:bold; padding:5px 0 5px 10px; text-align:center;}
+#content .Table13 .txt4 {width:100px; padding:2px 2px; background-color:#ecf8ff; color:#2277e0; text-align:center;}
+#content .Table13 .txt5 {padding:2px 2px; color:#2a87d5; padding:2px 0 2px 10px;}
+#content .Table13 .txt5_1 {padding:2px 2px; color:#005eac; padding:2px 0 2px 10px; text-align:center;}
+#content .Table13 .txt6 {padding:2px 2px; text-align:center;}
+#content .Table13 a:link, a:visited {color:#005eb8; text-decoration:underline;}
+#content .Table13 a:hover, a:active {color:#005eb8; text-decoration:underline;}
+#content .Table14 {width:100%; font-size:12px; border-top:1px #dcdcdc solid; border-right:1px #dcdcdc solid; margin:0px;}
+#content .Table14 td {padding:0px 5px; border-bottom:1px #dcdcdc solid; border-left:1px #dcdcdc solid; color:#434343; text-align:center;}
+#content .Table1_bt .txt {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; width:620px; color:#000; vertical-align:middle; text-align:left; padding:10px 0px 10px 0px;}
+#content .Table2_bt {width:620px; color:#000; vertical-align:middle; text-align:left; padding:3px 20px 5px 0px;}
+#content .Table3_bt {width:920px; color:#000; vertical-align:middle; text-align:left; padding:3px 0px 3px 0px;}
+#content .Table3_bt .txt {color:#000; vertical-align:middle; text-align:left; padding:10px 0px 10px 0px;}
+#content .Table4_bt {width:920px; color:#000; vertical-align:middle; text-align:left; padding:10px 0px 10px 0px;}
+#content .Table4_bt .txt {height:30px; color:#000; vertical-align:middle; text-align:left;}
+#content .Table4_bt .txt1 {color:#2a87d5; vertical-align:middle; text-align:left;}
+#content .bt1 {border:1px solid #2d4458; background:#526b83 url(../images/nn_search_bt_bg.gif) repeat-x; height:19px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:11px; color:#FFF;}
+#content .bt2 {border:1px solid #a6a6a6; background:#f9f8fb url(../images/nn_search_bt_bg2.gif) repeat-x; height:19px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:11px; color:#000;}
+#content .bt3 {border:1px solid #607b96; background:#8c9baa url(../images/nn_search_bt_bg3.gif) repeat-x; height:19px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:11px; color:#FFF;}
+#content .bt4 {border:1px solid #5b748d; background:#8c9baa url(../images/nn_search_bt_bg4.gif) repeat-x; height:25px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:12px; color:#FFF;}
+#content .bt5 {border:1px solid #607b96; background:#8c9baa url(../images/nn_search_bt_bg5.gif) repeat-x; height:24px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:12px; color:#000;}
+#content .graph {width:470px; height:280px; font-size:12px; border:1px solid #DBDBDB; margin:0px 0 0 0; padding:10px 10px 10px 10px; vertical-align:middle; /*background:url(../images/nn_graph_bg01.jpg) no-repeat;*/}
+#content .graph_ct {width:450px; font-size:12px; border:0px solid #DBDBDB; margin:0px 0 0 0; padding:0px; vertical-align:middle;}
+#content .Table_bt {width:940px; font-size:12px; border:0px solid #a5b8ff; margin:0px 0 0 0; padding:10px 0px 10px 0px; vertical-align:middle;}
+
+.graph_01 {width:450px; height:230px; font-size:12px; border:1px solid #DBDBDB; margin:10px 0 0 0; padding:0px; vertical-align:middle;}
+.graph_Table {width:450px; font-size:12px; color:#6C6C6C; border:1px solid #a5b8ff; margin:10px 0 0 0;}
+.graph_Table th {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", Arial, verdana, helvetica, sans-serif; color:#2277e0; text-align:center; padding:2px 2px 2px 2px;}
+.graph_Table td {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", Arial, verdana, helvetica, sans-serif; color:#6C6C6C; text-align:center;}
+.graph_Table .txt {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", Arial, verdana, helvetica, sans-serif; color:#005eac; text-align:center;}
+
+#content_login .bt2 {border:1px solid #a6a6a6; background:#f9f8fb url(../images/nn_search_bt_bg2.gif) repeat-x; height:19px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:11px; color:#000;}
+#content_login .bt3 {border:1px solid #607b96; background:#8c9baa url(../images/nn_search_bt_bg3.gif) repeat-x; height:19px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:11px; color:#FFF;}
+#content_login .bt4 {border:1px solid #5b748d; background:#8c9baa url(../images/nn_search_bt_bg4.gif) repeat-x; height:25px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:12px; color:#FFF;}
+#content_login .bt5 {border:1px solid #607b96; background:#8c9baa url(../images/nn_search_bt_bg5.gif) repeat-x; height:24px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:12px; color:#000;}
+
+#content2 .Table {'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; width:98%; font-size:12px; border:1px solid #a5b8ff; margin:10px 0 0 0; background:#f2f2f2;}
+
+#content2 .Table1 {width:98%; font-size:12px; color:#FFF; border:0px solid #a5b8ff; margin:0px 0 0 0; padding:10px 0px 0px 0px; background:#f2f2f2; vertical-align:middle;}
+#content2 .Table1 td {margin:0px; padding:3px 3px; vertical-align:middle;}
+#content2 .Table1 .txt {color:#000; vertical-align:middle; text-align:center;}
+#content2 .Table1 .txt1 {color:#000; vertical-align:middle; text-align:left; padding:5px 0px 5px 10px;}
+#content2 .Table1 .txt2 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:13px; font-weight:bold; color:#000; vertical-align:middle;}
+#content2 .Table1 .txt3 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:13px; font-weight:bold; color:#000; vertical-align:middle; text-align:left; padding:5px 0px 5px 10px;}
+
+#content2 .sdBase td {font-family:Arial, Verdana, Helvetica, sans-serif;text-decoration:none;margin:0px;}
+#content2 .Table1_1 {width:90%; font-size:12px; border:0px solid #a5b8ff; margin:0px 0px 0 0; padding:5px 0px 5px 5px; vertical-align:middle;}
+#content2 .Table1_2 {width:95%; font-size:12px; border:0px solid #a5b8ff; margin:5px 0px 0 0; padding:5px 0px 5px 5px; vertical-align:middle;}
+#content2 .Table1_1 .txt {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:14px; font-weight:bold; color:#000; vertical-align:middle; text-align:left; padding:0px 0px 0px 15px;}
+#content2 .Table1_1 .txt3 {font-size:12px; font-weight:bold; color:#0059ff; vertical-align:middle; text-align:left; padding:0px 0px 0px 0px;}
+#content2 .Table1_2 .bt2 {border:1px solid #a6a6a6; background:#f9f8fb url(../images/nn_search_bt_bg2.gif) repeat-x; height:19px; text-decoration:none; font-family:dotum, "돋움", "AppleGothic"; font-size:11px; color:#000;}
+#content2 .Table5 {float:left; width:99%; font-size:12px; color:#6C6C6C; border:1px solid #a5b8ff; margin:0px 0 0 0;}
+#content2 .Table5 th {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#2277e0; text-align:center; padding:3px 0px 3px 0px;}
+#content2 .Table5 td {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#6C6C6C; text-align:center; padding:3px 0px 3px 0px;}
+#content2 .SearchResultTable {float:left; width:99%; font-size:12px; color:#6C6C6C; border:1px solid #a5b8ff; margin:0px 0 0 0;}
+#content2 .SearchResultTable th {font-family:Arial Unicode MS, Arial,'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#000000; text-align:center; padding:3px 0px 3px 0px; font-weight: normal; border-collapse: inherit; border-color: #000000}
+#content2 .SearchResultTable td {font-family:Arial Unicode MS, Arial,'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:12px; color:#6C6C6C; text-align:center; padding:3px 0px 3px 0px;}
+#content2 .Table6 {float:right; width:100%; font-size:12px; color:#6C6C6C; border:1px solid #a5b8ff; margin:0px;}
+#content2 .Table6 th {color:#2277e0;}
+#content2 .Table6 td {font-size:11px; color:#6C6C6C; padding:0px;}
+#content2 .Table6 .tit {font-size:12px; font-weight:bold; color:#2277e0; padding:2px 0px 2px 12px;}
+#content2 .Table6 .tit1 {font-size:12px; font-weight:bold; color:#2277e0; padding:2px 5px 2px 0px; text-align:right;}
+#content2 .Table7 {float:right; width:100%; font-size:12px; color:#6C6C6C; border:1px solid #a5b8ff; margin:0px 0 0 0;}
+#content2 .Table7 th {color:#2277e0; text-align:center;}
+#content2 .Table7 td {font-size:11px; color:#6C6C6C; text-align:center;}
+#content2 .Table8 {width:100%; font-size:14px; border:0px solid #a5b8ff; margin:0px; font-family:Arial Unicode MS, Arial,'Trebuchet MS', 'Malgun Gothic' '맑은 고딕';}
+#content2 .Table9 {width:98%; font-size:12px; border:0px solid #a5b8ff; margin:0px;}
+#content2 .Table9_1 {width:99%; font-size:12px; border:0px solid #a5b8ff; margin:0px;}
+#content2 .Table10 {width:99%; font-size:12px; border-top:1px #a5b8ff solid; border-left:1px #a5b8ff solid; border-right:1px #a5b8ff solid; margin:10px 0px 0 0; vertical-align:middle;}
+#content2 .Table11 {width:100%; font-size:12px; border-top:1px #a5b8ff solid; border-left:1px #a5b8ff solid; border-right:1px #a5b8ff solid; margin:10px 0px 0 0; vertical-align:middle;}
+#content2 .Table11 .tit {font-size:12px; font-weight:bold; color:#2277e0; text-align:center;}
+#content2 .Table12 {width:98%; font-size:12px; border-top:1px #dcdcdc solid; border-right:1px #dcdcdc solid; margin:0px 0 0 0;}
+#content2 .Table12 th {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; padding:3px 5px; background-color:#dcf0f7; border-bottom:1px #dcdcdc solid;  border-left:1px #dcdcdc solid; color:#25405b; text-align:center;}
+#content2 .Table12 td {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; padding:3px 5px; border-bottom:1px #dcdcdc solid; border-left:1px #dcdcdc solid; color:#434343; vertical-align:middle; padding:0 0 0 10px;}
+#content2 .Table12 .txt3 {padding:2px 2px; color:#25405b; font-weight:bold; padding:5px 0 5px 10px; text-align:left;}
+#content2 .Table12 .txt3_1 {padding:2px 2px; color:#25405b; font-weight:bold; padding:5px 0 5px 10px; text-align:center;}
+#content2 .Table12 .txt4 {padding:2px 2px; background-color:#ecf8ff; color:#2277e0; text-align:center;}
+#content2 .Table12 .txt5 {padding:2px 2px; color:#2a87d5; padding:2px 0 2px 10px;}
+#content2 .Table12 .txt5_1 {padding:2px 2px; color:#005eac; padding:2px 0 2px 10px; text-align:center;}
+#content2 .Table12 .txt6 {padding:2px 2px; text-align:center;}
+#content2 .Table12 a:link, a:visited {color:#005eb8; text-decoration:underline;}
+#content2 .Table12 a:hover, a:active {color:#005eb8; text-decoration:underline;}
+#content2 .Table12 .txt {color:#000; text-decoration:underline;}
+#content2 .Table13 {float:right; width:100%; font-size:12px; border-top:1px #a5b8ff solid; border-left:1px #a5b8ff solid; border-right:1px #a5b8ff solid; margin:10px 0px 0 0; vertical-align:middle;}
+#content2 .Table13 .tit {font-size:12px; font-weight:bold; color:#333333; padding:0 0 0 10px;}
+#content2 .Table13_1 {float:right; width:100%; font-size:12px; border-bottom:0px #a5b8ff solid; border-left:1px #a5b8ff solid; border-right:1px #a5b8ff solid; margin:0px 0px 0 0; vertical-align:middle;}
+#content2 .Table13_1 .tit {font-size:12px; font-weight:bold; color:#333333; padding:0 0 0 10px;}
+#content2 .bt1 {border:1px solid #2d4458; background:#526b83 url(../images/nn_search_bt_bg.gif) repeat-x; height:19px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:11px; color:#FFF;}
+#content2 .bt2 {border:1px solid #a6a6a6; background:#f9f8fb url(../images/nn_search_bt_bg2.gif) repeat-x; height:19px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:11px; color:#000;}
+#content2 .bt3 {border:1px solid #607b96; background:#8c9baa url(../images/nn_search_bt_bg3.gif) repeat-x; height:19px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:11px; color:#FFF;}
+#content2 .bt4 {border:1px solid #5b748d; background:#8c9baa url(../images/nn_search_bt_bg4.gif) repeat-x; height:25px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:12px; color:#FFF;}
+#content2 .bt5 {border:1px solid #607b96; background:#8c9baa url(../images/nn_search_bt_bg5.gif) repeat-x; height:24px; text-decoration:none; cursor:pointer; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕", "AppleGothic"; font-size:12px; color:#000;}
+
+#content .num {width:100%; text-align:center; color:#5f5f5f; word-spacing:10px; margin:11px 0 0 0; padding:0 0 0 25px;}
+#content .num a:link {color:#2a87d5; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content .num a:visited {color:#5f5f5f; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content .num a:hover {color:#5f5f5f; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content .num a:active {color:#5f5f5f; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content .num span {color:#2a87d5; font-weight:bold;}
+#content .num1 {width:100%; text-align:center; color:#5f5f5f; word-spacing:10px; margin:11px 0 0 0; padding:0 0 0 25px;}
+#content .num1 a:link {color:#5f5f5f; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content .num1 a:visited {color:#5f5f5f; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content .num1 a:hover {color:#2a87d5; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content .num1 a:active {color:#2a87d5; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content .num1 span {color:#2a87d5; font-weight:bold;}
+#content2 .num {width:90%; text-align:center; color:#5f5f5f; word-spacing:10px; margin:11px 0 0 0; padding:0 0 0 25px;}
+#content2 .num a:link {color:#2a87d5; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content2 .num a:visited {color:#5f5f5f; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content2 .num a:hover {color:#5f5f5f; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content2 .num a:active {color:#5f5f5f; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content2 .num span {color:#2a87d5; font-weight:bold;}
+#content2 .num1 {width:100%; text-align:center; color:#5f5f5f; word-spacing:10px; margin:11px 0 0 0; padding:0 0 0 25px;}
+#content2 .num1 a:link {color:#5f5f5f; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content2 .num1 a:visited {color:#5f5f5f; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content2 .num1 a:hover {color:#2a87d5; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content2 .num1 a:active {color:#2a87d5; font-weight:bold; font-size:11px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";}
+#content2 .num1 span {color:#2a87d5; font-weight:bold;}
+
+#content a, a:link, a:visited {color:#5f5f5f; text-decoration:none;}
+#content a:hover, a:active {color:#005eb8; text-decoration:none;}
+#content2 a, a:link, a:visited {color:#5f5f5f; text-decoration:none;}
+#content2 a:hover, a:active {color:#656565; text-decoration:underline;}
+
+.txt1 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#303030; font-weight:bold; text-align:left; padding:0px 0px 0px 3px;}
+.txt2 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#393939; text-align:center; text-decoration:none;}
+.txt3 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#ff8c00; text-align:center; text-decoration:none;}
+.txt4 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; font-weight:bold; color:#000; text-decoration:none;}
+.txt_SearchResultTitle {font-family:"Arial Unicode MS", Arial,'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:12px; font-weight:bold; color:#0156AA; text-decoration:none;}
+.txt5 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; color:#303030; font-weight:normal; text-align:left; padding:0px;}
+.txt6 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:10px; color:#393939; text-align:left; text-decoration:none;}
+.txt7 {font-family:'Georgia', 'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:15px; font-weight:bold; color:#000; text-decoration:none;}
+
+.input_txt {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";border:1px solid #d9d9d9; !important; width:180px; !important; height:15px; font-size:12px; background:#FFF; !important; color:#222; !important; padding-top:3px; vertical-align:middle; !important;}
+.input_txt1 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";border:1px solid #d9d9d9; !important; /*width:180px; !important;*/ height:15px; font-size:12px; background:#FFF; !important; color:#222; !important; padding-top:3px; vertical-align:middle; !important;}
+.input_txt2 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";border:1px solid #a5a5a5; !important; width:180px; !important; height:15px; font-size:12px; background:#FFF; !important; color:#222; !important; padding-top:3px; vertical-align:middle; !important;}
+.input_txt3 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";border:1px solid #a5a5a5; !important; width:300px; !important; height:15px; font-size:12px; background:#FFF; !important; color:#222; !important; padding-top:3px; vertical-align:middle; !important;}
+.input_txt4 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";border:1px solid #a5a5a5; !important; width:40px; !important; height:15px; font-size:12px; background:#FFF; !important; color:#222; !important; padding-top:3px; vertical-align:middle; !important;}
+.input_txt5 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";border:1px solid #a5a5a5; !important; width:700px; !important; height:15px; font-size:12px; background:#FFF; !important; color:#222; !important; padding-top:3px; vertical-align:middle; !important;}
+.input_txt6 {font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";border:1px solid #d9d9d9; !important; width:155px; !important; height:15px; font-size:12px; background:#FFF; !important; color:#222; !important; padding-top:3px; vertical-align:middle; !important;}
+
+.sign ul {float:center; margin-right:10px;}
+.sign li {margin-bottom:8px;}
+.sign_email {width:150px; margin-left:30px;}
+.sign_pw {width:150px; margin-left:10px;}
+
+.viewB {margin:0 0; padding:0px; text-align:left;}
+
+/* tables */
+table.tablesorter {
+	font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";
+	background-color: #CDCDCD;
+	margin:10px 0pt 15px;
+	border:1px solid #a5b8ff;
+	font-size: 12px;
+	width: 100%;
+	text-align: left;
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+	font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕";
+	/*background-color: #e6EEEE;
+	border: 1px solid #FFF;*/
+	color:#2277e0;
+	font-size: 12px;
+	text-align: left;
+	padding: 4px;
+}
+table.tablesorter thead tr .header {
+	background-image: url(bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+table.tablesorter tbody td {
+	/*color: #3D3D3D;*/
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+table.tablesorter tbody tr.odd td {
+	background-color:#F0F0F6;
+}
+table.tablesorter thead tr .headerSortUp {
+	background-image: url(asc.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+	background-image: url(desc.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+background-color: #8dbdd8;
+}
+
+
+/* Popup
+------------------------------------------------------------------------------------ */
+#content_popup {font-family:"Malgun Gothic" "맑은 고딕";float:left; position:relative; width:640px; margin:0 auto; padding:0 0px; text-align:left;}
+#content_popup .Table {width:620px; font-size:12px; border:1px solid #a5b8ff; margin:5px 0 0 0; background:#f2f2f2;}
+/*#content_popup .Table th { padding:3px 5px; background-color:#dcf0f7; border-bottom:1px #dcdcdc solid;  border-left:1px #dcdcdc solid; color:#25405b; text-align:center;}
+#content_popup .Table td { padding:3px 5px; border-bottom:1px #dcdcdc solid; border-left:1px #dcdcdc solid; color:#434343; vertical-align:middle; text-align:center;}*/
+#content_popup .Table .txt9 {padding:3px 5px; background-color:#FFF; color:#434343; text-align:left;}
+#content_popup .Table1_1 {width:600px; font-size:12px; border:0px solid #a5b8ff; margin:0px 0 0 0; padding:10px 0px 10px 5px; vertical-align:middle;}
+#content_popup .Table1_2 .bt2 {border:1px solid #a6a6a6; background:#f9f8fb url(../images/nn_search_bt_bg2.gif) repeat-x; height:19px; text-decoration:none; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#000;}
+#content_popup .bt1 {border:1px solid #2d4458; background:#526b83 url(../images/nn_search_bt_bg.gif) repeat-x; height:19px; text-decoration:none; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#FFF;}
+#content_popup .bt2 {border:1px solid #a6a6a6; background:#f9f8fb url(../images/nn_search_bt_bg2.gif) repeat-x; height:19px; text-decoration:none; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#000;}
+#content_popup .bt3 {border:1px solid #607b96; background:#8c9baa url(../images/nn_search_bt_bg3.gif) repeat-x; height:19px; text-decoration:none; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:11px; color:#FFF;}
+#content_popup .bt4 {border:1px solid #5b748d; background:#8c9baa url(../images/nn_search_bt_bg4.gif) repeat-x; height:25px; text-decoration:none; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:12px; color:#FFF;}
+#content_popup .bt5 {border:1px solid #607b96; background:#8c9baa url(../images/nn_search_bt_bg5.gif) repeat-x; height:24px; text-decoration:none; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:12px; color:#000;}
+.viewA {margin:0 0; padding:0px 10px; text-align:left;}
+.tit_txt_3 {margin:10px 5px 5px 10px; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; font-size:15px; font-weight:nomal; color:#228aee; text-decoration:none;}
+.btnStyle_1 {float:right; font-family:'Trebuchet MS', "Malgun Gothic" "맑은 고딕"; background:url(../images/btn_cter.gif) repeat-x; margin-right:10px;}
+
+
+/* footer
+------------------------------------------------------------------------------------ */
+#footer {position:relative; /*background-color:#f5f5f4;*/ width:100%; height:83px; text-align:left; margin-bottom:0px; font-family:'Trebuchet MS', "Malgun Gothic" ,"맑은 고딕", '';}
+#footer .footer_logo {float:left; padding:5px 20px 0 15px; width:126px; height:32px;}
+#footer .footer_adress {padding:30px 0 0 0;}

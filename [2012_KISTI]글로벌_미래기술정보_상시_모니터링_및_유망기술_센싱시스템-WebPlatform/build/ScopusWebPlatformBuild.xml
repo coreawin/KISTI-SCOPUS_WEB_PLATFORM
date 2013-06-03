@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="EUC-KR" ?>
+<project name="Scopus Web Platform Ant Build" default="main">
+	<property name="src.dir" value="../" />
+	<property name="target.dir" value="t:\release\KISTI\Scopus_WebPlatform_Distribution" />
+	
+
+	<!-- 타겟 디렉토리 생성 -->
+	<target name="makeDir">
+		<!--delete dir="${target.dir}" failonerror="false" includeemptydirs="true" /-->
+		<mkdir dir="${target.dir}" />
+		<mkdir dir="${target.dir}/WEB-INF/" />
+		<mkdir dir="${target.dir}/WEB-INF/lib/" />
+	</target>
+
+	<!-- jar 생성 -->
+	<target name="makeJar" depends="makeDir">
+		<jar destfile="${target.dir}/WEB-INF/lib/scopus_web_platform-1.4.jar" update="true">
+			<fileset dir="${src.dir}/build/classes">
+				<!--exclude name="**/test/**" /-->
+			</fileset>
+		</jar>
+	</target>
+
+	<!-- 파일 복사 -->
+	<target name="copyFile" depends="makeJar">
+		<copy todir="${target.dir}" preservelastmodified="true" verbose="true">
+			<fileset dir="${src.dir}/WebContent">
+				<include name="**/*.*" />
+				<exclude name="**/CVS/*" />
+			</fileset>
+		</copy>
+		<!--copy todir="${target.dir}/WEB-INF/lib" preservelastmodified="true" verbose="true">
+			<fileset dir="${src.dir}/WebContent/WEB-INF/lib">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy-->
+	</target>
+
+	<target name="main" depends="copyFile">
+	</target>
+
+</project>

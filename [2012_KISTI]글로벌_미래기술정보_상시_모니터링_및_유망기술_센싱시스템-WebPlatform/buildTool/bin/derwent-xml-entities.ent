@@ -1,0 +1,543 @@
+	<!--******* Derwent XML ENTITIES *******-->
+	
+	<!-- ************  
+			VERSION               1.3
+			DATE                  03/02/04 10:11:40
+                    PROGRAM               derwent-xml-entities.ent
+
+	11 June 2000 - Added Hanging Indent (HI)
+
+********************** -->
+     <!--**** D Type Hanging Indent Notifier****-->
+ <!ENTITY  HI      "HangingIndent"     >
+
+
+     <!--**** From Greek Letters Character Entities (%isogrk1;)****-->
+
+     <!--** Greek small letter alpha **-->
+ <!ENTITY   agr      "&#x03B1;"     >
+
+     <!--** Greek capital letter ALPHA **-->
+ <!ENTITY   Agr      "&#x0391;"     >
+
+     <!--** Greek small letter beta **-->
+ <!ENTITY   bgr      "&#x03B2;"     >
+
+     <!--** Greek capital letter BETA **-->
+ <!ENTITY   Bgr      "&#x0392;"     >
+
+     <!--** Greek small letter gamma **-->
+ <!ENTITY   ggr      "&#x03B3;"     >
+
+     <!--** Greek capital letter GAMMA **-->
+ <!ENTITY   Ggr      "&#x0393;"     >
+
+     <!--** Greek small letter delta **-->
+ <!ENTITY   dgr      "&#x03B4;"     >
+
+     <!--** Greek capital letter DELTA **-->
+ <!ENTITY   Dgr      "&#x0394;"     >
+
+     <!--** Greek small letter epsilon **-->
+ <!ENTITY   egr      "&#x03B5;"     >
+
+     <!--** Greek capital letter EPSILON **-->
+ <!ENTITY   Egr      "&#x0395;"     >
+
+     <!--** Greek small letter zeta **-->
+ <!ENTITY   zgr      "&#x03B6;"     >
+
+     <!--** Greek capital letter ZETA **-->
+ <!ENTITY   Zgr      "&#x0396;"     >
+
+     <!--** Greek small letter eta **-->
+ <!ENTITY   eegr      "&#x03B7;"     >
+
+     <!--** Greek capital letter ETA **-->
+ <!ENTITY   EEgr      "&#x0397;"     >
+
+     <!--** Greek small letter theta **-->
+ <!ENTITY   thgr      "&#x03B8;"     >
+
+     <!--** Greek capital letter THETA **-->
+ <!ENTITY   THgr      "&#x0398;"     >
+
+     <!--** Greek small letter iota **-->
+ <!ENTITY   igr      "&#x03B9;"     >
+
+     <!--** Greek capital letter IOTA **-->
+ <!ENTITY   Igr      "&#x0399;"     >
+
+     <!--** Greek small letter kappa **-->
+ <!ENTITY   kgr      "&#x03BA;"     >
+
+     <!--** Greek capital letter KAPPA **-->
+ <!ENTITY   Kgr      "&#x039A;"     >
+
+     <!--** Greek small letter lamda **-->
+ <!ENTITY   lgr      "&#x03BB;"     >
+
+     <!--** Greek capital letter LAMDA **-->
+ <!ENTITY   Lgr      "&#x039B;"     >
+
+     <!--** Greek small letter mu **-->
+ <!ENTITY   mgr      "&#x03BC;"     >
+
+     <!--** Greek capital letter MU **-->
+ <!ENTITY   Mgr      "&#x039C;"     >
+
+     <!--** Greek small letter nu **-->
+ <!ENTITY   ngr      "&#x03BD;"     >
+
+     <!--** Greek capital letter NU **-->
+ <!ENTITY   Ngr      "&#x039D;"     >
+
+     <!--** Greek small letter xi **-->
+ <!ENTITY   xgr      "&#x03BE;"     >
+
+     <!--** Greek capital letter XI **-->
+ <!ENTITY   Xgr      "&#x039E;"     >
+
+     <!--** Greek small letter omicron **-->
+ <!ENTITY   ogr      "&#x03BF;"     >
+
+     <!--** Greek capital letter OMICRON **-->
+ <!ENTITY   Ogr      "&#x039F;"     >
+
+     <!--** Greek small letter pi **-->
+ <!ENTITY   pgr      "&#x03C0;"     >
+
+     <!--** Greek capital letter PI **-->
+ <!ENTITY   Pgr      "&#x03A0;"     >
+
+     <!--** Greek small letter rho **-->
+ <!ENTITY   rgr      "&#x03C1;"     >
+
+     <!--** Greek capital letter RHO **-->
+ <!ENTITY   Rgr      "&#x03A1;"     >
+
+     <!--** Greek small letter sigma **-->
+ <!ENTITY   sgr      "&#x03C3;"     >
+
+     <!--** Greek capital letter SIGMA **-->
+ <!ENTITY   Sgr      "&#x03A3;"     >
+
+     <!--** Greek small letter final sigma **-->
+ <!ENTITY   sfgr      "&#x03C2;"     >
+
+     <!--** Greek small letter tau **-->
+ <!ENTITY   tgr      "&#x03C4;"     >
+
+     <!--** Greek capital letter TAU **-->
+ <!ENTITY   Tgr      "&#x03A4;"     >
+
+     <!--** Greek small letter upsilon **-->
+ <!ENTITY   ugr      "&#x03C5;"     >
+
+     <!--** Greek capital letter UPSILON **-->
+ <!ENTITY   Ugr      "&#x03A5;"     >
+
+     <!--** Greek small letter phi **-->
+ <!ENTITY   phgr      "&#x03C6;"     >
+
+     <!--** Greek capital letter PHI **-->
+ <!ENTITY   PHgr      "&#x03A6;"     >
+
+     <!--** Greek small letter chi **-->
+ <!ENTITY   khgr      "&#x03C7;"     >
+
+     <!--** Greek capital letter CHI **-->
+ <!ENTITY   KHgr      "&#x03A7;"     >
+
+     <!--** Greek small letter psi **-->
+ <!ENTITY   psgr      "&#x03C8;"     >
+
+     <!--** Greek capital letter PSI **-->
+ <!ENTITY   PSgr      "&#x03A8;"     >
+
+     <!--** Greek small letter omega **-->
+ <!ENTITY   ohgr      "&#x03C9;"     >
+
+     <!--** Greek capital letter OMEGA **-->
+ <!ENTITY   OHgr      "&#x03A9;"     >
+
+
+
+
+
+     <!--**** From Greek Symbols Character Entities (%isogrk3;) ****-->
+
+     <!--** Greek small letter alpha **-->
+ <!ENTITY   alpha      "&#x03B1;"     >
+
+     <!--** Greek small letter beta **-->
+ <!ENTITY   beta      "&#x03B2;"     >
+
+     <!--** Greek small letter gamma **-->
+ <!ENTITY   gamma      "&#x03B3;"     >
+
+     <!--** Greek capital letter GAMMA **-->
+ <!ENTITY   Gamma      "&#x0393;"     >
+
+     <!--** Greek letter digamma **-->
+ <!ENTITY   gammad      "&#x03DC;"     >
+
+     <!--** Greek small letter delta **-->
+ <!ENTITY   delta      "&#x03B4;"     >
+
+     <!--** Greek capital letter DELTA **-->
+ <!ENTITY   Delta      "&#x0394;"     >
+
+     <!--** Greek small letter epsilon **-->
+ <!ENTITY   epsi      "&#x03B5;"     >
+
+     <!--** Latin small letter open e **-->
+ <!ENTITY   epsiv      "&#x025B;"     >
+
+     <!--** Greek small letter epsilon **-->
+ <!ENTITY   epsis      "&#x03B5;"     >
+
+     <!--** Greek small letter zeta **-->
+ <!ENTITY   zeta      "&#x03B6;"     >
+
+     <!--** Greek small letter eta **-->
+ <!ENTITY   eta      "&#x03B7;"     >
+
+     <!--** Greek small letter theta **-->
+ <!ENTITY   theta      "&#x03B8;"     >
+
+     <!--** Greek capital letter THETA **-->
+ <!ENTITY   Theta      "&#x0398;"     >
+
+     <!--** Greek theta symbol **-->
+ <!ENTITY   thetav      "&#x03D1;"     >
+
+     <!--** Greek small letter iota **-->
+ <!ENTITY   iota      "&#x03B9;"     >
+
+     <!--** Greek small letter kappa **-->
+ <!ENTITY   kappa      "&#x03BA;"     >
+
+     <!--** Greek kappa symbol **-->
+ <!ENTITY   kappav      "&#x03F0;"     >
+
+     <!--** Greek small letter lambda **-->
+ <!ENTITY   lambda      "&#x03BB;"     >
+
+     <!--** Greek capital letter LAMBDA **-->
+ <!ENTITY   Lambda      "&#x039B;"     >
+
+     <!--** Greek small letter mu **-->
+ <!ENTITY   mu      "&#x03BC;"     >
+
+     <!--** Greek small letter nu **-->
+ <!ENTITY   nu      "&#x03BD;"     >
+
+     <!--** Greek small letter xi **-->
+ <!ENTITY   xi      "&#x03BE;"     >
+
+     <!--** Greek capital letter XI **-->
+ <!ENTITY   Xi      "&#x039E;"     >
+
+     <!--** Greek small letter pi **-->
+ <!ENTITY   pi      "&#x03C0;"     >
+
+     <!--** Greek omega symbol **-->
+ <!ENTITY   piv      "&#x03D6;"     >
+
+     <!--** Greek capital letter PI **-->
+ <!ENTITY   Pi      "&#x03A0;"     >
+
+     <!--** Greek small letter rho **-->
+ <!ENTITY   rho      "&#x03C1;"     >
+
+     <!--** Greek rho symbol **-->
+ <!ENTITY   rhov      "&#x03F1;"     >
+
+     <!--** Greek small letter sigma **-->
+ <!ENTITY   sigma      "&#x03C3;"     >
+
+     <!--** Greek capital letter SIGMA **-->
+ <!ENTITY   Sigma      "&#x03A3;"     >
+
+     <!--** Greek small letter final sigma **-->
+ <!ENTITY   sigmav      "&#x03C2;"     >
+
+     <!--** Greek small letter tau **-->
+ <!ENTITY   tau      "&#x03C4;"     >
+
+     <!--** Greek small letter upsilon **-->
+ <!ENTITY   upsi      "&#x03C5;"     >
+
+     <!--** Greek upsilon with hook symbol **-->
+ <!ENTITY   Upsi      "&#x03D2;"     >
+
+     <!--** Greek small letter phi **-->
+ <!ENTITY   phis      "&#x03C6;"     >
+
+     <!--** Greek capital letter PHI **-->
+ <!ENTITY   Phi      "&#x03A6;"     >
+
+     <!--** Greek phi symbol **-->
+ <!ENTITY   phiv      "&#x03D5;"     >
+
+     <!--** Greek small letter chi **-->
+ <!ENTITY   chi      "&#x03C7;"     >
+
+     <!--** Greek small letter psi **-->
+ <!ENTITY   psi      "&#x03C8;"     >
+
+     <!--** Greek capital letter PSI **-->
+ <!ENTITY   Psi      "&#x03A8;"     >
+
+     <!--** Greek small letter omega **-->
+ <!ENTITY   omega      "&#x03C9;"     >
+
+     <!--** Greek capital letter OMEGA **-->
+ <!ENTITY   Omega      "&#x03A9;"     >
+
+
+         <!--** From Numeric and Special Graphic Character Entities (%isonum;) **-->
+
+     <!--** Vulgar fraction one half **-->
+ <!ENTITY   half      "&#x00BD;"     >
+
+     <!--** Vulgar fraction one half **-->
+ <!ENTITY   frac12      "&#x00BD;"     >
+
+     <!--** Vulgar fraction one quarter **-->
+ <!ENTITY   frac14      "&#x00BC;"     >
+
+     <!--** Vulgar fraction three quarters **-->
+ <!ENTITY   frac34      "&#x00BE;"     >
+
+     <!--** Vulgar fraction one eighth **-->
+ <!ENTITY   frac18      "&#x215B;"     >
+
+     <!--** Vulgar fraction three eighths **-->
+ <!ENTITY   frac38      "&#x215C;"     >
+
+     <!--** Vulgar fraction five eighths **-->
+ <!ENTITY   frac58      "&#x215D;"     >
+
+     <!--** Vulgar fraction seven eighths **-->
+ <!ENTITY   frac78      "&#x215E;"     >
+
+     <!--** Plus-minus sign **-->
+ <!ENTITY   plusmn      "&#x00B1;"     >
+
+     <!--** Multiplication sign **-->
+ <!ENTITY   times      "&#x00D7;"     >
+
+     <!--** Pound sign **-->
+ <!ENTITY   pound      "&#x00A3;"     >
+
+     <!--** Ampersand **-->
+ <!ENTITY   amp      "&#38;#38;"     >
+
+     <!--** Asterisk **-->
+ <!ENTITY   ast      "&#x002A;"     >
+
+     <!--** Left square bracket **-->
+ <!ENTITY   lsqb      "&#x005B;"     >
+
+     <!--** Right square bracket **-->
+ <!ENTITY   rsqb      "&#x005D;"     >
+
+     <!--** Left curly bracket **-->
+ <!ENTITY   lcub      "&#x007B;"     >
+
+     <!--** Right curly bracket **-->
+ <!ENTITY   rcub      "&#x007D;"     >
+
+     <!--** Micro sign **-->
+ <!ENTITY   micro      "&#x00B5;"     >
+
+     <!--** Ohm sign **-->
+ <!ENTITY   ohm      "&#x2126;"     >
+
+     <!--** Degree sign **-->
+ <!ENTITY   deg      "&#x00B0;"     >
+
+     <!--** Leftwards arrow **-->
+ <!ENTITY   larr      "&#x2190;"     >
+
+     <!--** Rightwards arrow **-->
+ <!ENTITY   rarr      "&#x2192;"     >
+
+     <!--** Copyright sign **-->
+ <!ENTITY   copy      "&#x00A9;"     >
+
+     <!--** Registered sign **-->
+ <!ENTITY   reg      "&#x00AE;"     >
+
+     <!--** Trade mark sign **-->
+ <!ENTITY   trade      "&#x2122;"     >
+
+     <!--** Euro dollar **-->
+ <!ENTITY   Euro      "&#x20AC;"     >
+
+     <!--** Microns **-->
+ <!ENTITY   microns      "&#x00B5;"     >
+
+     <!--** Division sign **-->
+ <!ENTITY   divide      "&#x00F7;"     >
+
+
+
+     <!--*** From Publishing Character Entities (%isopub;) ***-->
+
+     <!--** Vulgar fraction one third **-->
+ <!ENTITY   frac13      "&#x2153;"     >
+
+     <!--** Vulgar fraction two thirds **-->
+ <!ENTITY   frac23      "&#x2154;"     >
+
+     <!--** Vulgar fraction one fifth **-->
+ <!ENTITY   frac15      "&#x2155;"     >
+
+     <!--** Vulgar fraction two fifths **-->
+ <!ENTITY   frac25      "&#x2156;"     >
+
+     <!--** Vulgar fraction three fifths **-->
+ <!ENTITY   frac35      "&#x2157;"     >
+
+     <!--** Vulgar fraction four fifths **-->
+ <!ENTITY   frac45      "&#x2158;"     >
+
+     <!--** Vulgar fraction one sixth **-->
+ <!ENTITY   frac16      "&#x2159;"     >
+
+     <!--** Vulgar fraction five sixths **-->
+ <!ENTITY   frac56      "&#x215A;"     >
+
+
+
+     <!--***  General Technical Character Entities (%isotech;)  **-->
+
+      <!--** Angstrom sign **-->
+ <!ENTITY   angst      "&#x212B;"     >
+
+     <!--** Identical to **-->
+ <!ENTITY   equiv      "&#x2261;"     >
+
+     <!--** Greater-than or equal to **-->
+ <!ENTITY   ge      "&#x2265;"     >
+
+     <!--** Infinity **-->
+ <!ENTITY   infin      "&#x221E;"     >
+
+     <!--** Integral **-->
+ <!ENTITY   int      "&#x222B;"     >
+
+     <!--** Less-than or equal to **-->
+ <!ENTITY   le      "&#x2264;"     >
+
+     <!--** Minus sign **-->
+ <!ENTITY   minus      "&#x2212;"     >
+
+     <!--** Not equal to **-->
+ <!ENTITY   ne      "&#x2260;"     >
+
+     <!--** Square root **-->
+ <!ENTITY   radic      "&#x221A;"     >
+
+     <!--** Tilde operator, Similar **-->
+ <!ENTITY   sim      "&#x223C;"     >
+
+
+
+     <!--***  Added Math Symbols: Relations Character Entities (%isoamsr;)  **-->
+
+     <!--** Almost equal or equal to **-->
+ <!ENTITY   ape      "&#x224A;"     >
+
+
+     <!--***  Added Math Symbols: Arrow Relations Character Entities (%isoamsa;)  **-->
+
+     <!--** Anticlockwise top semicircle arrow **-->
+ <!ENTITY   cularr      "&#x21B6;"     >
+
+     <!--** Downwards double arrow **-->
+ <!ENTITY   dArr      "&#x21D3;"     >
+
+     <!--** Upwards double arrow **-->
+ <!ENTITY   uArr      "&#x21D1;"     >
+
+
+     <!--***  Added Math Symbols: Binary Operators Character Entities (%isoamsb;) **-->
+
+     <!--** Circled minus **-->
+ <!ENTITY   ominus      "&#x2296;"     >
+
+     <!--** Circled plus **-->
+ <!ENTITY   oplus      "&#x2295;"     >
+
+
+     <!--***  Added Math Symbols: Negated Relations Character Entities (%isoamsn;) **-->
+
+     <!--** Not almost equal to **-->
+ <!ENTITY   nap      "&#x2249;"     >
+
+     <!--** Not greater-than **-->
+ <!ENTITY   ngt      "&#x226F;"     >
+
+     <!--** Not less-than **-->
+ <!ENTITY   nlt      "&#x226E;"     >
+
+
+<!--***  ISO Latin 1 Character Entities (%isolat1;) **-->
+
+     <!--** Latin small letter a with diaeresis **-->
+ <!ENTITY   auml      "&#x00E4;"     >
+
+     <!--** Latin small letter c with cedilla **-->
+ <!ENTITY   ccedil      "&#x00E7;"     >
+
+     <!--** Latin small letter e with acute **-->
+ <!ENTITY   eacute      "&#x00E9;"     >
+
+     <!--** Latin small letter e with circumflex **-->
+ <!ENTITY   ecirc      "&#x00EA;"     >
+
+     <!--** Latin small letter e with grave **-->
+ <!ENTITY   egrave      "&#x00E8;"     >
+
+     <!--** Latin small letter e with diaeresis **-->
+ <!ENTITY   euml      "&#x00EB;"     >
+
+     <!--** Latin capital letter O with stroke **-->
+ <!ENTITY   Oslash      "&#x00D8;"     >
+
+     <!--** Latin small letter sharp s **-->
+ <!ENTITY   szlig      "&#x00DF;"     >
+
+     <!--** Latin small letter u with diaeresis **-->
+ <!ENTITY   uuml      "&#x00FC;"     >
+
+
+
+     <!--***  Derwent Custom Entities  ***-->
+
+     <!--** * Derwent Basic Patent Record Flag **-->
+ <!ENTITY   Dbasic      "&#x002A;"     >
+
+     <!--** = Derwent equivalent Patent Record **-->
+ <!ENTITY   Dequiv      "&#x003D;"     >
+
+     <!--** # Derwent Treat As Basic Patent **-->
+ <!ENTITY   Detab      "&#x0023;"     >
+
+     <!--** Exc, down and up arrow **-->
+ <!ENTITY   duarr      "&#x2191;&#x2193;"     >
+
+     <!--** Long right arrow **-->
+ <!ENTITY   lorarr      "&#x0024;&#x2192;"     >
+
+     <!--** Capital H in circle **-->
+ <!ENTITY   oH      "&#x24BD;"     >
+
+     <!--** Triple bond  **-->
+ <!ENTITY   trplbond      "&#x2261;"     >
+
+

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="[2012_KISTI]글로벌_미래기술정보_상시_모니터링_및_유망기술_센싱시스템-WebPlatform">
+        <wb-resource deploy-path="/" source-path="/WebContent"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="context-root" value="2012-StandAlone-글로벌_미래기술정보_상시_모니터링_및_유망기술_센싱시스템_개발"/>
+        <property name="java-output-path" value="/2012-StandAlone-글로벌 미래기술정보 상시 모니터링 및 유망기술 센싱시스템 개발/build/classes"/>
+    </wb-module>
+</project-modules>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="kr.co.topquadrant.db.bean.HCP" alias="HCP"/>
+		<typeAlias type="kr.co.topquadrant.db.bean.HCPDocument" alias="HCPDocument"/>
+		<typeAlias type="kr.co.topquadrant.db.bean.HCPYearInfo" alias="HCPYearInfo"/>
+		
+		<typeAlias type="kr.co.topquadrant.db.bean.ClusterResultSummary" alias="ClusterResultSummary"/>
+		<typeAlias type="kr.co.topquadrant.db.bean.RFClusterInfo" alias="RFClusterInfo"/>
+		
+		<typeAlias type="kr.co.topquadrant.db.bean.RFAnalysis" alias="RFAnalysis"/>
+		<typeAlias type="kr.co.topquadrant.db.bean.RFAnalysisCluster" alias="RFAnalysisCluster"/>
+		<typeAlias type="kr.co.topquadrant.db.bean.RFAnalysisOption" alias="RFAnalysisOption"/>
+		<typeAlias type="kr.co.topquadrant.db.bean.RFAnalysisClusterASJC" alias="RFAnalysisClusterASJC"/>
+		<typeAlias type="kr.co.topquadrant.db.bean.RFAnalysisClusterDocument" alias="RFAnalysisClusterDocument"/>
+		<typeAlias type="kr.co.topquadrant.db.bean.RFAnalysisClusterDomesticDocument" alias="RFAnalysisClusterDomesticDocument"/>
+		
+		<typeAlias type="kr.co.topquadrant.db.mybatis.MyBatisParameter" alias="MyBatisParameter"/>
+		<typeAlias type="kr.co.topquadrant.db.mybatis.HCPParameter" alias="HCPParameter"/>
+	</typeAliases>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="url" value="jdbc:oracle:thin:@203.250.196.44:1551:KISTI5"/>
+				<property name="username" value="scopus"/>
+				<property name="password" value="scopus+11"/>
+				<!-- 
+				<property name="url" value="jdbc:oracle:thin:@192.168.0.60:1521:ORCL"/>
+				<property name="username" value="kisti"/>
+				<property name="password" value="kisti"/>
+				 -->
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="myBatis/mapper/HCPMapper.xml"/>
+		<mapper resource="myBatis/mapper/RFAnalysisMapper.xml"/>
+		<mapper resource="myBatis/mapper/RFAnalysisClusterMapper.xml"/>
+	</mappers>
+
+</configuration>

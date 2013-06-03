@@ -1,0 +1,137 @@
+/*
+ * SCOPUS 데이터 구축을 위해 본 SQL 스크립트 파일을 일괄 실행합니다.
+ * 이 파일을 실행하는 순간 기존 데이터는 모두 삭제됩니다.
+ * */
+DROP TABLE Scopus_Classification_Others CASCADE CONSTRAINTS PURGE;
+DROP TABLE Scopus_Author_Group CASCADE CONSTRAINTS PURGE;
+DROP TABLE Scopus_Affilation_Group CASCADE CONSTRAINTS PURGE;
+DROP TABLE Scopus_Reference CASCADE CONSTRAINTS PURGE;
+DROP TABLE Scopus_Citation CASCADE CONSTRAINTS PURGE;
+DROP TABLE Scopus_Correspond_Author CASCADE CONSTRAINTS PURGE;
+DROP TABLE Scopus_Author CASCADE CONSTRAINTS PURGE;
+DROP TABLE Scopus_Classification_ASJC CASCADE CONSTRAINTS PURGE;
+DROP TABLE Scopus_Author_Keyword CASCADE CONSTRAINTS PURGE;
+DROP TABLE Scopus_Index_Keyword CASCADE CONSTRAINTS PURGE;
+DROP TABLE Scopus_Document CASCADE CONSTRAINTS PURGE;
+DROP TABLE SCOPUS_AUTHOR_ID_INFO CASCADE CONSTRAINTS PURGE;
+
+CREATE TABLE Scopus_Document(
+	eid  VARCHAR2(12)  NOT NULL ,
+	title  VARCHAR2(3000)  NULL ,
+	abstract  CLOB  NULL ,
+	publication_year  VARCHAR2(4)  NULL ,
+	publication_month  VARCHAR2(2)  NULL ,
+	volumn  VARCHAR2(128)  NULL ,
+	issue  VARCHAR2(256)  NULL ,
+	page  VARCHAR2(512)  NULL ,
+	source_id  VARCHAR2(12)  NULL ,
+	doi  VARCHAR2(512)  NULL ,
+	ref_count  INT  NOT NULL ,
+	citation_type  CHAR(2)  NULL ,
+	cit_count  INT  NOT NULL ,
+	CONSTRAINT  XPKScopus_Document PRIMARY KEY (eid),
+	CONSTRAINT  R_68 FOREIGN KEY (citation_type) REFERENCES Scopus_Citation_Type(citation_type) ON DELETE SET NULL
+);
+
+CREATE TABLE Scopus_Author_Keyword(
+	author_keyword_seq  INT  NOT NULL ,
+	eid  VARCHAR2(12)  NOT NULL ,
+	keyword  VARCHAR2(255)  NOT NULL ,
+	CONSTRAINT  XPKScopus_Author_Keyword PRIMARY KEY (author_keyword_seq),
+	CONSTRAINT  R_65 FOREIGN KEY (eid) REFERENCES Scopus_Document(eid) ON DELETE SET NULL
+);
+
+CREATE TABLE Scopus_Index_Keyword(
+	eid  VARCHAR2(12)  NOT NULL ,
+	type	VARCHAR2(6)	NOT	NULL,
+	keyword  VARCHAR2(255)  NOT NULL ,
+    CONSTRAINT  R_6115 FOREIGN KEY (eid) REFERENCES Scopus_Document(eid) ON DELETE SET NULL
+);
+
+CREATE TABLE Scopus_Classification_ASJC(
+	eid  VARCHAR2(12)  NOT NULL ,
+	asjc_code  CHAR(4)  NOT NULL ,
+	CONSTRAINT  XPKScopus_Classfication_ASJC PRIMARY KEY (eid,asjc_code),
+	CONSTRAINT  R_61 FOREIGN KEY (eid) REFERENCES Scopus_Document(eid),
+	CONSTRAINT  R_62 FOREIGN KEY (asjc_code) REFERENCES Scopus_ASJC(asjc_code)
+);
+
+CREATE TABLE Scopus_Author(
+	author_seq  INT  NOT NULL ,
+	author_id  VARCHAR2(12)  NULL ,
+	author_name  VARCHAR2(255)  NULL ,
+	delegate_author_name  VARCHAR2(255)  NULL ,
+	email  VARCHAR2(255)  NULL ,
+	CONSTRAINT  XPKScopus_Author PRIMARY KEY (author_seq)
+);
+
+CREATE TABLE SCOPUS_AUTHOR_ID_INFO(
+	eid  VARCHAR2(12)  NOT NULL ,
+    group_sequence  INT  NOT NULL ,
+	author_id  VARCHAR2(12)  NULL ,
+	author_name  VARCHAR2(255)  NULL ,
+	index_name  VARCHAR2(255)  NULL ,
+	email  VARCHAR2(255)  NULL ,
+	ranking  VARCHAR2(5)  NULL ,
+	delegate_author_name  VARCHAR2(255)  NULL
+);
+
+CREATE TABLE Scopus_Correspond_Author(
+	eid  VARCHAR2(12)  NOT NULL ,
+	author_seq  INT  NOT NULL ,
+	organization  VARCHAR2(1024)  NULL ,
+	email  VARCHAR2(256)  NULL ,
+	country_code  VARCHAR2(3)  NULL ,
+	CONSTRAINT  XPKScopus_Correspond_Author PRIMARY KEY (eid),
+	CONSTRAINT  R_56 FOREIGN KEY (eid) REFERENCES Scopus_Document(eid),
+	CONSTRAINT  R_57 FOREIGN KEY (author_seq) REFERENCES Scopus_Author(author_seq)
+);
+
+CREATE TABLE Scopus_Citation(
+	eid  VARCHAR2(12)  NOT NULL ,
+	cit_eid  VARCHAR2(12)  NOT NULL 
+);
+
+CREATE TABLE Scopus_Reference(
+	eid  VARCHAR2(12)  NOT NULL ,
+	ref_eid  VARCHAR2(12)  NOT NULL ,
+	publication_year  VARCHAR2(4)  NULL ,
+	text	VARCHAR2(3000)  NULL ,
+	title	VARCHAR2(3000)  NULL ,
+	source_title	VARCHAR2(3000)  NULL ,
+	issue	VARCHAR2(1024)  NULL ,
+	volumn	VARCHAR2(128)  NULL ,
+	firstpage	VARCHAR2(32)  NULL,
+	lastpage	VARCHAR2(1024)  NULL
+);
+
+CREATE TABLE Scopus_Affilation_Group(
+    eid  VARCHAR2(12)  NOT NULL ,
+    group_sequence  INT  NOT NULL ,
+    afid  VARCHAR2(30)  NULL ,
+    dftid  VARCHAR2(30)  NULL ,
+	org_name VARCHAR2(2000)  NULL ,
+	country_code  VARCHAR2(3)  NULL ,
+    delegate_org_name VARCHAR2(2000)  NULL ,
+	CONSTRAINT  XPKScopus_Affilation_Group_N PRIMARY KEY (eid,group_sequence),
+	CONSTRAINT  R_49_N FOREIGN KEY (eid) REFERENCES Scopus_Document(eid)
+);
+
+
+CREATE TABLE Scopus_Author_Group(
+	eid  VARCHAR2(12)  NOT NULL ,
+	group_sequence  INT  NOT NULL ,
+	author_seq  INT  NOT NULL ,
+	ranking  VARCHAR2(5)  NULL ,
+	CONSTRAINT  XPKScopus_Author_Group PRIMARY KEY (eid,group_sequence,author_seq),
+	CONSTRAINT  FK_46_Author_group FOREIGN KEY (author_seq) REFERENCES Scopus_Author(author_seq),
+	CONSTRAINT  R_53 FOREIGN KEY (eid,group_sequence) REFERENCES Scopus_Affilation_Group(eid,group_sequence)
+);
+
+CREATE TABLE Scopus_Classification_Others(
+	eid  VARCHAR2(12)  NOT NULL ,
+	type  VARCHAR2(20)  NOT NULL ,
+	code  VARCHAR2(255)  NOT NULL ,
+	CONSTRAINT  XPKScopus_Classification PRIMARY KEY (eid,type,code),
+	CONSTRAINT  R_39 FOREIGN KEY (eid) REFERENCES Scopus_Document(eid)
+);

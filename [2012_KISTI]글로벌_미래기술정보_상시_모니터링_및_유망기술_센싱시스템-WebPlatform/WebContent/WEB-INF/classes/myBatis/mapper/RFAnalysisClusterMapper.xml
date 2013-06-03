@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="RFAnalysisClusterMapper">
+
+	<resultMap id="resultMapAnalysisASJC" type="String">
+		<id property="asjc" column="asjc"/>   
+	</resultMap>
+	
+	<resultMap id="resultMapRFClusterInfo" type="RFClusterInfo">
+		<id property="seq" column="seq" />   
+		<id property="consecutiveNumber" column="CONSECUTIVE_NUMBER" />   
+		<id property="updateFlag" column="UPDATE_FLAG" />   
+		<result property="data" column="DATA" />
+	</resultMap>
+	
+	<resultMap id="resultMapClusterResultSummary" type="ClusterResultSummary">
+		<id property="seq" column="seq" />   
+		<id property="consecutiveNumber" column="CONSECUTIVE_NUMBER" />   
+		<result property="documentCount" column="DOCUMNET_COUNT" />
+		<result property="documentReferenceCount" column="DOCUMENT_REFERENCE_COUNT" />
+		<result property="referenceCountPerDocument" column="REFERENCE_COUNT_PER_DOCUMENT" />
+		<result property="averagePubYearDocument" column="AVERAGE_PUB_YEAR_DOCUMENT" />
+		<result property="averagePubYearCitationDocument" column="AVERAGE_PUB_YEAR_CITATION_DOC" />
+		<result property="updateFlag" column="UPDATE_FLAG" />
+		<result property="reg_date" column="REG_DATE" />
+		<result property="clusterNO" column="CLUSTER_NO" />
+		<result property="json" column="JSON" jdbcType="CLOB" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<resultMap id="resultMapAnalysisCluster" type="RFAnalysisCluster">
+		<id property="seq" column="seq" />   
+		<id property="consecutiveNumber" column="CONSECUTIVE_NUMBER" />   
+		<result property="documentCount" column="DOCUMNET_COUNT" />
+		<result property="documentReferenceCount" column="DOCUMENT_REFERENCE_COUNT" />
+		<result property="referenceCountPerDocument" column="REFERENCE_COUNT_PER_DOCUMENT" />
+		<result property="averagePubYearDocument" column="AVERAGE_PUB_YEAR_DOCUMENT" />
+		<result property="averagePubYearCitationDocument" column="AVERAGE_PUB_YEAR_CITATION_DOC" />
+		<result property="updateFlag" column="UPDATE_FLAG" />
+		<result property="reg_date" column="REG_DATE" />
+		<result property="clusterNO" column="CLUSTER_NO" />
+		<result property="json" column="JSON" jdbcType="CLOB" javaType="java.lang.String"/>
+		
+		<result property="totalCount" column="TOTALCOUNT" />
+		<result property="totalPage" column="TOTALPAGE" />
+	</resultMap>
+	
+	<resultMap id="resultMapAnalysisClusterDetail" type="RFAnalysisCluster">
+		<association property="bbsInfoBean" column="seq,consecutiveNumber" resultMap="resultMapAnalysisCluster"/>
+		<collection property="asjcs" column="seq,consecutiveNumber" ofType="RFAnalysisClusterASJC" select="selectAnaylsisASJC"/> 
+		<collection property="documents" column="seq,consecutiveNumber" ofType="RFAnalysisClusterDocument" select="selectAnaylsisASJC"/> 
+		<collection property="domesticDocuments" column="seq,consecutiveNumber" ofType="RFAnalysisClusterDomesticDocument" select="selectAnaylsisASJC"/> 
+	</resultMap>
+	
+	<select id="selectAllAnaylsisCluster" parameterType="MyBatisParameter" resultMap="resultMapAnalysisCluster">
+		select * from (
+			select
+				SEQ, 
+				CONSECUTIVE_NUMBER,
+				DOCUMNET_COUNT, 
+				DOCUMENT_REFERENCE_COUNT, 
+				REFERENCE_COUNT_PER_DOCUMENT, 
+				AVERAGE_PUB_YEAR_DOCUMENT, 
+				AVERAGE_PUB_YEAR_CITATION_DOC, 
+				CLUSTER_NO,
+				REG_DATE, 
+				(select data from RF_CLUSTER_INFO rci where rci.seq = rac.seq and rci.CONSECUTIVE_NUMBER=rac.CONSECUTIVE_NUMBER and rci.UPDATE_FLAG = rac.UPDATE_FLAG) as json,
+				UPDATE_FLAG, 
+				<if test="requestPage != null"> 
+					CEIL((ROW_NUMBER()
+						OVER(ORDER BY
+						<choose> 
+	    					<when test="orderColumn != null">
+								${orderColumn} ${sord}
+	    					</when>
+	    					<otherwise>
+								REG_DATE desc
+	    					</otherwise>
+	    				</choose> 
+					)) / #{rows}) PAGENUM,
+			      	CEIL(COUNT(*) OVER()/#{rows}) TOTALPAGE,  
+		      	</if>
+		      	CEIL(COUNT(*) OVER()) TOTALCOUNT
+			from 
+				RF_ANALASYS_CLUSTER rac  
+			where SEQ = #{seq} and UPDATE_FLAG = #{update_flag}
+			<if test="searchField != null">
+				<choose> 
+					<when test="searchField=='LASJC'">
+						and CONSECUTIVE_NUMBER in (
+							select consecutive_number from RF_CLUSTER_ASJC rca, SCOPUS_ASJC_KOREA sak
+							where rca.ASJC = sak.ASJC_CODE and seq=#{seq} and update_flag=#{update_flag}
+							and sak.description 
+								<if test="searchOper=='cn'">
+									like '%${searchString}%'
+								</if>
+								<if test="searchOper=='eq'">
+									like '%${searchString}'
+								</if>
+						)
+		    		</when>
+					<when test="searchField=='KEYWORD'">
+						and CONSECUTIVE_NUMBER in (
+							select distinct CONSECUTIVE_NUMBER from RF_CLUSTER_KEYWORD
+							where seq=#{seq} and update_flag=#{update_flag}
+							and keyword 
+								<if test="searchOper=='cn'">
+									like '%${searchString}%'
+								</if>
+								<if test="searchOper=='eq'">
+									like '%${searchString}'
+								</if>
+						)
+		    		</when>
+		    		<otherwise>
+						and ${searchField} 
+						<if test="searchOper=='cn'">
+							like '%${searchString}%'
+						</if>
+						<if test="searchOper=='eq'">
+							= '${searchString}'
+						</if>
+						<if test="searchOper=='lt'">
+							&lt; ${searchString}
+						</if>
+						<if test="searchOper=='le'">
+							&lt;= ${searchString}
+						</if>
+						<if test="searchOper=='gt'">
+							&gt; ${searchString}
+						</if>
+						<if test="searchOper=='ge'">
+							&gt;= ${searchString}
+						</if>
+		    		</otherwise>
+		    	</choose> 
+			</if>
+			<choose> 
+	    		<when test="orderColumn != null">
+					ORDER BY ${orderColumn} ${sord}
+	    		</when>
+	    		<otherwise>
+					ORDER BY REG_DATE desc
+	    		</otherwise>
+	    	</choose>  
+		)
+		<where>  
+		    <if test="requestPage != null">
+		        pagenum=#{requestPage} 
+		    </if>
+		</where>
+	</select>
+	
+	<select id="selectAllAnaylsisClusterSeq" parameterType="MyBatisParameter" resultMap="resultMapClusterResultSummary">
+		select * from (
+			select
+				SEQ, 
+				CONSECUTIVE_NUMBER,
+				DOCUMNET_COUNT, 
+				DOCUMENT_REFERENCE_COUNT, 
+				REFERENCE_COUNT_PER_DOCUMENT, 
+				AVERAGE_PUB_YEAR_DOCUMENT, 
+				AVERAGE_PUB_YEAR_CITATION_DOC, 
+				CLUSTER_NO,
+				REG_DATE, 
+				(select data from RF_CLUSTER_INFO rci where rci.seq = rac.seq and rci.CONSECUTIVE_NUMBER=rac.CONSECUTIVE_NUMBER and rci.UPDATE_FLAG = rac.UPDATE_FLAG) as json,
+				UPDATE_FLAG
+			from 
+				RF_ANALASYS_CLUSTER rac  
+			where SEQ = #{seq} and UPDATE_FLAG = #{update_flag}
+			ORDER BY DOCUMNET_COUNT desc
+		)
+	</select>
+	
+	<select id="selectOneAnaylsisResultInfo" parameterType="MyBatisParameter" resultMap="resultMapRFClusterInfo">
+		select
+			SEQ, 
+			CONSECUTIVE_NUMBER,
+			UPDATE_FLAG,
+			DATA
+		from 
+			RF_CLUSTER_INFO  
+		where 
+			SEQ = #{seq} and CONSECUTIVE_NUMBER = #{consecutiveNumber} and UPDATE_FLAG = #{update_flag}
+	</select>
+	
+	<insert id="insertAnaylsisCluster" parameterType="RFAnalysis" useGeneratedKeys="true" keyProperty="id" keyColumn="seq">
+		insert into RF_ANALYSIS 
+			(SEQ, TITLE,DESCRIPTION,ADD_SCIENCE,ADD_NATURE,REG_USER,REG_DATE_FIRST,MOD_USER,MOD_DATE)
+    	values 
+    		(RF_ANLAYSIS_SEQ_SEQ.nextval, #{title},#{description},#{add_science},#{add_nature},#{reg_user}, CURRENT_DATE, #{mod_user}, CURRENT_DATE)
+		<selectKey resultType="int" order="AFTER" keyProperty="seq"> 
+			select RF_ANLAYSIS_SEQ_SEQ.CurrVal from dual
+		</selectKey>
+	</insert>
+
+	<delete id="deleteAnaylsis" parameterType="int">
+		delete from RF_ANALYSIS where SEQ = #{seq} 
+	</delete>
+	
+	<delete id="deleteAnaylsisClusterDocument" parameterType="MyBatisParameter">
+		delete from RF_CLUSETER_DOCUMENT
+		where 
+		SEQ = #{seq} and CONSECUTIVE_NUMBER = #{consecutiveNumber} and UPDATE_FLAG = #{update_flag}
+	</delete>
+	<delete id="deleteAnaylsisClusterASJC" parameterType="MyBatisParameter">
+		delete from RF_CLUSTER_ASJC
+		where 
+		SEQ = #{seq} and CONSECUTIVE_NUMBER = #{consecutiveNumber} and UPDATE_FLAG = #{update_flag}
+	</delete>
+	<delete id="deleteAnaylsisClusterDomestic" parameterType="MyBatisParameter">
+		delete from RF_CLUSTER_DOMESTIC
+		where 
+		SEQ = #{seq} and CONSECUTIVE_NUMBER = #{consecutiveNumber} and UPDATE_FLAG = #{update_flag}
+	</delete>
+	<delete id="deleteAnaylsisClusterInfo" parameterType="MyBatisParameter">
+		delete from RF_CLUSTER_INFO
+		where 
+		SEQ = #{seq} and CONSECUTIVE_NUMBER = #{consecutiveNumber} and UPDATE_FLAG = #{update_flag}
+	</delete>
+	<delete id="deleteAnaylsisClusterKeyword" parameterType="MyBatisParameter">
+		delete from RF_CLUSTER_KEYWORD
+		where 
+		SEQ = #{seq} and CONSECUTIVE_NUMBER = #{consecutiveNumber} and UPDATE_FLAG = #{update_flag}
+	</delete>
+	<delete id="deleteAnaylsisCluster" parameterType="MyBatisParameter">
+		delete from RF_ANALASYS_CLUSTER 
+		where 
+		SEQ = #{seq} and CONSECUTIVE_NUMBER = #{consecutiveNumber} and UPDATE_FLAG = #{update_flag}
+	</delete>
+  
+</mapper>

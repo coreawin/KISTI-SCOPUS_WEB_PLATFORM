@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+     <head>
+         <title>An Example SciVerse Scopus Search Javascript API Transaction</title>
+                <!-- SECTION 1 : Initial configuration -->
+                    <link REL="stylesheet" TYPE="text/css" href="http://searchapi.scopus.com/stylesheets/css_sciverse_list_hilight.css"/>
+                        <script type="text/javascript" src="http://api.elsevier.com/javascript/scopussearch.jsp"></script>
+                        <script type="text/javascript">
+                            <!-- SECTION 2 : Call back -->
+                               callback = function(){ document.sciverseForm.searchButton.disabled = false; }
+                            <!-- SECTION 3 : Running Search -->
+                               runSearch = function(){
+                               document.sciverseForm.searchButton.disabled = true;
+                               var varSearchObj = new searchObj();
+                               varSearchObj.setSearch(document.sciverseForm.searchString.value);
+                               sciverse.search(varSearchObj);
+                               }
+                        </script>
+                <!-- SECTION 4 : Setting defaults -->
+                        <script type="text/javascript">
+
+                            sciverse.setApiKey("<!--INSERT YOUR APIKEY HERE-->");
+                            sciverse.setCallback(callback);
+                        </script>
+     </head>
+<!-- SECTION 5 : Rendering page -->
+     <body>
+         <h2>Search Form:</h2>
+                  <form name="sciverseForm" onsubmit="return false">
+                      <input type="text" name="searchString"/>
+                      <button onClick="runSearch()" name="searchButton"/>SEARCH</button>
+                  </form>
+         <h2>Returned sciverse Content:</h2>
+                  <div id="sciverse">
+                      None.
+                  </div>
+     </body>
+</html>

@@ -1,0 +1,27 @@
+LOAD DATA 
+INFILE './source.txt' 
+BADFILE './source.bad'
+DISCARDFILE './source.dsc'
+
+
+INTO TABLE "SCOPUS_SOURCE_INFO"
+APPEND
+
+FIELDS TERMINATED BY X'9'
+trailing nullcols
+
+  (SOURCE_ID  CHAR(12)
+, 
+   SOURCE_TITLE	CHAR(2000)
+,
+   P_ISSN  CHAR(8)
+, 
+   E_ISSN  CHAR(8)
+, 
+   SOURCE_TYPE  CHAR(64)
+,
+   PUBLCSHER_NAME	CHAR(512)
+,
+   COUNTRY	CHAR(128)
+)
+

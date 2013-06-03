@@ -1,0 +1,1393 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- *******  Derwent ISI  Product  DTD   ********
+	Version  	 : 1.7
+	Date     	 : 03/02/04 10:11:40
+	File Name  	 : derwentProductDtdtype1.dtd
+-->
+<!-- ******** Changes Request implementation **********
+	15 May 2001   - attribute "panAs" in element BiblioPtTyp1 made  #IMPLIED
+	15 May 2001   - Additional comments added
+	25 May 2001   - Add attribute "no" to  Element "KPara" which was deleted in error
+	19 June 2001  - Add value "Replace" to Attribute "PanTyp1.action"
+	23 April 2002 - Removed unused "Table" from %Para; and "calsxmltable.dtd" entity.
+	                Removed some unused leftover "name" attributes and comments.
+	                Removed unused "Doc" container & definitions.
+	13 Jan 2003   - Made attributes type, dw and vsWpi IMPLIED on PatentTyp1.
+	                Added attribute CitedPatents to element Cited.
+	14 Jan 2003   - Added IMPLIED attribute ext to elements DCR and DCRU.
+	                This is to hold the external DCR number that goes with the
+	                internal DCR held in the DCR and DCRU elements.
+        15 Jan 2003   - Made attribute ki on element PatentTyp1 IMPLIED to allow
+	                citation records with no kind code.
+***  -->
+<!--************   DTD Documentation   ***********************
+
+	This DTD includes a set of element and attribute declarations
+     	that partially defines the DTD model.  
+     	However, the model is not well-defined without the accompanying natural 
+     	language description of the semantics (meanings) of these various elements,
+     	attributes and attribute values.  The semantic writeup should be used in 
+	conjunction with this DTD.
+	-->
+<!--************   Derwent Business Model   ***********************
+
+	This DTD does not by itself represent Derwent's business model. The 
+	DTD in combination with Derwent's QA rules engine ensures that
+	instances conform to Derwent's Business rules			
+	-->
+<!--************   Derwent Patent Families   ***********************-->
+<!--Predefined XML General ENTITIES -->
+<!ENTITY lt "&#38;#60;">
+<!ENTITY gt "&#62;">
+<!ENTITY amp "&#38;#38;">
+<!ENTITY apos "&#39;">
+<!ENTITY quot "&#34;">
+<!--Paragraph Model for DAJ and ADS Master Abstracts-->
+<!ENTITY % Para "(P | DL | L)+">
+<!--Simple Paragraph Model-->
+<!ENTITY % SimplePara "#PCDATA | Sub |Sup| Em">
+<!--*********  List  ********************-->
+<!ENTITY % List "#PCDATA | Sub | Sup | Em | RefD | RefF">
+<!--******* Citation in the abstract text ********-->
+<!ENTITY % InlineCite "#PCDATA |JN | JV">
+<!-- ************************ Derwent XML ENTITIES ******************-->
+<!ENTITY % DerwentXmlEntities PUBLIC "-//Derwent//Derwent XML General ENTITIES 20000214//EN"
+		"derwent-xml-entities.ent">
+%DerwentXmlEntities;
+<!--******* ********************************************************************** **************-->
+<!--*******  DTD Paragraph etc components  **************-->
+<!ELEMENT P (%SimplePara; | PsL | Prt | Cit | RefD | RefF)*>
+<!-- **Pseudo List, required as in D-types, the editors often used the 
+	{H control sequence to force an indent to make lists of compounds more 
+	legible.  We can't be sure that they are always lists but there is 
+	useful mark-up there that we wouldn't want to lose**-->
+<!--******************* Subscript *******************************-->
+<!ELEMENT Sub (#PCDATA)>
+<!--******************* Superscript *******************************-->
+<!ELEMENT Sup (#PCDATA)>
+<!--******************* Emphasis **************************************-->
+<!--
+	attribute typ	=Defines what kind of emphasis 	is being used. Rules in 
+			the composition software will decide how to render these.
+			S  for Species
+			L  for Latin
+			G  for GeneSeq
+			P  for PeptideSeq
+			R  for RTM
+			UB for unknow  bold
+			UI for unknown italic
+			UU for unknown underlined
+			St for standard, ie ISO standard or W3C recomendation
+			URI for internet reference
+			EC for enzyne classification
+			
+	-->
+<!ELEMENT Em (#PCDATA)>
+<!ATTLIST Em
+	typ (S | L | G | P | R | UB | UI | UU | St | URI | EC) #REQUIRED
+>
+<!ELEMENT PsL (PsE+)>
+<!--Pseudo List Entry-->
+<!ELEMENT PsE (PsP, PsS)>
+<!--Pseudo List Prefix-->
+<!ELEMENT PsP (#PCDATA | Sub | Sup | Em)*>
+<!--Pseudo List Suffix-->
+<!ELEMENT PsS (#PCDATA | Sub | Sup | Em)*>
+<!-- ************************ Part Container Element **************-->
+<!ELEMENT Prt (PrtNo, PrtNm)>
+<!--PartNo-->
+<!ELEMENT PrtNo (#PCDATA | Sub | Sup | Em)*>
+<!--PartName-->
+<!ELEMENT PrtNm (#PCDATA | Sub | Sup | Em)*>
+<!--******************* Citation in the abstract text****************-->
+<!--predominantly for future use.-->
+<!--
+	Attibute typ	= patent or other
+			P for patent
+			O for other
+	-->
+<!ELEMENT Cit (%InlineCite;)*>
+<!ATTLIST Cit
+	typ (P | O) #REQUIRED
+>
+<!--*******  **************-->
+<!--Drawing Reference-->
+<!--
+
+	Attribute tgt       = This attribute determines which 
+			      product this particular reference will appear in. 
+			      It is used to position the same image at different
+			      points in the abstract dependent on the product.
+	Attribute cpt	    = For future use?
+	Attribute uri	=XML link (URI) to the Drawing image.
+	Attribute EdSc = Edna Scaling facture.
+	-->
+<!ELEMENT RefD EMPTY>
+<!ATTLIST RefD
+	tgt NMTOKENS #REQUIRED
+	cpt CDATA #IMPLIED
+	uri CDATA #REQUIRED
+	EdSc NMTOKEN #IMPLIED
+>
+<!--Formula Reference-->
+<!-- For attribute definition see RefD element -->
+<!ELEMENT RefF EMPTY>
+<!ATTLIST RefF
+	tgt NMTOKENS #REQUIRED
+	cpt CDATA #IMPLIED
+	uri CDATA #REQUIRED
+	EdSc NMTOKEN #IMPLIED
+>
+<!--****************** Journal Name *******************************-->
+<!ELEMENT JN (#PCDATA | Sub | Sup | Em)*>
+<!--*********** Journal Volume. Altered content to PCDATA**********-->
+<!ELEMENT JV (#PCDATA)>
+<!-- ************************ List  Container Element *************-->
+<!--
+	Attribute typ=used by the composition software to decide how to prefix 
+			the list entries, e.g. (a), (A), (i), (1), etc.
+			AL for AlphaLower
+			AU for AlphaUpper
+			RL for RomanLower
+			RU for RomanUpper
+			No for Number
+	-->
+<!ELEMENT L (LP, LS?)+>
+<!ATTLIST L
+	typ (AL | AU | RL | RU | No) #IMPLIED
+>
+<!--List Paragraph-->
+<!ELEMENT LP (%List;)*>
+<!--1st level sublist-->
+<!--
+	Attribute typ=used by the composition software to decide how to prefix 
+			the list entries, e.g. (a), (A), (i), (1), etc.
+			AL for AlphaLower
+			AU for AlphaUpper
+			RL for RomanLower
+			RU for RomanUpper
+			No for Number
+	-->
+<!ELEMENT LS (LP, LSS?)+>
+<!ATTLIST LS
+	typ (AL | AU | RL | RU | No) #IMPLIED
+>
+<!--2nd level list-->
+<!--
+	Attribute typ=used by the composition software to decide how to prefix 
+			the list entries, e.g. (a), (A), (i), (1), etc.
+			AL for AlphaLower
+			AU for AlphaUpper
+			RL for RomanLower
+			RU for RomanUpper
+			No for Number
+	-->
+<!ELEMENT LSS (LP+)>
+<!ATTLIST LSS
+	typ (AL | AU | RL | RU | No) #IMPLIED
+>
+<!-- **********Definition List ************************-->
+<!--attribute M="Y" identifies the list as a Markush definition list-->
+<!ELEMENT DL (DE+)>
+<!ATTLIST DL
+	M (Y) #IMPLIED
+>
+<!--DefListEntry-->
+<!ELEMENT DE (DT, DD)>
+<!--Term-->
+<!ELEMENT DT (%SimplePara;)*>
+<!--Definition-->
+<!ELEMENT DD (%List;)*>
+<!--******* Root Element ****************************************************************************************-->
+<!--******* Root Element **************-->
+<!--******* Root Element **************-->
+<!-- **     Attribute issueDate 	= 	Date Instance extracted from Derwent's CMS 
+** -->
+<!ELEMENT DerwentCmsOutputType1 (PanTyp1+)>
+<!ATTLIST DerwentCmsOutputType1
+	issueDate NMTOKEN #REQUIRED
+>
+<!-- ** Patent Family Container Element 
+	 Attribute 	pan		= Derwent Patent Accession Number
+	     			action	= 	New for new family
+							Delete for delete whole Family
+							Amend for delete,  replace or add patent in Family.  
+						Replace for delete whole Family and add new version of that Family
+
+** -->
+<!ELEMENT PanTyp1 (PatentTyp1*)>
+<!ATTLIST PanTyp1
+	pan NMTOKEN #REQUIRED
+	action (New | Delete | Amend | Replace) #REQUIRED
+>
+<!-- ** Patent Container Element 
+	     Attribute action	= 	New for new Patent
+							Delete for delete patent
+							Replace for replace patent
+	      			co		= Patent country
+	    			 se		= Patent serial
+	     			 ki		= Patent Kind (optional for PCI only patents)
+	      			typ		= Basic Patent type
+	     		 	dw	  	= Derwent week
+				vsWpi	= Biblio, Content and Indexing Derwenr version Number
+				vsPci	= Derwent PCI version Number
+
+** -->
+<!ELEMENT PatentTyp1 (BiblioPtTyp1?, ContentCorePtTyp1?, IndexingCorePtTyp1?, PCITyp1?)>
+<!ATTLIST PatentTyp1
+	action (New | Delete | Replace) #IMPLIED
+	co NMTOKEN #REQUIRED
+	se NMTOKEN #REQUIRED
+	ki NMTOKEN #IMPLIED
+	type (B | E | ETAB) #IMPLIED
+	dw NMTOKEN #IMPLIED
+	vsWpi NMTOKEN #IMPLIED
+	vsPci NMTOKEN #IMPLIED
+>
+<!-- ***Patent Biblio container element
+	     Attribute lg	=language, Derwent 3 letter code. Note 
+				   as codes are non-standard will have to 
+				   convert to full name, convert to ISO country
+				   codes or provide meanings if instances are 
+				   sent to third parties. 
+	     Attribute dt	=Patent Publish date,ISO date format YYYYMMDD
+	     Attribute pgs	=number of pages in the patent
+	     Attribute drgs	=number of drawings in the patent.
+	     Attribute clms	=number of claims in the patent	     	
+ 	     Attribute panAs	=Derwent PAN Assigned code.
+	     Attribute csan	=Derwent original CPI Secondary Accession 
+	     Attribute csanWk	=Derwent original CPI Secondary Accession 
+							       Number week
+	     Attribute nsan	=Derwent original Non CPI Secondary 
+	     Attribute nsanWk	=Derwent original Non CPI Secondary 
+						    Accession Number week
+	     Attribute bpnoCo   =Basic Patent Country
+	     Attribute bpnoSe   =Basic Patent Serial
+	     Attribute bpnoKi   =Basic Patent Kind
+
+**  -->
+<!ELEMENT BiblioPtTyp1 (Ptees?, Invs?, Pris?, DesSt?, Refs?, PANsAlt?, XPans?, ReIs?, Imgs?)>
+<!ATTLIST BiblioPtTyp1
+	lg NMTOKEN #IMPLIED
+	dt NMTOKEN #IMPLIED
+	pgs NMTOKEN #IMPLIED
+	drgs NMTOKEN #IMPLIED
+	clms NMTOKEN #IMPLIED
+	panAs (A | M) #IMPLIED
+	csan NMTOKEN #IMPLIED
+	csanWk NMTOKEN #IMPLIED
+	nsan NMTOKEN #IMPLIED
+	nsanWk NMTOKEN #IMPLIED
+	bpnoCo NMTOKEN #IMPLIED
+	bpnoSe NMTOKEN #IMPLIED
+	bpnoKi NMTOKEN #IMPLIED
+>
+<!--*******Content Container Element********************-->
+<!ELEMENT ContentCorePtTyp1 (TitCTyp1?, AbsCTyp1?, RefsNEmb?)>
+<!--*******Title container********************-->
+<!--Core Patent Title. -->
+<!ELEMENT TitCTyp1 ((Tit, TiP?) | TiP)>
+<!--*************CORE PATENT ABSTRACT CONTAINER ELEMENT***************-->
+<!ELEMENT AbsCTyp1 (PhoenixTyp1 | LegacyTyp1)>
+<!--*********** Master Abstract Container element ******************-->
+<!--** Applied via Analyst Desktop Software **-->
+<!ELEMENT PhoenixTyp1 (PNonOnline, POnline)>
+<!--****** Legacy Abstract Online Container element ************ -->
+<!--Abstract Applied via pre-ADS Tools-->
+<!ELEMENT LegacyTyp1 (Alert, Doc?)>
+<!--****** *********** -->
+<!--******   ************ -->
+<!-- *******               PATENT INDEXING (IndexingCorePt            ********
+	Core Patent Indexing is the indexing applied as part
+	of the DWPI process.  It is composed of Derwent Classification
+	(which includes Manual Codes), IPCs, Chemical Fragmentation Coding,
+	Polymer Indexing (including Plasdoc and Enhanced Polymer Indexing)
+	Unlinked Registry numbers and Keyword Indexing (incorporating DCR).
+	Any combination is the root elements is allowed. 
+	-->
+<!ELEMENT IndexingCorePtTyp1 (DC?, IPCs?, Frag?, PolymerTyp1?, IdxU?, KI?)>
+<!-- *******             Polymer Indexing                             ********
+	
+	Derwent's polymer indexing comprised initially a set of 
+	fragmentation codes on punch cards similar to those used
+ 	in the Chemical code.  These are known as the 'A' or 
+	'MultiPunch' Codes.  They were supplemented by the addition
+	of codes representing common combinations of code concepts
+	known as the 'Key Serials'
+
+	A new coding system, the Enhanced Polymer Code is now used 
+	in place of the MultiPunch and Key Serial (collectively 
+	known as Plasdoc) systems.  For a short	period of time, 
+	records have both Enhanced Polymer (EP) and Plasdoc Coding (PC)
+	-->
+<!ELEMENT PolymerTyp1 ((EPolymer, Plasdoc?) | Plasdoc)>
+<!--****** ************ -->
+<!--******   ************ -->
+<!-- ************ Patentees Container element**************** -->
+<!ELEMENT Ptees (Main, Sec?)>
+<!--** Main Patentee ** -->
+<!ELEMENT Main (Ptee)>
+<!--** A Patentee ** -->
+<!-- ** 
+	  Attribute typ	= type of patentee:	
+ 				S for Soviet institute
+				N for Non standard Company
+				C for Company
+				I for Individual
+	  Attribute cde	= Derwent four letter company code
+	** -->
+<!ELEMENT Ptee (Nm?, Loc?)>
+<!ATTLIST Ptee
+	cde NMTOKEN #IMPLIED
+	typ (S | N | C | I) #IMPLIED
+>
+<!-- ** Patentee Name ** 
+	 If individual Format "Sparkes P D"-->
+<!ELEMENT Nm (#PCDATA)>
+<!-- ** Patentee Location *** -->
+<!ELEMENT Loc (Cty?, US?, Co)>
+<!-- ** Patentee City *** -->
+<!ELEMENT Cty (#PCDATA)>
+<!-- ** Patentee US State *** -->
+<!ELEMENT US (#PCDATA)>
+<!-- ** Patentee Country *** -->
+<!ELEMENT Co (#PCDATA)>
+<!--** Secondary Patentees ** -->
+<!ELEMENT Sec (Ptee+)>
+<!-- ************Inventors Container element****************** -->
+<!ELEMENT Invs (Inv+)>
+<!-- ** An Inventor, Format "Sparkes P D" *** -->
+<!ELEMENT Inv (#PCDATA)>
+<!ATTLIST Inv
+	co NMTOKEN #IMPLIED
+>
+<!-- ************ Priorities Container element*************** -->
+<!-- ** Note to be re-reviewed at a later date  ** -->
+<!ELEMENT Pris (PriLocs?, PriLat, PriEst?, PriRels?, PriOths?)>
+<!--**  Container element for multiple  Local Priorities **-->
+<!ELEMENT PriLocs (PriLoc+)>
+<!-- ** Priority Local *** -->
+<!-- ** 
+	  Attribute typ	=Priority type:
+				A for application
+				U for utility ** -->
+<!ELEMENT PriLoc (PriSe, PriKi)>
+<!ATTLIST PriLoc
+	typ (A | U) #REQUIRED
+>
+<!-- ** Priority Serial *** -->
+<!ELEMENT PriSe (Fl, PriDt?)>
+<!-- ** Priority Serial filing number *** -->
+<!-- ** 
+	  Attribute yr  =Filing year
+	  Attribute co 	=Filing Country
+	  Attribute se  =Filing Serial ** -->
+<!ELEMENT Fl EMPTY>
+<!ATTLIST Fl
+	yr NMTOKEN #REQUIRED
+	co NMTOKEN #REQUIRED
+	se NMTOKEN #REQUIRED
+>
+<!-- ** Priority patent Serial *** -->
+<!-- ** 
+	  Attribute co  =Patent country
+	  Attribute se 	=Patent Serial
+	  Attribute ki  =Patent Kind 
+	** -->
+<!ELEMENT Pt EMPTY>
+<!ATTLIST Pt
+	co NMTOKEN #REQUIRED
+	se NMTOKEN #REQUIRED
+	ki NMTOKEN #REQUIRED
+>
+<!-- ** Priority Date *** -->
+<!ELEMENT PriDt (#PCDATA)>
+<!-- ** Priority Kind *** -->
+<!ELEMENT PriKi (#PCDATA)>
+<!-- ** Priority Latest *** -->
+<!-- ** 
+	  Attribute typ		=Priority type:
+				A for application
+				U for utility ** -->
+<!ELEMENT PriLat (PriSe, PriKi)>
+<!ATTLIST PriLat
+	typ (A | U) #REQUIRED
+>
+<!-- ** Priority Earliest *** -->
+<!--**
+	  Attribute typ		=Priority type:
+				A for application
+				U for utility ** -->
+<!ELEMENT PriEst (PriSe, PriKi)>
+<!ATTLIST PriEst
+	typ (A | U) #REQUIRED
+>
+<!-- ** Priority Related Container element*** -->
+<!ELEMENT PriRels (PriRel+)>
+<!-- ** Priority Related *** -->
+<!--**
+	  Attribute typ		=Priority type:
+				A for application
+				P for patent
+				U for utility 
+	** -->
+<!ELEMENT PriRel (((PriSe, Pt?) | Pt), PriKi)>
+<!ATTLIST PriRel
+	typ (A | P | U) #REQUIRED
+>
+<!-- ** Priority Other Container element*** -->
+<!ELEMENT PriOths (PriOth+)>
+<!-- ** Priority Other *** -->
+<!--**
+	  Attribute typ		=Priority type:
+				A for application
+				P for patent
+				U for utility 
+	** -->
+<!ELEMENT PriOth (((PriSe, Pt?) | Pt), PriKi)>
+<!ATTLIST PriOth
+	typ (A | P | U) #REQUIRED
+>
+<!-- *********** Designated States Container Element********* -->
+<!ELEMENT DesSt (Rte+)>
+<!-- ** A Designated State Route ** -->
+<!-- ** route.type= route type 
+				R for regional
+				N for national
+				** -->
+<!ELEMENT Rte (St+)>
+<!ATTLIST Rte
+	typ (R | N) #REQUIRED
+>
+<!-- ** A States in a Route** -->
+<!ELEMENT St (#PCDATA)>
+<!-- ******* References (old citations) Container Element**** -->
+<!ELEMENT Refs (Ref+)>
+<!-- ** A Reference **** -->
+<!--
+		Attribute typ	=Type of reference
+					J for journal
+					P for patent
+					N fpr Other
+		Attribute cat	= One or more Categories of citation may 
+				be applied to indicates how relevant to the 
+				master patent the Patent Examiner considers 
+				the citation to be. Categories are:
+				X  particularly relevant if taken alone (EP); 
+				   document of particular relevance, the 
+				   claimed invention cannot be considered 
+				   novel or cannot be considered to involve 
+				   an inventive step (WO).
+				Y  particularly relevant if combined with 
+				   another document of the same category (EP); 
+				   document of particular relevance, the 
+				   claimed invention cannot be to involve an 
+				   inventive step when the document is 
+				   combined with one or more other such 
+				   documents, such combination being obvious 
+				   to a person skilled in the art (WO).
+				A  technological background
+				O  non-written disclosure
+				P  intermediate document (EP); published prior 
+				   to the international filing date but later 
+				   than the priority date claimed (WO).
+				T  theory or principle underlying the invention
+				E  earlier patent document, but published on, 
+				   or after the filing date.
+				D  document cited in the application
+				L  document cited for other reasons
+				S  member of the same patent family, 
+			           corresponding document
+	-->
+<!ELEMENT Ref (#PCDATA)>
+<!ATTLIST Ref
+	typ (J | P | N) #REQUIRED
+	cat NMTOKENS #IMPLIED
+>
+<!-- ******** Alternative PANs container element 
+	Only applies to early patents where different product lines had 
+	their own PANs****** -->
+<!ELEMENT PANsAlt (Pan+)>
+<!-- ** Alternative PAN ** -->
+<!--
+  	   Attribute as= Derwent XPAN assignment **-->
+<!ELEMENT Pan (#PCDATA)>
+<!-- ******** Derwent Cross-ref PANs container element ****** -->
+<!ELEMENT XPans (XPan+)>
+<!-- ** Cross-ref PAN ** -->
+<!--
+  	   Attribute as= Derwent XPAN assignment **-->
+<!ELEMENT XPan (#PCDATA)>
+<!ATTLIST XPan
+	as (I | X) #REQUIRED
+>
+<!-- *************** Reissue week container element ********* -->
+<!--** Note May move into versioning at a future date**-->
+<!ELEMENT ReIs (Wk+)>
+<!-- ** Reissue week ** -->
+<!--** 
+	  Atribute tgt	=list of products reissued (to be)**-->
+<!ELEMENT Wk (#PCDATA)>
+<!ATTLIST Wk
+	tgt NMTOKENS #IMPLIED
+>
+<!--**IMAGES POOL, from original patent + Derwent generated***-->
+<!--
+
+	-->
+<!ELEMENT Imgs ((TDwgs, Fmlas?) | Fmlas)>
+<!-- **Technical Drawings Container element**-->
+<!ELEMENT TDwgs (TDwg+)>
+<!--**A Technical Drawing**-->
+<!--** 
+	Attribute ht    = Scanned Image Height in pixels.
+	Attribute wt    = Scanned Image Width in pixels.    
+	Attribute no	= The number of the drawing
+			      in the source patent document which the 
+			      analyst has selected for inclusion in an 
+			      abstract e.g. '1a' or '5'.
+
+  	uri  	= The XML XLink URI of the file, which contains the
+			      drawing. 
+
+	**-->
+<!ELEMENT TDwg EMPTY>
+<!ATTLIST TDwg
+	ht NMTOKEN #IMPLIED
+	wt NMTOKEN #IMPLIED
+	no CDATA #IMPLIED
+	uri CDATA #REQUIRED
+>
+<!--**Formulae Container element, some from 
+	       original patent and some Derwent generated**-->
+<!ELEMENT Fmlas (Fmla+)>
+<!--** A Formula**-->
+<!--** See Element TechDwgs for description of attributes** -->
+<!ELEMENT Fmla EMPTY>
+<!ATTLIST Fmla
+	ht NMTOKEN #IMPLIED
+	wt NMTOKEN #IMPLIED
+	uri CDATA #REQUIRED
+>
+<!--*******Title container********************-->
+<!--Core Patent Title. -->
+<!ELEMENT Tit ((Ti1, Ti2?), Tms?)>
+<!--Title 1, First Part of Core Patent Title-->
+<!ELEMENT Ti1 (#PCDATA)>
+<!--Title 2 Second, optional, part of core patent title-->
+<!ELEMENT Ti2 (#PCDATA)>
+<!--Title Terms and Additional Indexing Terms. -->
+<!ELEMENT Tms ((STTs, AITs?) | AITs)>
+<!--Standard Thesaurus Terms container element -->
+<!ELEMENT STTs (STT+)>
+<!-- A Standard Thesaurus Terms, standardised versions of the 
+						words in the title. **-->
+<!ELEMENT STT (#PCDATA)>
+<!--Additional indexing words container element -->
+<!ELEMENT AITs (STT+)>
+<!--*******Title container********************-->
+<!--Core Patent Title. -->
+<!--Phoenix Title -->
+<!ELEMENT TiP (%SimplePara;)*>
+<!--ADS Phoenix Abstract Non-Online Sections-->
+<!ELEMENT PNonOnline ((PNov, PDesc?, PDfn?, PWDis?, PTech?, PAct?, PMA?, PAdm?, PSC?, PPArt?, PUse?, PAdv?, PEg?, PDDwg?))>
+<!--Phoenix Abstract Novelty-->
+<!ELEMENT PNov (%Para;)>
+<!--Phoenix Abstract Detailed Description-->
+<!ELEMENT PDesc (%Para;)>
+<!--Phoenix Abstract Definitions-->
+<!ELEMENT PDfn (((%Para;), PDfnA*) | PDfnA+)>
+<!--Phoenix Abstract Definitions Area.-->
+<!--
+ 	Attribute AreaDesc =the title of Definitions area -->
+<!ELEMENT PDfnA (%Para;)>
+<!--Phoenix Abstract Wider Disclosure -->
+<!ELEMENT PWDis (%Para;)>
+<!--Phoenix Abstract Technology Focus-->
+<!ELEMENT PTech (((%Para;), PTechA*) | PTechA+)>
+<!--Phoenix Abstract Technology Focus Area.-->
+<!--
+ 	Attribute AreaDesc =the title of technology focus area, selected within the ADS 
+	Editor application from a standard picklist-->
+<!ELEMENT PTechA (%Para;)>
+<!ATTLIST PTechA
+        AreaDesc CDATA #REQUIRED
+>
+<!--Phoenix Abstract Activity-->
+<!ELEMENT PAct (%Para;)>
+<!--Phoenix Abstract Mechanism Of Action-->
+<!ELEMENT PMA (%Para;)>
+<!--Phoenix Abstract Administration-->
+<!ELEMENT PAdm (%Para;)>
+<!--Phoenix Abstract Specific Compounds-->
+<!ELEMENT PSC (PSCA+)>
+<!--Phoenix Abstract Specific Substances Area 
+	Attribute contains the area name.-->
+<!ELEMENT PSCA (%Para;)>
+<!ATTLIST PSCA
+	AreaDesc CDATA #REQUIRED
+>
+<!--Phoenix Abstract Prior Art-->
+<!ELEMENT PPArt (%Para;)>
+<!--Phoenix Abstract Use. Should be mandatory? 
+	(If no Uses text should be "None Given")-->
+<!ELEMENT PUse (((%Para;), PUseA*) | PUseA+)>
+<!--Phoenix Abstract Use Area. -->
+<!--
+	Attribute AreaDesc =area name-->
+<!ELEMENT PUseA (%Para;)>
+<!ATTLIST PUseA
+	AreaDesc CDATA #REQUIRED
+>
+<!--Phoenix Abstract Advantage-->
+<!ELEMENT PAdv (%Para;)>
+<!--Phoenix Abstract Example-->
+<!ELEMENT PEg (%Para;)>
+<!--Phoenix Abstract Description Of Drawings-->
+<!ELEMENT PDDwg (PS | DL)+>
+<!-- Simple Paragraph -->
+<!-- Altered to point to entity SimplePara to overcome 
+	constraint XML has on mixed content, "An element type has mixed 
+	content when elements of that type may contain character data, 
+	optionally interspersed with child elements. In this case, 
+	the types of the child elements may be constrained, but not 
+	their order or their number of occurrences-->
+<!ELEMENT PS (#PCDATA | Sub | Sup | Em | Prt)*>
+<!--Phoenix Abstract Online Paragraph Text-->
+<!ENTITY % POPara "#PCDATA | RefD | RefF">
+<!--****** Phoenix Abstract Online Container element ************ -->
+<!--ADS Phoenix Abstract Online Sections-->
+<!ELEMENT POnline ((PONov, PODesc?, PODfn?, POWDis?, POTech?, POAct?, POMA?, POAdm?, POSC?, POPArt?, POUse?, POAdv?, POEg?, PODDwg?))>
+<!--Phoenix Abstract Online Novelty-->
+<!ELEMENT PONov (POP+)>
+<!-- Phoenix Online Paragraph -->
+<!-- Altered to point to entity POPara to overcome constraint XML has 
+	on mixed content, which requires zero or many not one or many on a 
+	mixed content element model-->
+<!ELEMENT POP (%POPara;)*>
+<!--Phoenix Abstract Online Detailed Description-->
+<!ELEMENT PODesc (POP+)>
+<!--Phoenix Abstract online Definitions-->
+<!ELEMENT PODfn (((POP+), PODfnA*) | PODfnA+)>
+<!--Phoenix Online Abstract Definitions Area.-->
+<!--
+ 	Attribute AreaDesc =the title of Definitions area -->
+<!ELEMENT PODfnA (POP+)>
+<!ATTLIST PODfnA
+	AreaDesc NMTOKENS #REQUIRED
+>
+<!--Phoenix Abstract online Wider Disclosure-->
+<!ELEMENT POWDis (POP+)>
+<!--Phoenix Abstract online Technology Focus-->
+<!ELEMENT POTech ((POP+, POTechA*) | POTechA+)>
+<!--Phoenix Abstract online Technology Focus Area. -->
+<!--
+	Attribute contains the area name-->
+<!ELEMENT POTechA (POP+)>
+<!ATTLIST POTechA
+	AreaDesc CDATA #REQUIRED
+>
+<!--Phoenix Abstract online Activity-->
+<!ELEMENT POAct (POP+)>
+<!--Phoenix Abstract online Mechanism Of Action-->
+<!ELEMENT POMA (POP+)>
+<!--Phoenix Abstract online Administration-->
+<!ELEMENT POAdm (POP+)>
+<!--Phoenix Abstract online Specific Substances-->
+<!ELEMENT POSC (POSCA+)>
+<!--Phoenix Abstract online Specific Substances -->
+<!--
+	Attribute AreaDesc =area name-->
+<!ELEMENT POSCA (POP+)>
+<!ATTLIST POSCA
+	AreaDesc CDATA #REQUIRED
+>
+<!--Phoenix Abstract online Prior Art-->
+<!ELEMENT POPArt (POP+)>
+<!--Phoenix Abstract online Use-->
+<!ELEMENT POUse ((POP+, POUseA*) | POUseA+)>
+<!--Phoenix Abstract Online Use Area. -->
+<!--
+	Attribute contains the area name-->
+<!ELEMENT POUseA (POP+)>
+<!ATTLIST POUseA
+	AreaDesc CDATA #REQUIRED
+>
+<!--Phoenix Abstract online Advantage-->
+<!ELEMENT POAdv (POP+)>
+<!--Phoenix Abstract online Example-->
+<!ELEMENT POEg (POP+)>
+<!--Phoenix Abstract online Description Of Drawings-->
+<!ELEMENT PODDwg (POPS+)>
+<!--Phoenix Abstract online simple paragraph-->
+<!ELEMENT POPS (#PCDATA)>
+<!--**************Documentation Abstract Container element*********-->
+<!ELEMENT Doc ANY>
+<!--Alert Abstract. Abstract with 
+	APP_ABSTRACT.product_type = 'A' on DIL-->
+<!ELEMENT Alert (AFSn, (((AUse, AAdv?) | AAdv) | AUseAdv)?)>
+<!--First section of the Alert Abstract.-->
+<!ELEMENT AFSn (AP+)>
+<!--Alert Paragraph Text. Should the 
+	content model be just SimplePara?-->
+<!ELEMENT AP (#PCDATA | Sub | Sup | Em | Prt | Cit)*>
+<!--Alert Abstract text section detailing 
+	the uses of the invention.-->
+<!--Do we need a Hdr? 
+	Autogenerate on extract? (c.f Phoenix Abstract Model)-->
+<!ELEMENT AUse (Hdr, AP+)>
+<!-- Hdr element -->
+<!ELEMENT Hdr (#PCDATA)>
+<!--Alert Abstract text section detailing 
+	the advantages of the invention.-->
+<!--Do we need a Hdr? 
+	Autogenerate on extract? (c.f Phoenix Abstract Model)-->
+<!ELEMENT AAdv (Hdr, AP+)>
+<!--Some Alert abstracts may have USE/ADVANTAGE 
+	sections rather than discrete USE or ADVANTAGE sections.-->
+<!--Do we need a Hdr? 
+	Autogenerate on extract? (c.f Phoenix Abstract Model)-->
+<!ELEMENT AUseAdv (Hdr, AP+)>
+<!--***********Images not embedded in the Abstract ************** -->
+<!--Used for abstracts where drawing references embedded 
+	in the text are not appropriate, for example, 
+	Online Alert and Alert.-->
+<!ELEMENT RefsNEmb ((RefsNEmbD, RefsNEmbF?) | (RefsNEmbF, RefsNEmbD?))>
+<!--Non Embedded Drawing References. Used for 
+	abstracts where drawing references embedded 
+	in the text are not appropriate, for example, 
+	Online Alert and Alert.-->
+<!ELEMENT RefsNEmbD (RefD+)>
+<!--Non Embedded Formulae References. Used for 
+	abstracts where formula references embedded in 
+	the text are not appropriate, for example, 
+	Online Alert and Alert.-->
+<!ELEMENT RefsNEmbF (RefF+)>
+<!--*******Patent- Core Indexing DTD Fragments  **************-->
+<!--******* Derwent Classification & Manual Codes **************-->
+<!-- A list of numbers (00 to 99) used often in the indexing  -->
+<!ENTITY %	List99 "(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|
+			16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|
+			33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48|49|
+			50|51|52|53|54|55|56|57|58|59|60|61|62|63|64|65|66|
+			67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|
+			84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99)">
+<!-- ***************************************************************** -->
+<!ELEMENT DC ((CPIs, EngPIs?, EPIs?) | (EngPIs, EPIs?) | EPIs)>
+<!--** Container element for CPI**-->
+<!ELEMENT CPIs (CPI+)>
+<!--** CPI is composed of sections A to N (no section I)
+	Any combination is allowed, there has to be at least one section. 
+	No section can appear twice. The DTD does not enforce this. 
+	Section N can't be on his own. The DTD does not enforce this.
+	Each single Chemical section is composed of one main class (DCCM) 
+	and zero to many secondary classes (DCCSs). One to many Manual 
+	code (MCCs) has to be applied to a given chemical section. 	
+	Attribute section= an allowed Derwent CPI section    **-->
+<!--  Note that content MCCs is optional as its optional in the backfile 
+	before 19?? -->
+<!ELEMENT CPI ((DCCM, DCCSs?, MCCs?) | MCCs)>
+<!ATTLIST CPI
+	sct (A | B | C | D | E | F | G | H | J | K | L | M | N) #REQUIRED
+>
+<!--** Derwent Class Chemical Main element **-->
+<!ELEMENT DCCM (#PCDATA)>
+<!--** Derwent Classes Chemical Secondary Container element**-->
+<!ELEMENT DCCSs (DCCS+)>
+<!--** A Derwent Class Chemical Secondary (DCCS) **-->
+<!ELEMENT DCCS (#PCDATA)>
+<!--** Manual Codes CPI Container Element **-->
+<!ELEMENT MCCs (MCC+)>
+<!--** A Manual Code CPI **-->
+<!ELEMENT MCC (#PCDATA)>
+<!--**General & Mechanical Sections Container element**-->
+<!ELEMENT EngPIs (EngPI+)>
+<!--** General & Mechanical Sections EngPI is composed of sections 
+	P and Q. Any combination is allowed, with at least one section. 
+	There are no manual codes for these sections.
+	Each single EngPI section is composed of
+	one or more Derwent Class Engineering (DCEng) elements.
+	No section can appear twice. The DTD does not enforce this. 	
+	Attribute section= an allowed Derwent EngPI section         **-->
+<!ELEMENT EngPI (DCEngs)>
+<!ATTLIST EngPI
+	sct (P | Q) #REQUIRED
+>
+<!--** Derwent Class Engineering Container element **-->
+<!ELEMENT DCEngs (DCEng+)>
+<!--** Derwent Class Engineering  **-->
+<!ELEMENT DCEng (#PCDATA)>
+<!--** Electronic & Electrical Sections EPI **-->
+<!-- Container element for EPI -->
+<!ELEMENT EPIs (EPI+)>
+<!--** EPI is composed of sections R to X. Any combination is allowed,
+	 with at least one section. 
+	Section R can't be on his own. The DTD does not enforce this.
+	Each single is composed of one or more Derwent Class Electronic 
+	and Electrical (DCE) elements.
+	No section can appear twice. The DTD does not enforce this. **-->
+<!--
+	Attribute sct = an allowed Derwent EPI section         
+	**-->
+<!ELEMENT EPI (EPIgp+)>
+<!ATTLIST EPI
+	sct (R | S | T | U | V | W | X) #REQUIRED
+>
+<!--** A Container element to group the related DCE & MCEs elements **-->
+<!--  Note that content MCEs is optional as its optional in the backfile 
+	before 19?? -->
+<!ELEMENT EPIgp (DCE, MCEs?)>
+<!--** Derwent Class Electronic & Electrical (DCE) contains
+	Manual Codes Electronic & Electrical (MCE)		    **-->
+<!--** Derwent Class EPI **-->
+<!ELEMENT DCE (#PCDATA)>
+<!--** Manual Codes EPI container element **-->
+<!ELEMENT MCEs (MCE+)>
+<!--** A Manual Code EPI **-->
+<!ELEMENT MCE (#PCDATA)>
+<!-- ********************IPCs Container element ************* -->
+<!--** The following xlink construct is a link to the IPC codes on 
+	the WIPO site, this could be added to the DTD to provide the link 
+	without adding any thing to the individual instances
+  	xlink:type   (locator)  #FIXED     "locator"
+  	xlink:rl   NMTOKEN	  #FIXED     "IPCs"
+  	xlink:href CDATA #FIXED "http://classifications.wipo.int/fulltext/new_ipc/"
+  	xlink:title  CDATA	  #FIXED     "IPC Codes"            **-->
+<!ELEMENT IPCs (IPC+)>
+<!--** An IPC Code **-->
+<!--** Attribute rnk= Derwent assigned character to indicate type
+	of IPC:
+		A= Main IPC
+		B= Other, unlinked IPCs
+		C to Y = Linked IPCs and Index Terms
+		Z= IPC Index Terms
+		-= Additional terms				   **-->
+<!ELEMENT IPC (#PCDATA)>
+<!ATTLIST IPC
+	rnk (A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z | -) #REQUIRED
+>
+<!-- ***************BCE INDEXING OR FRAGMENTATION ************-->
+<!-- A list of numbers (00 to 99) used often in the indexing  -->
+<!ENTITY %	List99 "(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|
+			16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|
+			33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48|49|
+			50|51|52|53|54|55|56|57|58|59|60|61|62|63|64|65|66|
+			67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|
+			84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99)">
+<!-- ***************************************************************** -->
+<!-- ***************BCE INDEXING OR FRAGMENTATION ************-->
+<!-- ** Fragmentation Container element**-->
+<!ELEMENT Frag (FragSub+)>
+<!--** Fragmentation Sub heading **-->
+<!--** Attribute sjct=The main BCE chemical subject categories 
+	defined by Derwent as subsets. The subsets are designated by the 
+	subheadings MO through M6: 
+		MO  Agricultural, pharmaceutical     1963-1969
+		M1  Agricultural, pharmaceutical natural products 
+					and polymers     1970 to present
+		M2  Agricultural, pharmaceutical         1970 to present
+		M3  General chemicals                    1970 to present
+		M4  Dyes                                 1970 to present
+		M5  Steroids                             1963 to present
+		M6  Galenicals                           1976 to present"**-->
+<!ELEMENT FragSub (CardRec+)>
+<!ATTLIST FragSub
+	sjct (M0 | M1 | M2 | M3 | M4 | M5 | M6) #REQUIRED
+>
+<!--** Card Record **-->
+<!--**
+	Attribute no	=Derwent assigned record number
+	Attribute mc	= Markush DARC Control Code
+	Attribute trc	= Fragmentaion Control Time ranging codes:
+				M900     Pre-1970
+				M901     1970-1971
+				M902     1972-1981 (8126)
+				M903     1981 (8127) onward
+				M905
+	Attribute rn 	= 910 Codes generated from registry numbers. 
+				Only searchable from 1981
+	Attribute wd = 911 Wide Disclosure. Only searchable from 1981
+	-->
+<!ELEMENT CardRec (FCodes, RINs?, SCNs?, MCNs?, DRNs?, DCRs?)>
+<!ATTLIST CardRec
+	no %List99; #REQUIRED
+	trc (M900 | M901 | M902 | M903 | M905) #IMPLIED
+	mc (M904) #IMPLIED
+	rn (M910) #IMPLIED
+	wd (M911) #IMPLIED
+>
+<!--** Fragmentation codes container element 
+	**-->
+<!ELEMENT FCodes (FCode+)>
+<!-- ** Frag codes and Frag Negation codes both use the FragCode 
+	element **-->
+<!ELEMENT FCode (#PCDATA)>
+<!-- ** Ring Index Numbers Container element  ***-->
+<!ELEMENT RINs (RIN+)>
+<!-- ** Ring Index Number ***-->
+<!ELEMENT RIN (#PCDATA)>
+<!--** Specific compound numbers Container element 
+	Is composed of WPI and INPI SCNs		
+	**-->
+<!ELEMENT SCNs ((SCNDs, SCNIs?) | SCNIs)>
+<!--** Specific compound numbers WPI Container element **-->
+<!ELEMENT SCNDs (SCND+)>
+<!--** A Specific compound number WPI**-->
+<!-- rl=one or many of A,C,D,M,N,P,Q,R,S,U,X,Z,K,T,E,V
+			A   substance analysed/detected
+			C   catalyst
+			D   detecting agent
+			E   excipient
+                        K   known (always output for recent data if not N)
+			M   component of a mixture
+			N   new compound
+			P   known compound produced
+			Q   product defined by starting materials
+			R   removing/purifying agent
+			S   starting material
+			T   therapeutic (always output for recent data for 
+			    certain P codes)
+			U   use of single compound
+			V   reactive
+			X   substance removed
+			Z   miscellaneous
+	     ia = intellectually applied, M for Manually Applied
+	     Note: All SCND whether in EPTerm or Frags should have the 
+		   same content model.  To accommodate the  source database
+		   /R (intellectually applied = "ia") attribute for EPTerm 
+		   and the various role attributes for Frags.  This is 
+	           an unfortunate relaxation of the DTD as EPTerm SCNs 
+		   don't have roles and Frags don't have /R but better 
+		   overall.			   **-->
+<!ELEMENT SCND (#PCDATA)>
+<!ATTLIST SCND
+	rl NMTOKENS #IMPLIED
+	ia (Y) #IMPLIED
+>
+<!--** Specific compound numbers INPI Container element **-->
+<!ELEMENT SCNIs (SCNI+)>
+<!--** A Specific compound number INPI**-->
+<!--** rl=one or many of A,C,D,M,N,P,Q,R,S,U,X,Z,K,T,E,V
+		see element SCND for details **-->
+<!ELEMENT SCNI (#PCDATA)>
+<!ATTLIST SCNI
+	rl NMTOKENS #REQUIRED
+>
+<!--** Markush compound numbers Container element**-->
+<!ELEMENT MCNs ((MCNDs, MCNIs?) | MCNIs)>
+<!--** Markush compound number WPI Container element**-->
+<!ELEMENT MCNDs (MCND+)>
+<!--** A Markush compound number WPI **-->
+<!--** rl=one or many of A,C,D,M,N,P,Q,R,S,U,X,Z,K,T,E,V
+		see element SCND for details **-->
+<!ELEMENT MCND (#PCDATA)>
+<!ATTLIST MCND
+	rl NMTOKENS #REQUIRED
+>
+<!-- Markush compound number INPI Container element-->
+<!ELEMENT MCNIs (MCNI+)>
+<!--** A Markush compound number INPI **-->
+<!--** rl=one or many of A,C,D,M,N,P,Q,R,S,U,X,Z,K,T,E,V
+		see element SCND for details **-->
+<!ELEMENT MCNI (#PCDATA)>
+<!ATTLIST MCNI
+	rl NMTOKENS #REQUIRED
+>
+<!--** Derwent Registry numbers Container element**-->
+<!ELEMENT DRNs (DRN+)>
+<!--** A  DerwentRegistry number**-->
+<!-- Attribute rl= P     (compound produced)
+			     S     (starting material)
+                             U     (compound used)  **-->
+<!ELEMENT DRN (#PCDATA)>
+<!ATTLIST DRN
+	rl NMTOKENS #REQUIRED
+>
+<!--** DCR  Container element**-->
+<!ELEMENT DCRs (DCR+)>
+<!--** An _internal_ DCR NUMBER **-->
+<!--** 
+	Attribute rl=see KW element 
+	Attribute ext= the _external_ DCR number associated with
+	               this _internal _DCR number
+	**-->
+<!ELEMENT DCR (#PCDATA)>
+<!ATTLIST DCR
+	rl NMTOKENS #IMPLIED
+	ext NMTOKEN #IMPLIED
+	ia (Y) #IMPLIED
+>
+<!--** Plasdoc coding Container element**-->
+<!ELEMENT Plasdoc (PCodes+)>
+<!-- ** Plasdoc Codes Container element**-->
+<!-- ** 
+	Attribute TRC =Time Ranging Codes:
+			01A:      1966-mid - 1968
+			01B:      mid 1968 - 1971
+			012:      1972 - 1976
+			010:      1977
+			011:      1978-1981
+			013:      1982-1983
+			014:      1984 onwards **-->
+<!ELEMENT PCodes (Ks?, MPs?)>
+<!ATTLIST PCodes
+	no NMTOKEN #REQUIRED
+>
+<!-- ** Key serial  Container Element**-->
+<!ELEMENT Ks (K+)>
+<!-- ** A Key serial**-->
+<!ELEMENT K (#PCDATA)>
+<!-- Multipunch coding Container element-->
+<!ELEMENT MPs (MP+)>
+<!ATTLIST MPs
+	trc (01A | 01B | 010 | 011 | 012 | 013 | 014 | 017) #REQUIRED
+>
+<!--A Multipunch coding Container-->
+<!ELEMENT MP (#PCDATA)>
+<!--** Polymer indexing **-->
+<!-- A list of numbers (00 to 99) used often in the indexing  -->
+<!ENTITY %	List99 "(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|
+			16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|
+			33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48|49|
+			50|51|52|53|54|55|56|57|58|59|60|61|62|63|64|65|66|
+			67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|
+			84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99)">
+<!-- ***************************************************************** -->
+<!--** Polymer indexing **-->
+<!ELEMENT EPolymer (EPara+)>
+<!--** One to many sentences within a paragraph. **-->
+<!--**
+	 Attribute no= Derwent applied paragraph number. 
+	**-->
+<!ELEMENT EPara (ESent+)>
+<!ATTLIST EPara
+	no %List99; #REQUIRED
+>
+<!--** One to many phrase within a sentence**-->
+<!--** 
+	   Attribute no	 = sentence number: 001 to 999 
+	   Attribute trc = time ranging code:
+				017 from week 199332 to end of 1995
+				018 since   week 199601             
+				2004 since   week 200403             
+	**-->
+<!ELEMENT ESent (EPhrase+)>
+<!ATTLIST ESent
+	no NMTOKEN #REQUIRED
+	trc (017 | 018 | 2004) #REQUIRED
+>
+<!--** A Phrase consists of Any combination of multiple term 
+		or SCND elements**-->
+<!ELEMENT EPhrase ((ETs, SCNDs?, DCRs?) | (SCNDs, DCRs?) | DCRs)>
+<!--** A Container element for EP terms**-->
+<!ELEMENT ETs (ET+)>
+<!--** An EP term**-->
+<!-- **
+	     Attribute ia =Y (yes) for manually applied role **-->
+<!ELEMENT ET (#PCDATA)>
+<!ATTLIST ET
+	ia (Y) #IMPLIED
+>
+<!--* UNLINKED REGISTRY AND RING INDEX NUMBERS CONTAINER ELEMENT*-->
+<!ELEMENT IdxU ((DRNUs, RINUs?, DCRUs?) | (RINUs, DCRUs?) | DCRUs)>
+<!--** Unlinked Derwent Registry Numbers  Container Element**-->
+<!ELEMENT DRNUs (DRNU+)>
+<!--** A Unlinked Derwent Registry Number**-->
+<!-- Attribute rl= Any combination of: 
+				  P for product
+				  S for starting material
+			          U for used	**-->
+<!ELEMENT DRNU (#PCDATA)>
+<!ATTLIST DRNU
+	rl NMTOKENS #REQUIRED
+>
+<!--** Unlinked Ring Index Numbers Container Element**-->
+<!ELEMENT RINUs (RINU+)>
+<!--**A  Unlinked Ring Index Number**-->
+<!ELEMENT RINU (#PCDATA)>
+<!--** Unlinked DCR Container Element**-->
+<!ELEMENT DCRUs (DCRU+)>
+<!--** An Unlinked _internal_ DCR NUMBER **-->
+<!--** 
+	Attribute rl=see KW element 
+	Attribute ext= the _external_ DCR number associated with
+	               this _internal _DCR number
+	**-->
+<!ELEMENT DCRU (#PCDATA)>
+<!ATTLIST DCRU
+	rl NMTOKENS #IMPLIED
+	ext NMTOKEN #IMPLIED
+>
+<!-- ************* KEYWORD INDEXING CONTAINER ELEMENT******** -->
+<!-- Contains:
+		Keyword Indexing (KWI) and 
+		Reaction Keyword Indexing (RxKWI) 
+	**-->
+<!ELEMENT KI ((KWs, KRs?) | KRs)>
+<!--** Keyword Indexing Contains:
+	     Keyword Common Term (KWC) and Keyword Link Term (KWL)  **-->
+<!ELEMENT KWs (KWC?, KWL)>
+<!--** Keyword Indexing Contains:
+	   Keyword Common Reaction (KRC) and Keyword Reaction Term (KRL) 
+	**-->
+<!ELEMENT KRs (KRC?, KRL)>
+<!-- **Keyword Common Term (KWC)**-->
+<!ELEMENT KWC (KPara)>
+<!-- **Keyword Common Reaction (KRC)**-->
+<!ELEMENT KRC (KPara)>
+<!-- **Keyword Link Term (KWL)**-->
+<!ELEMENT KWL (KPara+)>
+<!-- **Keyword Reaction Term (KRL)**-->
+<!ELEMENT KRL (KPara+)>
+<!-- **Key Para (KPara) **
+	Attribute no = the paragraph sequence number. 
+		Does it have any other meaning?  
+		Is number required?-->
+<!ELEMENT KPara (KSent+)>
+<!ATTLIST KPara 
+	no NMTOKEN #IMPLIED
+>
+<!-- **Key Ksentence**
+	Attribute no 	  = the sentence sequence number. 
+	Attribute flvr	  = A non-judgemental qualifier which may be 
+		applied to the Indexing Term, for example to identify it 
+		as a Purple Term one applied using old selection and 
+		coverage rules from which legacy indexing may be derived; 
+		or to identify it as a Gold Term the key essence of the 
+		indexing, etc.
+	Attribute supp	  = Analysts apply keywords by selecting from 
+		controlled lists in the Indexing Tool. The nature of 
+		Derwent's business means indexing of technical content 
+		will evolve over time, as new technologies appear. 
+		Hence Analysts may wish to apply keywords not currently 
+		held in the approved listing. Such new keywords will 
+		need to be suppressed from core products until they 
+		have been accepted into the list. Some keywords will 
+		exist solely to generate legacy coding (e.g. Manual Codes, 
+		Fragmentation Codes). These keywords are also suppressed 
+		to ensure they do not appear in any products, only 
+		them generated classes or codes.
+		X     To autogenerate Manual/Frag Codes only.
+		Y     New Keyword pending approval.
+		X and Y flagged records are not to be used in products.
+		For Terms that are not Keywords the suppress attribute 
+		does not have a value of Y and  the NatKeywordUniqueID 
+		attribute is empty.
+	-->
+<!ELEMENT KSent (KW | DCR | MCN | SEQ)>
+<!ATTLIST KSent
+	no NMTOKEN #REQUIRED
+	flvr (Purple | Gold | GoldPurple | PurpleGold) #IMPLIED
+	supp (X | Y | XY | YX) #IMPLIED
+>
+<!-- **Keyword (KW) - Place holder, not yet used **-->
+<!--** 
+	Attribute fct= Each Keyword can be identified by a 
+			specific Facet. To flag the type of term Examples:
+			AE     Adverse Effects
+			CD     Compound Descriptor
+			CI     Contraindications
+			DA     Activities
+			ID     Indications
+			IA     Interactions
+			MA     Mechanism of Actions
+			PA     Potential Activities
+			PW     Precautions and Warnings
+			SS     Structure Keywords, specific
+			SG     Structure Keywords, general
+			TO     Target Organisms
+			NAME   Preferred Derwent Names
+			APP    Applications
+			CHP    Chemical Processes
+			EQU    Equipment
+			NOV    Novelty Descriptors
+			PHO    Physical Operations
+			PRP    Properties
+			REA    Reactions
+			SFO    Shape & Form
+	Attribute nld= The Keyword's thesaurus ID for Keywords 
+			which exist in the thesaurus, if new keyword the 
+			attribute is blank. Note that the term may not be 
+			a keyword but could be  for example aDCR number.
+			New Keywords can be identified  if this attribute 
+			is blank and the Suppress attribute has a value of 'Y'.	
+	Attribute rl=Indexing Terms may be qualified by the use 
+			of a Role to reflect the context in which the term 
+			has been applied. For example roles applied to a 
+			DCR Number may indicate the use of the compound 
+			(e.g. pharmaceutics, treatment, etc.) and the 
+			location of the compound in the patent 
+			(e.g. Claim, Example). A Role may also be used to 
+			distinguish applied and autogenerated keywords, 
+			to allow searchers to isolate the core concept(s) 
+			in a patent Not every Keyword will have an 
+			associated Role. Keywords may have multiple Roles. 
+			DCR Numbers and Markush Numbers must have at 
+			least one role, to autogenerate roles for 
+			autogenerated old indexing (SCNs, Markush CNs, DRNs).
+	**-->
+<!ELEMENT KW (#PCDATA)>
+<!ATTLIST KW
+	fct NMTOKEN #REQUIRED
+	nld NMTOKEN #IMPLIED
+	rl NMTOKENS #IMPLIED
+>
+<!--** A Markush Compound Number**-->
+<!--** 	
+	Attribute rl=see KW element 
+	**-->
+<!ELEMENT MCN (#PCDATA)>
+<!ATTLIST MCN
+	rl NMTOKENS #IMPLIED
+>
+<!-- *Geneseq sequence number (GSEQ) ************************ -->
+<!ELEMENT SEQ (#PCDATA)>
+
+<!--****** PCI  ************ -->
+<!ELEMENT PCITyp1 ((Cited, Citing?) | Citing)>
+<!-- ** Citing Patents Container Element ** -->
+<!ELEMENT Citing (CitingPt+)>
+<!-- ** A Citing Patent ** -->
+<!ELEMENT CitingPt ((Inv | Pat)*, M_Src+)>
+<!ATTLIST CitingPt
+	co CDATA #REQUIRED
+	se CDATA #REQUIRED
+	ki CDATA #REQUIRED
+>
+<!-- ** Citing Source Information -->
+<!-- **
+	attribute  m_src	= type of cited patent, who cited by:
+				           A for Author, 
+				           N for inventor
+				           X for examiner
+
+	attribute m_cat	= Categories of citation (only applied to EP, WO, GB 
+					and FR Examiner's citations) - Multiple enties are to be 
+					in the form of a space separated list
+					One or more Categories of citation may be applied to 
+					indicates how relevant the Patent Examiner considers 
+					the cited patent is to the master patent. Categories are:
+			X       particularly relevant if taken alone (EP); 
+				document of particular relevance, the claimed 
+				invention cannot be considered novel or cannot 
+				be considered to involve an inventive step (WO).
+			Y       particularly relevant if combined with another 
+				document of the same category (EP); document 
+				of particular relevance, the claimed invention 
+				cannot be to involve an inventive step when 
+				the document is combined with one or more other 
+				such documents, such combination being obvious 
+				to a person skilled in the art (WO).
+			A       technological background
+			O       non-written disclosure
+			P       intermediate document (EP); published prior to 
+				the international filing date but later than 
+				the priority date claimed (WO).
+			T       theory or principle underlying the invention
+			E       earlier patent document, but published on, 
+				or after the filing date.
+			D       document cited in the application
+			L       document cited for other reasons
+			&       member of the same patent family, 
+				corresponding document
+	attribute issWk = Derwent Week FOS entered into Derwent Database
+	attribute updWk = Derwent Week FOS updated in Derwent Database
+** -->
+<!ELEMENT M_Src EMPTY>
+<!ATTLIST M_Src
+	m_src (A | N | X) #REQUIRED
+	m_cat CDATA #IMPLIED
+	issWk CDATA #IMPLIED
+	updWk CDATA #IMPLIED
+>
+<!-- ** PCI Cited References 
+        contains details of the Patents and Journals 
+        which are cited by the subject patent
+** -->
+<!ELEMENT Cited (FOS*, CitedPt*, CitedJn*)>
+<!ATTLIST Cited
+  CitedPatents ( N | Y ) #IMPLIED
+  >
+<!-- ** Field of Search Element ** -->
+<!-- ** 
+	attribute typ 	= I for IPC Field Of Search
+	                  U for US Field Of Search
+	attribute issWk = Derwent Week FOS entered into Derwent Database
+	attribute updWk = Derwent Week FOS updated in Derwent Database
+** -->
+<!ELEMENT FOS (#PCDATA)>
+<!ATTLIST FOS
+	typ (U | I) #REQUIRED
+	issWk CDATA #IMPLIED
+	updWk CDATA #IMPLIED
+>
+<!-- ** Cited Patent Element ** -->
+<!-- **
+	attribute co		= Cited patent Country
+	attribute se		= Cited patent Serial
+	attribute ki		= Cited patent Kind
+** -->
+<!ELEMENT CitedPt ((Inv | Pat)*, Src+)>
+<!ATTLIST CitedPt
+	co CDATA #REQUIRED
+	se CDATA #REQUIRED
+	ki CDATA #IMPLIED
+>
+<!-- ** Citation Source Details ** -->
+<!-- **
+	attribute  src	= type of cited patent, who cited by:
+				           A for Author, 
+				           N for inventor
+				           X for examiner
+
+	attribute cat	= Categories of citation (only applied to EP, WO, GB 
+					and FR Examiner's citations) - Multiple enties are to be 
+					in the form of a space separated list
+					One or more Categories of citation may be applied to 
+					indicates how relevant the Patent Examiner considers 
+					the cited patent is to the master patent. Categories are:
+			X       particularly relevant if taken alone (EP); 
+				document of particular relevance, the claimed 
+				invention cannot be considered novel or cannot 
+				be considered to involve an inventive step (WO).
+			Y       particularly relevant if combined with another 
+				document of the same category (EP); document 
+				of particular relevance, the claimed invention 
+				cannot be to involve an inventive step when 
+				the document is combined with one or more other 
+				such documents, such combination being obvious 
+				to a person skilled in the art (WO).
+			A       technological background
+			O       non-written disclosure
+			P       intermediate document (EP); published prior to 
+				the international filing date but later than 
+				the priority date claimed (WO).
+			T       theory or principle underlying the invention
+			E       earlier patent document, but published on, 
+				or after the filing date.
+			D       document cited in the application
+			L       document cited for other reasons
+			&       member of the same patent family, 
+				corresponding document
+	attribute issWk = Derwent Week FOS entered into Derwent Database
+	attribute updWk = Derwent Week FOS updated in Derwent Database
+** -->
+<!ELEMENT Src EMPTY>
+<!ATTLIST Src
+	src (A | N | X) #REQUIRED
+	cat CDATA #IMPLIED
+	issWk CDATA #IMPLIED
+	updWk CDATA #IMPLIED
+>
+<!-- ** Cited Journal Name - See above for attribute values ** -->
+<!ELEMENT CitedJn (#PCDATA)>
+<!ATTLIST CitedJn
+	typ (A | X) #REQUIRED
+	cat CDATA #IMPLIED
+	issWk CDATA #IMPLIED
+	updWk CDATA #IMPLIED
+>
+<!ELEMENT Pat (#PCDATA)>
+<!ATTLIST Pat
+	code CDATA #IMPLIED
+>

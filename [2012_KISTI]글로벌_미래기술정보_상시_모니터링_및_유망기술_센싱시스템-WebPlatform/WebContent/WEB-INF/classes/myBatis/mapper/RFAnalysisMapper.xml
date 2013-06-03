@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="RFAnalysisMapper">
+
+	<resultMap id="resultMapAnalysisASJC" type="String">
+		<id property="asjc" column="asjc"/>   
+	</resultMap>
+	
+	<resultMap id="resultMapAnalysis" type="RFAnalysis">
+		<id property="seq" column="seq" />   
+		<result property="title" column="title" />
+		<result property="description" column="description" />
+		<result property="add_science" column="add_science" />
+		<result property="add_nature" column="add_nature" />
+		<result property="reg_user" column="reg_user" />
+		<result property="reg_date_first" column="reg_date_first" />
+		<result property="mod_user" column="mod_user" />
+		<result property="mod_date" column="mod_date" />
+		<result property="update_flag" column="update_flag" />
+		<result property="showMirian" column="SHOW_MIRIAN" javaType="java.lang.String"/>
+		
+		<result property="totalCount" column="TOTALCOUNT" />
+		<result property="totalPage" column="TOTALPAGE" />
+		<collection property="asjcList" column="seq" ofType="ArrayList" select="selectAnaylsisASJC"/> 
+	</resultMap>
+	
+	<select id="selectAnaylsisASJC" parameterType="int" resultMap="resultMapAnalysisASJC"> 
+		select SEQ, ASJC from RF_ANALYSIS_ASJC where SEQ=#{seq} 
+	</select>
+
+	<select id="selectAllAnaylsis" parameterType="MyBatisParameter" resultMap="resultMapAnalysis">
+		select * from (
+			select
+				SEQ, 
+				TITLE,
+				DESCRIPTION, 
+				ADD_SCIENCE, 
+				ADD_NATURE, 
+				SHOW_MIRIAN,
+				REG_USER, 
+				REG_DATE_FIRST, 
+				MOD_USER, 
+				<if test="requestPage != null"> 
+					CEIL((ROW_NUMBER()
+						OVER(ORDER BY
+						<choose> 
+	    					<when test="orderColumn != null">
+								${orderColumn} ${sord}
+	    					</when>
+	    					<otherwise>
+								MOD_DATE desc
+	    					</otherwise>
+	    				</choose> 
+					)) / #{rows}) PAGENUM,
+			      	CEIL(COUNT(*) OVER()/#{rows}) TOTALPAGE,  
+		      	</if>
+		      	CEIL(COUNT(*) OVER()) TOTALCOUNT,
+				MOD_DATE,
+				(select max(update_flag) from  RF_ANALASYS_CLUSTER i where i.seq=ra.seq) as update_flag
+			from 
+				RF_ANALYSIS ra  
+			<if test="searchField!=null">
+				<where>
+					${searchField} 
+					<if test="searchOper=='cn'">
+						like '%${searchString}%'
+					</if>
+					<if test="searchOper=='eq'">
+						= '${searchString}'
+					</if>
+				</where>
+			</if>
+			<if test="showMirian==Y">
+				<if test="searchField!=null">
+					and SHOW_MIRIAN = '${showMirian}'
+				</if>
+				<if test="searchField==null">
+					<where>
+						SHOW_MIRIAN = '${showMirian}'
+					</where>
+				</if>
+			</if>
+			
+			<choose> 
+	    		<when test="orderColumn != null">
+					ORDER BY ${orderColumn} ${sord}
+	    		</when>
+	    		<otherwise>
+					order by MOD_DATE desc
+	    		</otherwise>
+	    	</choose>  
+		)
+		<where>  
+		    <if test="requestPage != null"> 
+		        pagenum=#{requestPage} 
+		    </if>
+		</where>
+		 
+	</select>
+	
+	<select id="selectOneAnaylsis" parameterType="int" resultMap="resultMapAnalysis">
+		select
+			ra.SEQ as seq, 
+			TITLE,
+			DESCRIPTION, 
+			ADD_SCIENCE, 
+			ADD_NATURE, 
+			SHOW_MIRIAN,
+			REG_USER, 
+			REG_DATE_FIRST, 
+			MOD_USER, 
+			MOD_DATE  
+		from 
+			RF_ANALYSIS ra  
+		where 
+			ra.SEQ = #{seq} 
+	</select>
+	
+	<insert id="insertAnaylsis" parameterType="RFAnalysis" useGeneratedKeys="true" keyProperty="id" keyColumn="seq">
+		insert into RF_ANALYSIS 
+			(SEQ, TITLE,DESCRIPTION,ADD_SCIENCE,ADD_NATURE,SHOW_MIRIAN,REG_USER,REG_DATE_FIRST,MOD_USER,MOD_DATE)
+    	values 
+    		(RF_ANLAYSIS_SEQ_SEQ.nextval, #{title},#{description},#{add_science},#{add_nature},'N',#{reg_user}, CURRENT_DATE, #{mod_user}, CURRENT_DATE)
+		<selectKey resultType="int" order="AFTER" keyProperty="seq"> 
+			select RF_ANLAYSIS_SEQ_SEQ.CurrVal from dual
+		</selectKey>
+	</insert>
+	
+	<update id="insertAnaylsisAsjc" parameterType="RFAnalysis">
+		insert all
+		<foreach item="asjc" index="index" collection="asjcList">
+			into RF_ANALYSIS_ASJC (SEQ, ASJC) values (#{seq}, #{asjc})
+		</foreach>
+		select * from dual
+	</update>
+	
+	<update id="updateAnaylsisShowMirian" parameterType="MyBatisParameter">
+		update RF_ANALYSIS set SHOW_MIRIAN = #{showMirian} where SEQ = #{seq} 
+	</update>
+
+	<delete id="deleteAnaylsis" parameterType="int">
+		delete from RF_ANALYSIS where SEQ = #{seq} 
+	</delete>
+	
+	<resultMap id="resultMapAnalysisOption" type="RFAnalysisOption">
+		<id property="seq" column="seq" />   
+		<result property="contentsJson" column="CONTENTS_JSON" />
+		<result property="reg_user" column="REG_USER" />
+		<result property="reg_date" column="REG_DATE" />
+	</resultMap>
+  
+	<select id="selectAllAnaylsisOption" resultMap="resultMapAnalysisOption">
+		select
+			SEQ, 
+			CONTENTS_JSON,
+			REG_USER,
+			REG_DATE
+		from 
+			RF_ANALYSIS_OPTION
+		order by 
+			REG_DATE DESC
+	</select>
+	
+	<insert id="insertAnaylsisOption" parameterType="RFAnalysisOption">
+		insert into RF_ANALYSIS_OPTION 
+			(SEQ, CONTENTS_JSON, REG_USER,REG_DATE)
+    	values 
+    		(RF_ANALYSIS_OPTION_SEQ_SEQ.nextval, #{contentsJson}, #{reg_user}, CURRENT_DATE)
+	</insert>
+</mapper>
