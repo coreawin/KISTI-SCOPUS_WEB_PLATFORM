@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,10 +13,15 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.topquadrant.util.AuthorNameCleansing;
 import kr.co.tqk.db.ConnectionFactory;
+import kr.co.tqk.web.db.bean.ScopusSourceInfoBean;
 import kr.co.tqk.web.util.InfoStack;
 import kr.co.tqk.web.util.UtilSQL;
+import kr.co.tqk.web.util.UtilString;
 
 /**
  * SCOPUS 데이터의 Type table 정보를 가져오는 클래스.
@@ -28,11 +32,95 @@ import kr.co.tqk.web.util.UtilSQL;
 public class ScopusTypeDao {
 
 	/**
+	 * 기관 정제된 기관 정보를 얻어온다.
+	 * 
+	 * @return key : afid <br>
+	 *         value : afname|country_code
+	 */
+	public static Map<String, String> getKistiAffiliation() {
+		Map<String, String> r = new HashMap<String, String>();
+		String query = "select AFID, AFFILATION, COUNTRY_CODE from SCOPUS_KISTI_AFFILIATION";
+		ConnectionFactory cf = ConnectionFactory.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = cf.getConnection();
+			psmt = conn.prepareStatement(query);
+			psmt.setFetchSize(2000);
+			rs = psmt.executeQuery();
+			rs.setFetchSize(2000);
+			while (rs.next()) {
+				String afid = UtilString.nullCkeck(rs.getString("AFID"), true);
+				String name = UtilString.nullCkeck(rs.getString("AFFILATION"), true);
+				String cc = UtilString.nullCkeck(rs.getString("COUNTRY_CODE"), true);
+				if (".".equals(cc)) {
+					cc = "";
+				}
+				r.put(afid, name + "|" + cc);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			cf.release(rs, psmt, conn);
+		}
+
+		return r;
+	}
+
+	/**
+	 * 저널 정보를 얻어온다.
+	 * 
+	 * @return key : afid <br>
+	 *         value : afname|country_code
+	 */
+	public static Map<String, ScopusSourceInfoBean> getSourceInfoList() {
+		Map<String, ScopusSourceInfoBean> r = new HashMap<String, ScopusSourceInfoBean>();
+		String query = "select * from SCOPUS_SOURCE_INFO ";
+		ConnectionFactory cf = ConnectionFactory.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = cf.getConnection();
+			psmt = conn.prepareStatement(query);
+			psmt.setFetchSize(2000);
+			rs = psmt.executeQuery();
+			rs.setFetchSize(2000);
+			while (rs.next()) {
+				ScopusSourceInfoBean bean = new ScopusSourceInfoBean();
+				String SOURCE_ID = UtilString.nullCkeck(rs.getString("SOURCE_ID"), true);
+				String SOURCE_TITLE = UtilString.nullCkeck(rs.getString("SOURCE_TITLE"), true);
+				String P_ISSN = UtilString.nullCkeck(rs.getString("P_ISSN"), true);
+				String E_ISSN = UtilString.nullCkeck(rs.getString("E_ISSN"), true);
+				String SOURCE_TYPE = UtilString.nullCkeck(rs.getString("SOURCE_TYPE"), true);
+				String PUBLISHER_NAME = UtilString.nullCkeck(rs.getString("PUBLISHER_NAME"), true);
+				String COUNTRY = UtilString.nullCkeck(rs.getString("COUNTRY"), true);
+				bean.setSourceID(SOURCE_ID);
+				bean.setTitle(SOURCE_TITLE);
+				bean.setPissn(P_ISSN);
+				bean.setEissn(E_ISSN);
+				bean.setType(SOURCE_TYPE);
+				bean.setPublisherName(PUBLISHER_NAME);
+				bean.setCountry(COUNTRY);
+				r.put(SOURCE_ID, bean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			cf.release(rs, psmt, conn);
+		}
+		return r;
+	}
+
+	/**
 	 * SCOPUS_CITATION_TYPE 테이블에서 전체 데이터를 가져온다.
 	 * 
 	 * @return
 	 */
 	public static SortedMap<String, String> getCitationTypeList() {
+		Logger l = LoggerFactory.getLogger("ScopusTypeDao.class");
+		l.info("call getCitationTypeList()");
 		SortedMap<String, String> result = new TreeMap<String, String>();
 		String query = "select CITATION_TYPE, DESCRIPTION from SCOPUS_CITATION_TYPE";
 		ConnectionFactory cf = ConnectionFactory.getInstance();
@@ -156,19 +244,18 @@ public class ScopusTypeDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	public static Map<String, String> getAuthorNameDescription(Map<String, String> authorNameMap,
-			Map<String, Integer> authorNameFreqMap, Set<String> authorIDs) throws SQLException {
+	public static Map<String, String> getAuthorNameDescription(Map<String, String> authorNameMap, Map<String, Integer> authorNameFreqMap, Set<String> authorIDs)
+			throws SQLException {
 		ConnectionFactory cf = null;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
 		InfoStack.manageMap(authorNameMap, authorNameFreqMap);
-		
+
 		authorIDs = InfoStack.getNotInclude(authorNameMap, authorIDs);
 		if (authorIDs.size() < 1)
 			return authorNameMap;
-
 
 		Map<String, String> data = new HashMap<String, String>();
 		try {
@@ -200,7 +287,7 @@ public class ScopusTypeDao {
 		}
 		return authorNameMap;
 	}
-	
+
 	/**
 	 * 통계 정보에서 기관 이름을 검색한다.<br>
 	 * 
@@ -208,51 +295,50 @@ public class ScopusTypeDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	public static Map<String, String> getAffiliationNameDescription(Map<String, String> affiliationNameMap,
-			Map<String, Integer> affiliationNameFreqMap, Set<String> affiliationIDs) throws SQLException {
+	public static Map<String, String> getAffiliationNameDescription(Map<String, String> affiliationNameMap, Map<String, Integer> affiliationNameFreqMap,
+			Set<String> affiliationIDs) throws SQLException {
 		ConnectionFactory cf = null;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		
+
 		InfoStack.manageMap(affiliationNameMap, affiliationNameFreqMap);
-		
+
 		affiliationIDs = InfoStack.getNotInclude(affiliationNameMap, affiliationIDs);
 		if (affiliationIDs.size() < 1)
 			return affiliationNameMap;
-		
 
 		List<Set<String>> afidSets = new ArrayList<Set<String>>();
 
-		if(affiliationIDs.size() > 500){
-			
+		if (affiliationIDs.size() > 500) {
+
 			Set<String> tmp = new HashSet<String>();
-			
+
 			int count = 0;
-			for(String s : affiliationIDs){
+			for (String s : affiliationIDs) {
 				tmp.add(s);
-				if(count==500){
+				if (count == 500) {
 					afidSets.add(tmp);
 					tmp = new HashSet<String>();
 					count = 0;
 				}
 				count++;
 			}
-			if(tmp.size() > 0){
+			if (tmp.size() > 0) {
 				afidSets.add(tmp);
 			}
-		}else{
+		} else {
 			afidSets.add(affiliationIDs);
 		}
-//		Map<String, String> data = new HashMap<String, String>();
+		// Map<String, String> data = new HashMap<String, String>();
 		try {
 			cf = ConnectionFactory.getInstance();
 			conn = cf.getConnection();
 			StringBuffer query = new StringBuffer();
 			query.append(" SELECT afid, affilation ");
 			query.append(" FROM SCOPUS_KISTI_AFFILIATION WHERE afid IN (%s) ");
-			
-			for(Set<String> afidSet : afidSets){
+
+			for (Set<String> afidSet : afidSets) {
 				psmt = conn.prepareStatement(UtilSQL.makeQuery(query.toString(), afidSet.size()));
 				int preparedIdx = 1;
 				for (String afid : afidSet) {
@@ -269,7 +355,7 @@ public class ScopusTypeDao {
 				rs.close();
 				psmt.clearParameters();
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
@@ -291,8 +377,8 @@ public class ScopusTypeDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	public static Map<String, String> getSourceDescription(Map<String, String> sourceTitleMap,
-			Map<String, Integer> sourceTitleFreqMap, Set<String> sourceIDs) throws SQLException {
+	public static Map<String, String> getSourceDescription(Map<String, String> sourceTitleMap, Map<String, Integer> sourceTitleFreqMap, Set<String> sourceIDs)
+			throws SQLException {
 		ConnectionFactory cf = null;
 		Connection conn = null;
 		PreparedStatement psmt = null;

@@ -19,13 +19,122 @@ import kr.co.tqk.web.util.UtilString;
  */
 public class ExportBean {
 
-	String eid, title, abstractTitle, year, doi, authorKeyword, indexKeyword, asjcCode, citationList, referenceList, refCitList, citation_type,
-			author_authorName, author_affiliation_info, author_email, author_country, author_affiliation, affiliation_country, source_sourceTitle,
-			source_volumn, source_issue, source_page, source_type, source_publisher, source_country, source_pissn, source_eissn, corr_authorName, corr_country,
-			corr_email, corr_affilation;
+	String eid, title, abs, year, doi, authorKeyword, indexKeyword, asjcCode, citationList, referenceList, refCitList, citation_type, author_authorName, author_delegateName,
+			author_affiliation_info, author_email, author_country, author_affiliation, affiliation_country, source_sourceTitle, source_volumn, source_issue,
+			source_page, source_type, source_publisher, source_country, source_pissn, source_eissn, corr_authorName, corr_country, corr_email, corr_affilation;
 
 	int numberOfCitation, numberOfReference;
 
+	StringBuffer buf = new StringBuffer();
+
+	public String toString() {
+		buf.setLength(0);
+		buf.append("eid : ");
+		buf.append(eid);
+		buf.append("\n");
+		buf.append("title : ");
+		buf.append(title);
+		buf.append("\n");
+		buf.append("abs : ");
+		buf.append(abs);
+		buf.append("\n");
+		buf.append("year : ");
+		buf.append(year);
+		buf.append("\n");
+		buf.append("doi : ");
+		buf.append(doi);
+		buf.append("\n");
+		buf.append("authorKeyword : ");
+		buf.append(authorKeyword);
+		buf.append("\n");
+		buf.append("indexKeyword : ");
+		buf.append(indexKeyword);
+		buf.append("\n");
+		buf.append("asjcCode : ");
+		buf.append(asjcCode);
+		buf.append("\n");
+		buf.append("citationList : ");
+		buf.append(citationList);
+		buf.append("\n");
+		buf.append("referenceList : ");
+		buf.append(referenceList);
+		buf.append("\n");
+		buf.append("refCitList : ");
+		buf.append(refCitList);
+		buf.append("\n");
+		buf.append("citation_type : ");
+		buf.append(citation_type);
+		buf.append("\n");
+		buf.append("author_authorName : ");
+		buf.append(author_authorName);
+		buf.append("author_delegateName : ");
+		buf.append(author_delegateName);
+		buf.append("\n");
+		buf.append("author_affiliation_info : ");
+		buf.append(author_affiliation_info);
+		buf.append("\n");
+		buf.append("author_email : ");
+		buf.append(author_email);
+		buf.append("\n");
+		buf.append("author_country : ");
+		buf.append(author_country);
+		buf.append("\n");
+		buf.append("author_affiliation : ");
+		buf.append(author_affiliation);
+		buf.append("\n");
+		buf.append("affiliation_country : ");
+		buf.append(affiliation_country);
+		buf.append("\n");
+		buf.append("source_sourceTitle : ");
+		buf.append(source_sourceTitle);
+		buf.append("\n");
+		buf.append("source_volumn : ");
+		buf.append(source_volumn);
+		buf.append("\n");
+		buf.append("source_issue : ");
+		buf.append(source_issue);
+		buf.append("\n");
+		buf.append("source_page : ");
+		buf.append(source_page);
+		buf.append("\n");
+		buf.append("source_type : ");
+		buf.append(source_type);
+		buf.append("\n");
+		buf.append("source_publisher : ");
+		buf.append(source_publisher);
+		buf.append("\n");
+		buf.append("source_country : ");
+		buf.append(source_country);
+		buf.append("\n");
+		buf.append("source_pissn : ");
+		buf.append(source_pissn);
+		buf.append("\n");
+		buf.append("source_eissn : ");
+		buf.append(source_eissn);
+		buf.append("\n");
+		buf.append("corr_authorName : ");
+		buf.append(corr_authorName);
+		buf.append("\n");
+		buf.append("corr_country : ");
+		buf.append(corr_country);
+		buf.append("\n");
+		buf.append("corr_email : ");
+		buf.append(corr_email);
+		buf.append("\n");
+		buf.append("corr_affilation : ");
+		buf.append(corr_affilation);
+		buf.append("\n");
+		buf.append("numberOfCitation : ");
+		buf.append(numberOfCitation);
+		buf.append("\n");
+		buf.append("numberOfReference : ");
+		buf.append(numberOfReference);
+		buf.append("\n");
+
+		return buf.toString();
+	}
+
+	protected String specialCharacter = "[^\uAC00-\uD7A3xfe0-9a-zA-Z,;_()@.!?<>\"\'-+=|:\\s]";
 	Map<ExportField, Boolean> exportField = new HashMap<ExportField, Boolean>();
 
 	public ExportBean(String eid) {
@@ -44,7 +153,7 @@ public class ExportBean {
 				return "";
 			}
 		}
-		return UtilString.nullCkeck(s);
+		return UtilString.nullCkeck(s).replaceAll(specialCharacter, " ");
 	}
 	
 	private int checkField(ExportField field, int s) {
@@ -62,8 +171,9 @@ public class ExportBean {
 	}
 
 	public String getRefCitList() {
-		return checkField(ExportField.CITATION, refCitList);
-//		return UtilString.nullCkeck(refCitList);
+		return refCitList;
+		// return checkField(ExportField.CITATION, refCitList);
+		// return UtilString.nullCkeck(refCitList);
 	}
 
 	public void setRefCitList(String refCitList) {
@@ -71,7 +181,7 @@ public class ExportBean {
 	}
 
 	public String getTitle() {
-//		return UtilString.nullCkeck(title);
+		// return UtilString.nullCkeck(title);
 		return checkField(ExportField.TITLE, title);
 	}
 
@@ -79,17 +189,17 @@ public class ExportBean {
 		this.title = title;
 	}
 
-	public String getAbstractTitle() {
-//		return UtilString.nullCkeck(abstractTitle);
-		return checkField(ExportField.ABSTRACT, abstractTitle);
+	public String getAbs() {
+		// return UtilString.nullCkeck(abstractTitle);
+		return checkField(ExportField.ABSTRACT, abs);
 	}
 
-	public void setAbstractTitle(String abstractTitle) {
-		this.abstractTitle = abstractTitle;
+	public void setAbs(String abs) {
+		this.abs = abs;
 	}
 
 	public String getYear() {
-//		return UtilString.nullCkeck(year);
+		// return UtilString.nullCkeck(year);
 		return checkField(ExportField.YEAR, year);
 	}
 
@@ -98,7 +208,7 @@ public class ExportBean {
 	}
 
 	public String getDoi() {
-//		return UtilString.nullCkeck(doi);
+		// return UtilString.nullCkeck(doi);
 		return checkField(ExportField.DOI, doi);
 	}
 
@@ -107,7 +217,7 @@ public class ExportBean {
 	}
 
 	public String getAuthorKeyword() {
-//		return UtilString.nullCkeck(authorKeyword);
+		// return UtilString.nullCkeck(authorKeyword);
 		return checkField(ExportField.KEYWORD, authorKeyword);
 	}
 
@@ -116,7 +226,7 @@ public class ExportBean {
 	}
 
 	public String getIndexKeyword() {
-//		return UtilString.nullCkeck(indexKeyword);
+		// return UtilString.nullCkeck(indexKeyword);
 		return checkField(ExportField.INDEX_KEYWORD, indexKeyword);
 	}
 
@@ -125,7 +235,7 @@ public class ExportBean {
 	}
 
 	public String getAsjcCode() {
-//		return UtilString.nullCkeck(asjcCode);
+		// return UtilString.nullCkeck(asjcCode);
 		return checkField(ExportField.ASJC, asjcCode);
 	}
 
@@ -134,7 +244,7 @@ public class ExportBean {
 	}
 
 	public String getCitationList() {
-//		return UtilString.nullCkeck(citationList);
+		// return UtilString.nullCkeck(citationList);
 		return checkField(ExportField.CITATION, citationList);
 	}
 
@@ -143,7 +253,7 @@ public class ExportBean {
 	}
 
 	public String getReferenceList() {
-//		return UtilString.nullCkeck(referenceList);
+		// return UtilString.nullCkeck(referenceList);
 		return checkField(ExportField.REFERENCE, referenceList);
 	}
 
@@ -152,7 +262,7 @@ public class ExportBean {
 	}
 
 	public String getAuthor_authorName() {
-//		return UtilString.nullCkeck(author_authorName);
+		// return UtilString.nullCkeck(author_authorName);
 		return checkField(ExportField.AUTHOR_NAME, author_authorName);
 	}
 
@@ -161,7 +271,7 @@ public class ExportBean {
 	}
 
 	public String getAuthor_email() {
-//		return UtilString.nullCkeck(author_email);
+		// return UtilString.nullCkeck(author_email);
 		return checkField(ExportField.AUTHOR_EMAIL, author_email);
 	}
 
@@ -170,7 +280,7 @@ public class ExportBean {
 	}
 
 	public String getAuthor_country() {
-//		return UtilString.nullCkeck(author_country);
+		// return UtilString.nullCkeck(author_country);
 		return checkField(ExportField.AUTHOR_COUNTRYCODE, author_country);
 	}
 
@@ -179,7 +289,7 @@ public class ExportBean {
 	}
 
 	public String getAuthor_affilation() {
-//		return UtilString.nullCkeck(author_affiliation);
+		// return UtilString.nullCkeck(author_affiliation);
 		return checkField(ExportField.AFFILIATION_NAME, author_affiliation);
 	}
 
@@ -188,7 +298,7 @@ public class ExportBean {
 	}
 
 	public String getSource_sourceTitle() {
-//		return UtilString.nullCkeck(source_sourceTitle);
+		// return UtilString.nullCkeck(source_sourceTitle);
 		return checkField(ExportField.SOURCE_SOURCETITLE, source_sourceTitle);
 	}
 
@@ -197,7 +307,7 @@ public class ExportBean {
 	}
 
 	public String getSource_volumn() {
-//		return UtilString.nullCkeck(source_volumn);
+		// return UtilString.nullCkeck(source_volumn);
 		return checkField(ExportField.SOURCE_VOLUMN, source_volumn);
 	}
 
@@ -206,7 +316,7 @@ public class ExportBean {
 	}
 
 	public String getSource_issue() {
-//		return UtilString.nullCkeck(source_issue);
+		// return UtilString.nullCkeck(source_issue);
 		return checkField(ExportField.SOURCE_ISSUE, source_issue);
 	}
 
@@ -215,7 +325,7 @@ public class ExportBean {
 	}
 
 	public String getSource_page() {
-//		return UtilString.nullCkeck(source_page);
+		// return UtilString.nullCkeck(source_page);
 		return checkField(ExportField.SOURCE_PAGE, source_page);
 	}
 
@@ -226,7 +336,7 @@ public class ExportBean {
 	}
 
 	public String getSource_type() {
-//		return UtilString.nullCkeck(source_type);
+		// return UtilString.nullCkeck(source_type);
 		return checkField(ExportField.SOURCE_TYPE, source_type);
 	}
 
@@ -235,7 +345,7 @@ public class ExportBean {
 	}
 
 	public String getSource_publisher() {
-//		return UtilString.nullCkeck(source_publisher);
+		// return UtilString.nullCkeck(source_publisher);
 		return checkField(ExportField.SOURCE_PUBLICSHERNAME, source_publisher);
 	}
 
@@ -244,7 +354,7 @@ public class ExportBean {
 	}
 
 	public String getSource_country() {
-//		return UtilString.nullCkeck(source_country);
+		// return UtilString.nullCkeck(source_country);
 		return checkField(ExportField.SOURCE_COUNTRY, source_country);
 	}
 
@@ -253,7 +363,7 @@ public class ExportBean {
 	}
 
 	public String getSource_pissn() {
-//		return UtilString.nullCkeck(source_pissn);
+		// return UtilString.nullCkeck(source_pissn);
 		return checkField(ExportField.SOURCE_PISSN, source_pissn);
 	}
 
@@ -262,7 +372,7 @@ public class ExportBean {
 	}
 
 	public String getSource_eissn() {
-//		return UtilString.nullCkeck(source_eissn);
+		// return UtilString.nullCkeck(source_eissn);
 		return checkField(ExportField.SOURCE_EISSN, source_eissn);
 	}
 
@@ -271,7 +381,7 @@ public class ExportBean {
 	}
 
 	public String getCorr_authorName() {
-//		return UtilString.nullCkeck(corr_authorName);
+		// return UtilString.nullCkeck(corr_authorName);
 		return checkField(ExportField.CORR_AUTHORNAME, corr_authorName);
 	}
 
@@ -280,7 +390,7 @@ public class ExportBean {
 	}
 
 	public String getCorr_country() {
-//		return UtilString.nullCkeck(corr_country);
+		// return UtilString.nullCkeck(corr_country);
 		return checkField(ExportField.CORR_COUNTRYCODE, corr_country);
 	}
 
@@ -289,7 +399,7 @@ public class ExportBean {
 	}
 
 	public String getCorr_email() {
-//		return UtilString.nullCkeck(corr_email);
+		// return UtilString.nullCkeck(corr_email);
 		return checkField(ExportField.CORR_EMAIL, corr_email);
 	}
 
@@ -298,7 +408,7 @@ public class ExportBean {
 	}
 
 	public String getCorr_affilation() {
-//		return UtilString.nullCkeck(corr_affilation);
+		// return UtilString.nullCkeck(corr_affilation);
 		return checkField(ExportField.CORR_AFFILIATION, corr_affilation);
 	}
 
@@ -307,7 +417,7 @@ public class ExportBean {
 	}
 
 	public int getNumberOfCitation() {
-//		return UtilString.nullCkeck(numberOfCitation);
+		// return UtilString.nullCkeck(numberOfCitation);
 		return checkField(ExportField.NUMBER_CITATION, numberOfCitation);
 	}
 
@@ -316,7 +426,7 @@ public class ExportBean {
 	}
 
 	public int getNumberOfReference() {
-//		return UtilString.nullCkeck(numberOfReference);
+		// return UtilString.nullCkeck(numberOfReference);
 		return checkField(ExportField.NUMBER_REFERENCE, numberOfReference);
 	}
 
@@ -325,7 +435,7 @@ public class ExportBean {
 	}
 
 	public String getAuthor_affilation_info() {
-//		return author_affiliation_info;
+		// return author_affiliation_info;
 		return checkField(ExportField.AUTHOR_AUTHORINFO, author_affiliation_info);
 	}
 
@@ -334,7 +444,7 @@ public class ExportBean {
 	}
 
 	public String getAffiliation_country() {
-//		return UtilString.nullCkeck(affiliation_country);
+		// return UtilString.nullCkeck(affiliation_country);
 		return checkField(ExportField.AFFILIATION_COUNTRY, affiliation_country);
 	}
 
@@ -353,6 +463,14 @@ public class ExportBean {
 
 	public void setCitation_type(String citation_type) {
 		this.citation_type = citation_type;
+	}
+
+	public String getAuthor_delegateName() {
+		return author_delegateName;
+	}
+
+	public void setAuthor_delegateName(String author_delegateName) {
+		this.author_delegateName = author_delegateName;
 	}
 
 }

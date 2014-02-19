@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 <title>SCOPUS 정보 검색 플랫폼 - Research Front</title>
 <link rel="SHORTCUT ICON" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link href="<%=contextPath%>/css/nano_style.css" rel="stylesheet" type="text/css" />
@@ -130,7 +131,7 @@ $(document).ready(function() {
 			repeatitems: false
 		},
     	pager : '#pager',
-       	colNames:['No', 'Mirian Service(YES OR NO)', 'Title', 'ASJC Code', 'Description', 'Science', 'Nature', 'Date', 'Export'],
+       	colNames:['No', 'Mirian Service(YES OR NO)', 'Title', 'ASJC Code', 'Description', 'Science', 'Nature', 'Date', 'Update', 'Export'],
        	colModel:[
 			{name:'seq', index:'SEQ', hidden:true},
 			{name:'showMirian',index:'SHOW_MIRIAN', width:'50', align:'center', formatter:mirianLink},
@@ -143,8 +144,9 @@ $(document).ready(function() {
 			{name:'add_science',index:'ADD_SCIENCE', stype:'select', searchoptions:{sopt:['eq'], value:"Y:Y;N:N"}, width:'40', align:'center'},
 			{name:'add_nature',index:'ADD_NATURE', stype:'select', searchoptions:{sopt:['eq'], value:"Y:Y;N:N", attr:{title:'Select Science'}}, width:'40', align:'center'},
 			{name:'reg_date_first',index:'REG_DATE_FIRST', width:'60', align:'center', sorttype:'date'},
+			{name:'update_flag',index:'update_flag', width:'30', align:'center', sortable: false,},
 			{name:'excelExport',width:'60', align:'center', formatter:makeAction, sortable : false}
-       	],
+       	],		
        	sortorder:"desc",
        	shrinkToFit:true,
        	rownumbers: true,

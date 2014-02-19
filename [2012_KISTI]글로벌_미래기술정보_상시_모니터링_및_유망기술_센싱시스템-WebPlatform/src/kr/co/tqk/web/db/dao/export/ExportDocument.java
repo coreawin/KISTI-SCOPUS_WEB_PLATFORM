@@ -97,8 +97,12 @@ public abstract class ExportDocument {
 //				exportField.put(checkKey, true);
 //			}
 //		}
-//		logger.debug("selectedCheck : " + selectedCheck.toString());
-//		logger.debug("exportField : " + exportField.toString());
+//		System.out.println("selectedCheck====================");
+//		System.out.println(selectedCheck);
+//		System.out.println("exportField====================");
+//		System.out.println(exportField);
+//		logger.debug("selectedCheck : {}", selectedCheck.toString());
+//		logger.debug("exportField : {}", exportField.toString());
 	}
 
 	public void exportData(Connection conn, LinkedHashSet<String> eidSet) {

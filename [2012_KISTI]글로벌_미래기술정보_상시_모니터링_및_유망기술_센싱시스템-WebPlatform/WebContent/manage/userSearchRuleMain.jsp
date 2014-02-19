@@ -1,4 +1,4 @@
-<%@page import="kr.co.tqk.web.DWPIQueryConverter"%>
+<%@page import="com.websqrd.fastcat.user.kisti.DWPIQueryConverter"%>
 <%@page import="java.util.LinkedHashMap"%>
 <%@page import="kr.co.tqk.analysis.util.NumberFormatUtil"%>
 <%@page import="kr.co.tqk.web.db.dao.UserSearchRuleDao"%>
@@ -40,6 +40,8 @@ function research(objID){
 	//이미 했던 검색을 검색식으로만 재실행.
 	var form = document.getElementById("parameter");
 	form.searchRule.value = $("#"+objID).attr("value");
+	//if(!window.console) console.debug("history search rule : " + form.searchRule.value);
+	
 	form.action="../documentSearch/catresult.jsp";
 	form.submit();
 }
@@ -264,6 +266,18 @@ $(document).ready(function() {
 		}
     }
 	
+	function fnMore(_id){
+		var data = document.getElementById("_more_"+_id);
+		var btnLabel = document.getElementById("_more_buttn_label_"+_id);
+		if (data.style.display == 'none') {
+			data.style.display = '';
+			btnLabel.innerText = "close";
+		} else {
+			data.style.display = 'none';
+			btnLabel.innerText = "more";
+		}
+	}
+	
 
 
 </script>
@@ -335,12 +349,27 @@ $(document).ready(function() {
                                  		id="check1" type="checkbox" 
                                  		value="<%=usrBean.getSeq() %>" 
                                  		<%--=selectUsrSearchBeanMap.containsKey(usrBean.getSeq())?"checked":"" --%>/>
-                                 		<input type="hidden" id="sendSearchRule_<%=usrBean.getSeq()%>" value="<%= usrBean.getSearchRule()%>"/>
+                                 		<input type="hidden" id="sendSearchRule_<%=usrBean.getSeq()%>" value="<%= usrBean.getSearchRule().replaceAll("\"","&quot;")%>"/>
                                  	</td>
                                  	<td scope="row"><%=usrBean.getSeq() %></td>
                                     <td  ><%=usrBean.getInsertDate() %></td>
                                  	<td  style="color:#2a87d5; text-align:center;"><%=NumberFormatUtil.getDecimalFormat(usrBean.getSearchCount()) %></td>
-                                    <td style="color:#005eac; text-align:left;"><a href="javascript:research('sendSearchRule_<%=usrBean.getSeq()%>');"><%=usrBean.getSearchRule().replaceAll("\\\\:",":").replaceAll("\\\\,",",").replaceAll("\\\\&","&").replaceAll("\\\\=","=") %></a></td>
+                                    <td style="color:#005eac; text-align:left;">
+										<a href="javascript:research('sendSearchRule_<%=usrBean.getSeq()%>');">
+											<%
+											String searchRules = usrBean.getSearchRule().replaceAll("\\\\:",":").replaceAll("\\\\,",",").replaceAll("\\\\&","&").replaceAll("\\\\=","=").replaceAll("\"","&quot;");
+											if(searchRules.length() > 512){
+												out.print(searchRules.substring(0, 512));
+												out.print("<span id='_more_"+usrBean.getSeq()+"' style='display:none;'>");
+												out.print(searchRules.substring(512, searchRules.length()));
+												out.print("</span>");
+												out.print("<a href=\"javascript:fnMore('"+usrBean.getSeq()+"');\"><span id=\"_more_buttn_label_"+usrBean.getSeq()+"\">more</span></a>");
+											}else{
+												out.println(searchRules);
+											}
+											%>
+										</a>
+									</td>
                        	 	 	</tr>
 <%
 		cnt++;

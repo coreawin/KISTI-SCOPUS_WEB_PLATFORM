@@ -23,7 +23,7 @@ try{
 	}else{
 		String ndslURL = apiURL + "?keyValue="+apiID+"&returnType="+apiReturnType+"&version=3.0&Target=A&callback=aa&id=doi:"+URLEncoder.encode(doi,"UTF-8");
 		String deeplink = FullTextJSON.request(ndslURL);
-		System.out.println("ndslURL " + ndslURL);
+		System.out.println("ndslURL : " + ndslURL);
 		//System.out.println(doi +"==> " + deeplink);
 		out.println(deeplink);
 	}

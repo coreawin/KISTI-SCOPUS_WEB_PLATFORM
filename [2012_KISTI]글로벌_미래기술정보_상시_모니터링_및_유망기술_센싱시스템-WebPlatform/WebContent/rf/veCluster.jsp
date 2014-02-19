@@ -40,6 +40,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 <link rel="SHORTCUT ICON" href="<%=request.getContextPath() %>/../images/favicon.ico" />
 <!-- link href="<%=contextPath%>/css/nano_style.css" rel="stylesheet" type="text/css" / -->
 <script src="<%=contextPath%>/module/jqgrid/js/jquery-1.7.2.min.js" type="text/javascript"></script>
@@ -213,8 +214,9 @@ td.specalt {
 							</tr>
 							<tr align="center">
 								<td><%=cd.getDocumentCount() %></td>
-								<td><%=cd.getDocumentReferenceCount() %></td>
-								<td><%=NumberFormatUtil.getDecimalFormat(cd.getReferenceCountPerDocument(), 2)  %></td>
+								<td><%=cd.getCitationCount() %></td>
+								<!--<td><%=calculatorValues(cd.getDocumentCitationCountLinked())%></td>-->
+								<td><%=NumberFormatUtil.getDecimalFormat(cd.getCitationPerCount(), 2)  %></td>
 								<td><%=NumberFormatUtil.getDecimalFormat(cd.getAveragePubYearDocument(), 2) %></td>
 								<td><%=NumberFormatUtil.getDecimalFormat(cd.getAveragePubYearCiationDoc(), 2) %></td>
 							</tr>
@@ -383,6 +385,14 @@ td.specalt {
 		}
 		topDocumentSB.append("</table>");
 		return topDocumentSB.toString();
+	}
+
+	private String calculatorValues(Map<String, Integer> citationMapInfo){
+		int sum = 0;
+		for (Integer value : citationMapInfo.values()) {
+			sum = sum + value.intValue();
+		}
+		return java.text.NumberFormat.getNumberInstance().format(sum);
 	}
 	
 	

@@ -59,6 +59,18 @@ $(document).ready(function() {
 	
 });
 
+
+function fnMore(_id){
+	var data = document.getElementById("_more_"+_id);
+	var btnLabel = document.getElementById("_more_buttn_label_"+_id);
+	if (data.style.display == 'none') {
+		data.style.display = '';
+		btnLabel.innerText = "close";
+	} else {
+		data.style.display = 'none';
+		btnLabel.innerText = "more";
+	}
+}
 </script>
 
 </head>
@@ -123,14 +135,14 @@ $(document).ready(function() {
             </table>
             <table width="100%" border="0" cellpadding="0" cellspacing="0" class="Table5" >
             	<tr>
-                    <td height='35' class="txt1" style="text-align: left">검색식 작성방법</td>
+                    <td height='35' class="txt1" style="text-align: left">검색식 작성방법 (현재 Boolean Keyword는 대문자만을 지원합니다.)</td>
                 </tr>
                 <tr>
                     <td style="text-align: left;width: 53%;vertical-align: text-top;">
                     	<B>&nbsp;&nbsp;1. 단일필드 단일키워드 검색</B><BR> 
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;검색키워드.필드명.<BR>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;예) oled.ti.<BR>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;예) not oled.ti.<BR>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;예) NOT oled.ti.<BR>
 						<B>&nbsp;&nbsp;2. 단일필드 복합키워드 검색(키워드간 AND관계)</B><BR>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(키워드1 키워드2 … ).필드명<BR>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;예) (oled tech).ti.<BR>
@@ -142,11 +154,11 @@ $(document).ready(function() {
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;예) (oled* tech*).ti.<BR>
 						<B>&nbsp;&nbsp;&nbsp;&nbsp;* 확장검색시 키워드뒤에 "*"를 붙여주며, prefix 검색으로 동작한다. </B><BR>
 						<B>&nbsp;&nbsp;5. Boolean필드 Boolean키워드 검색 </B><BR>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(키워드1 키워드2 …).필드1,필드2…. [and|or|not] (키워드1 키워드2 …).필드1,필드2….<BR>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(키워드1 키워드2 …).필드1,필드2…. [AND|OR|NOT] (키워드1 키워드2 …).필드1,필드2….<BR>
 						<B>&nbsp;&nbsp;예) (oled tech).ti. (ips display).abs,kw. </B><BR>
-						<B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(oled tech).ti. and (ips display).ab,kw. </B><BR>
-						<B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(oled tech).ti. or (ips display).ab,kw. </B><BR>
-						<B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(oled tech).ti. not (ips display).ab,kw. </B><BR>
+						<B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(oled tech).ti. AND (ips display).ab,kw. </B><BR>
+						<B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(oled tech).ti. OR (ips display).ab,kw. </B><BR>
+						<B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(oled tech).ti. NOT (ips display).ab,kw. </B><BR>
 						<B>&nbsp;&nbsp;&nbsp;&nbsp;* 검색식간 boolean 생략시 AND로 동작하고, 키워드간은 항상 AND로 동작한다.  </B><BR></BR>
                     </td>
                     <td style="text-align: left;width: 47%;" valign="top">
@@ -219,7 +231,20 @@ $(document).ready(function() {
                                     <td  ><%=usrBean.getInsertDate() %></td>
                                  	<td  style="color:#2a87d5; text-align:center;"><%=NumberFormatUtil.getDecimalFormat(usrBean.getSearchCount()) %></td>
                                     <td style="color:#005eac; text-align:left;">
-                                    	<a href="javascript:research('sendSearchRule_<%=usrBean.getSeq()%>');"><%=usrBean.getSearchRule().replaceAll("\\\\:",":").replaceAll("\\\\,",",").replaceAll("\\\\&","&").replaceAll("\\\\=","=") %></a>
+                                    	<a href="javascript:research('sendSearchRule_<%=usrBean.getSeq()%>');">
+                                    		<%
+											String searchRules = usrBean.getSearchRule().replaceAll("\\\\:",":").replaceAll("\\\\,",",").replaceAll("\\\\&","&").replaceAll("\\\\=","=").replaceAll("\"","&quot;");
+											if(searchRules.length() > 512){
+												out.print(searchRules.substring(0, 512));
+												out.print("<span id='_more_"+usrBean.getSeq()+"' style='display:none;'>");
+												out.print(searchRules.substring(512, searchRules.length()));
+												out.print("</span>");
+												out.print("<a href=\"javascript:fnMore('"+usrBean.getSeq()+"');\"><span id=\"_more_buttn_label_"+usrBean.getSeq()+"\">more</span></a>");
+											}else{
+												out.println(searchRules);
+											}
+											%>
+                                    	</a>
                                     </td>
                        	 	 	</tr>
                                     

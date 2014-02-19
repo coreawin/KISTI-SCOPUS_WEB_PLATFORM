@@ -30,8 +30,8 @@
 	String modelPath = "/data/home/scopus/jsphome/models/";
 	String tmpSavePath = "/data/home/scopus/jsphome/tmp/";
 	*/
-	final String TEMPORARY_SAVE_PATH = "j://Distribution/KISTI_Scopus_WebPlatform_Distribution/tmp/";
-	String modelPath = "j://Distribution/KISTI_Scopus_WebPlatform_Distribution/models/";
+	final String TEMPORARY_SAVE_PATH = "t:/release/KISTI/Scopus_WebPlatform_Distribution/tmp/";
+	String modelPath = "t:/release/KISTI/Scopus_WebPlatform_Distribution/models/";
 	String tmpSavePath = TEMPORARY_SAVE_PATH;
 	
 	String currentDir = request.getRequestURI();

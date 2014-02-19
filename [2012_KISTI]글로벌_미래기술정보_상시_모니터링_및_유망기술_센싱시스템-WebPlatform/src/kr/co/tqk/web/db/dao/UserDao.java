@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import kr.co.diquest.util.SHAEncrypt;
 import kr.co.tqk.db.ConnectionFactory;
 import kr.co.tqk.web.db.bean.UserBean;
 import kr.co.tqk.web.util.UserAuthDefinition;
@@ -38,7 +39,7 @@ public class UserDao {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		String query = "select * from USER_INFO where id=? and pwd=?";
+		String query = "select * from USER_INFO where id=? and NPWD=?";
 		UserBean bean = null;
 		try {
 			cf = ConnectionFactory.getInstance();
@@ -46,12 +47,12 @@ public class UserDao {
 
 			psmt = conn.prepareStatement(query);
 			psmt.setString(1, id.trim());
-			psmt.setString(2, pwd.trim());
+			psmt.setString(2, SHAEncrypt.getEncrypt(pwd.trim()));
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				bean = new UserBean();
 				bean.setId(rs.getString("ID"));
-				bean.setPwd(rs.getString("PWD"));
+				bean.setPwd(rs.getString("NPWD"));
 				bean.setNames(rs.getString("NAMES"));
 				bean.setEmail(rs.getString("EMAIL"));
 				bean.setDepartment(rs.getString("DEPARTMENT"));
@@ -92,7 +93,7 @@ public class UserDao {
 			while (rs.next()) {
 				bean = new UserBean();
 				bean.setId(rs.getString("ID"));
-				bean.setPwd(rs.getString("PWD"));
+				bean.setPwd(rs.getString("NPWD"));
 				bean.setNames(rs.getString("NAMES"));
 				bean.setEmail(rs.getString("EMAIL"));
 				bean.setDepartment(rs.getString("DEPARTMENT"));
@@ -131,7 +132,7 @@ public class UserDao {
 			while (rs.next()) {
 				bean = new UserBean();
 				bean.setId(rs.getString("ID"));
-				bean.setPwd(rs.getString("PWD"));
+				bean.setPwd(rs.getString("NPWD"));
 				bean.setNames(rs.getString("NAMES"));
 				bean.setEmail(rs.getString("EMAIL"));
 				bean.setDepartment(rs.getString("DEPARTMENT"));
@@ -183,7 +184,7 @@ public class UserDao {
 			while (rs.next()) {
 				bean = new UserBean();
 				bean.setId(rs.getString("ID"));
-				bean.setPwd(rs.getString("PWD"));
+				bean.setPwd(rs.getString("NPWD"));
 				bean.setNames(rs.getString("NAMES"));
 				bean.setEmail(rs.getString("EMAIL"));
 				bean.setDepartment(rs.getString("DEPARTMENT"));
@@ -236,7 +237,7 @@ public class UserDao {
 			while (rs.next()) {
 				bean = new UserBean();
 				bean.setId(rs.getString("ID"));
-				bean.setPwd(rs.getString("PWD"));
+				bean.setPwd(rs.getString("NPWD"));
 				bean.setNames(rs.getString("NAMES"));
 				bean.setEmail(rs.getString("EMAIL"));
 				bean.setDepartment(rs.getString("DEPARTMENT"));
@@ -317,7 +318,7 @@ public class UserDao {
 			while (rs.next()) {
 				bean = new UserBean();
 				bean.setId(rs.getString("ID"));
-				bean.setPwd(rs.getString("PWD"));
+				bean.setPwd(rs.getString("NPWD"));
 				bean.setNames(rs.getString("NAMES"));
 				bean.setEmail(rs.getString("EMAIL"));
 				bean.setDepartment(rs.getString("DEPARTMENT"));
@@ -435,7 +436,7 @@ public class UserDao {
 			while (rs.next()) {
 				bean = new UserBean();
 				bean.setId(rs.getString("ID"));
-				bean.setPwd(rs.getString("PWD"));
+				bean.setPwd(rs.getString("NPWD"));
 				bean.setNames(rs.getString("NAMES"));
 				bean.setEmail(rs.getString("EMAIL"));
 				bean.setDepartment(rs.getString("DEPARTMENT"));
@@ -506,7 +507,7 @@ public class UserDao {
 			while (rs.next()) {
 				bean = new UserBean();
 				bean.setId(rs.getString("ID"));
-				bean.setPwd(rs.getString("PWD"));
+				bean.setPwd(rs.getString("NPWD"));
 				bean.setNames(rs.getString("NAMES"));
 				bean.setEmail(rs.getString("EMAIL"));
 				bean.setDepartment(rs.getString("DEPARTMENT"));
@@ -544,18 +545,18 @@ public class UserDao {
 		ConnectionFactory cf = null;
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		String query = "insert into USER_INFO values(?, ?, ?, ?, ?, ?, CURRENT_DATE) ";
+		String query = "insert into USER_INFO values(?, ?, ?, ?, ?, CURRENT_DATE, ?) ";
 		try {
 			cf = ConnectionFactory.getInstance();
 			conn = cf.getConnection();
 
 			psmt = conn.prepareStatement(query);
 			psmt.setString(1, id.trim());
-			psmt.setString(2, pwd.trim());
-			psmt.setString(3, names.trim());
-			psmt.setString(4, email.trim());
-			psmt.setString(5, department.trim());
-			psmt.setString(6, UserAuthEnum.AUTH_WAITING.getAuth().trim());
+			psmt.setString(2, names.trim());
+			psmt.setString(3, email.trim());
+			psmt.setString(4, department.trim());
+			psmt.setString(5, UserAuthEnum.AUTH_WAITING.getAuth().trim());
+			psmt.setString(6, SHAEncrypt.getEncrypt(pwd.trim()));
 			psmt.execute();
 			conn.commit();
 		} catch (SQLException e) {
@@ -586,13 +587,13 @@ public class UserDao {
 		ConnectionFactory cf = null;
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		String query = "update USER_INFO set PWD = ?, NAMES= ?, EMAIL=? , DEPARTMENT=? where ID=?";
+		String query = "update USER_INFO set NPWD = ?, NAMES= ?, EMAIL=? , DEPARTMENT=? where ID=?";
 		try {
 			cf = ConnectionFactory.getInstance();
 			conn = cf.getConnection();
 
 			psmt = conn.prepareStatement(query);
-			psmt.setString(1, pwd);
+			psmt.setString(1, SHAEncrypt.getEncrypt(pwd));
 			psmt.setString(2, names);
 			psmt.setString(3, email);
 			psmt.setString(4, department);
@@ -651,13 +652,13 @@ public class UserDao {
 		ConnectionFactory cf = null;
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		String query = "update USER_INFO set PWD = ? where ID=?";
+		String query = "update USER_INFO set NPWD = ? where ID=?";
 		try {
 			cf = ConnectionFactory.getInstance();
 			conn = cf.getConnection();
 
 			psmt = conn.prepareStatement(query);
-			psmt.setString(1, id);
+			psmt.setString(1, SHAEncrypt.getEncrypt(id));
 			psmt.setString(2, id);
 			psmt.executeUpdate();
 			conn.commit();

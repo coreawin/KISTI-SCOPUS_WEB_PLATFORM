@@ -2,8 +2,9 @@ package kr.co.tqk.web.db.dao.export;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.HashSet;
 
 import kr.co.tqk.web.db.bean.export.ExportBean;
@@ -14,7 +15,7 @@ import kr.co.tqk.web.db.bean.export.ExportBean;
  * @author Á¤½ÂÇÑ
  * 
  */
-public class ExportText extends ExportDocument {
+public class ExportText extends ExportDocumentSax {
 
 	BufferedWriter br = null;
 
@@ -22,14 +23,14 @@ public class ExportText extends ExportDocument {
 		super(makeFileName, selectedCheck);
 		File makeFile = new File(makeFileName);
 		try {
-			br = new BufferedWriter(new FileWriter(makeFile));
+			br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(this.writeFile), "UTF-8"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private void write(String field, String contents) throws Exception{
-		if(selectedCheck.contains(field)){
+
+	private void write(String field, String contents) throws Exception {
+		if (selectedCheck.contains(field)) {
 			w(field, contents);
 		}
 	}
@@ -37,11 +38,16 @@ public class ExportText extends ExportDocument {
 	@Override
 	protected void write() {
 		if (exportDataList != null) {
+			try {
+				w("-ENCODE", "UTF-8");
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			for (ExportBean eb : exportDataList) {
 				try {
 					w("EID", eb.getEid());
 					write("TITLE", eb.getTitle());
-					write("ABSTRACT", eb.getAbstractTitle());
+					write("ABSTRACT", eb.getAbs());
 					write("YEAR", eb.getYear());
 					write("DOI", eb.getDoi());
 					write("KEYWORD", eb.getAuthorKeyword());
@@ -52,20 +58,20 @@ public class ExportText extends ExportDocument {
 					write("NUMBER_REFERENCE", String.valueOf(eb.getNumberOfReference()));
 					write("REFERENCE", eb.getReferenceList());
 					write("CITATION_TYPE", eb.getCitation_type());
-					
+
 					write("AUTHOR_AUTHORINFO", eb.getAuthor_affilation_info());
 					write("AUTHOR_NAME", eb.getAuthor_authorName());
-					write("AUTHOR_COUNTRYCODE", eb.getAuthor_country());
+					write("AUTHOR_COUNTRYCODE", eb.getAuthor_country().toUpperCase());
 					write("AUTHOR_EMAIL", eb.getAuthor_email());
 					write("AFFILIATION_NAME", eb.getAuthor_affilation());
 					write("AFFILIATION_COUNTRY", eb.getAffiliation_country());
-					
+
 					write("SOURCE_SOURCETITLE", eb.getSource_sourceTitle());
 					write("SOURCE_VOLUMN", eb.getSource_volumn());
 					write("SOURCE_ISSUE", eb.getSource_issue());
 					write("SOURCE_PAGE", eb.getSource_page());
 					write("SOURCE_TYPE", eb.getSource_type());
-					write("SOURCE_PUBLICSHERNAME", eb.getSource_publisher());
+//					write("SOURCE_PUBLICSHERNAME", eb.getSource_publisher());
 					write("SOURCE_COUNTRY", eb.getSource_country());
 					write("SOURCE_PISSN", eb.getSource_pissn());
 					write("SOURCE_EISSN", eb.getSource_eissn());
@@ -73,7 +79,7 @@ public class ExportText extends ExportDocument {
 					write("CORR_COUNTRYCODE", eb.getCorr_country());
 					write("CORR_EMAIL", eb.getCorr_email());
 					write("CORR_AFFILIATION", eb.getCorr_affilation());
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -83,7 +89,7 @@ public class ExportText extends ExportDocument {
 
 	public void w(String field, String contents) throws Exception {
 		try {
-			if(br!=null){
+			if (br != null) {
 				br.write(field + "|" + contents + "\r\n");
 			}
 		} catch (NullPointerException e) {

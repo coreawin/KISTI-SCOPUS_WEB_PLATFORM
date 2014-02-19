@@ -1,6 +1,7 @@
 package kr.co.topquadrant.db.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.topquadrant.db.bean.ClusterDocument;
 import kr.co.topquadrant.db.bean.ClusterResultSummary;
@@ -159,6 +160,30 @@ public class ResearchFrontDAO implements IResearchFrontDao {
 		} finally {
 			session.close();
 		}
+	}
+
+	@Override
+	public void deleteStopWord(int seq) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void insertStopWord(String keyword) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<Integer, String> selectStopWord(MyBatisParameter parameter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int selectTotalStopWord() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

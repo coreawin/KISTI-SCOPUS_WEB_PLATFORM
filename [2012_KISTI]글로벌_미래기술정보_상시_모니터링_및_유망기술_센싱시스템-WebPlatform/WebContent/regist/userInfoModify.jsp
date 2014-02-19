@@ -132,7 +132,7 @@
                                 <li>NAME<span style="text-align:left; padding:0px 0px 0px 72px;">
                                     <input type="text" id="name" class="input_txt" name="name" maxlength="128" value="<%=userBean.getNames()%>"/></span></li>
                                 <li>Password<span style="text-align:left; padding:0px 0px 0px 52px;">
-                                    <input type="password" id="pwd" class="input_txt" name="pwd" maxlength="16" value="<%=userBean.getPwd()%>"/></span></li>
+                                    <input type="password" id="pwd" class="input_txt" name="pwd" maxlength="16"/></span></li>
                                 <li>Password 확인<span style="text-align:left; padding:0px 0px 0px 24px;">
                                     <input type="password" id="pwdV" class="input_txt" name="pwdV" maxlength="16" /></span></li>
                                 <li>E-Mail<span style="text-align:left; padding:0px 0px 0px 70px;">

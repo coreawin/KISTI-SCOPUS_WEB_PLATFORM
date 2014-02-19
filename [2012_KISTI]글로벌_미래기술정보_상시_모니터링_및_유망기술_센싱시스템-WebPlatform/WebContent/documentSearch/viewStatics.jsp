@@ -1,4 +1,4 @@
-<%@page import="kr.co.tqk.web.DWPIQueryConverter"%>
+<%@page import="com.websqrd.fastcat.user.kisti.DWPIQueryConverter"%>
 <%@page import="java.util.HashSet"%>
 <%@page import="java.util.Set"%>
 <%@page import="kr.co.tqk.web.db.dao.ScopusTypeDao"%>

@@ -215,7 +215,7 @@ function unload(){
 	<input type="hidden" name="totalSize" value="<%=totalSize%>"/>
 	<input type="hidden" name="selectDocSize" value="<%=selectDocSize%>"/>
 	<input type="hidden" name="cn" value="<%=searchParameter.get("cn") %>" />
-   	<input type="hidden" name="se" value="<%=searchParameter.get("se") %>" />
+   	<input type="hidden" name="se" value="<%=searchParameter.get("se").replaceAll("\"", "&quot;") %>" />
    	<input type="hidden" name="fl" value="<%=searchParameter.get("fl") %>" />
    	<input type="hidden" name="sn" value="<%=searchParameter.get("sn") %>" />
    	<input type="hidden" name="ln" value="<%=searchParameter.get("ln") %>" />

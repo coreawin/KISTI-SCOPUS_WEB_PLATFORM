@@ -33,11 +33,17 @@ public class MakeHCPTree {
 		int minPublicationYear = Integer.MAX_VALUE;
 		
 		IHCPDao hcpdao = new HCPDao();
-		List<HCPYearInfo> yearInfo = hcpdao.selectHCPYearInfo();
-		for(HCPYearInfo yi : yearInfo){
-			maxPublicationYear = Math.max(maxPublicationYear, yi.getPublication_year());
-			minPublicationYear = Math.min(minPublicationYear, yi.getPublication_year());
+		List<HCPYearInfo> yearInfo = new LinkedList<HCPYearInfo>();
+		for(int i = 1996; i<2015; i++){
+			HCPYearInfo h = new HCPYearInfo();
+			h.setPublication_year(i);
+			yearInfo.add(h);
 		}
+//		List<HCPYearInfo> yearInfo = hcpdao.selectHCPYearInfo();
+//		for(HCPYearInfo yi : yearInfo){
+//			maxPublicationYear = Math.max(maxPublicationYear, yi.getPublication_year());
+//			minPublicationYear = Math.min(minPublicationYear, yi.getPublication_year());
+//		}
 //		System.out.println("maxPublicationYear " + maxPublicationYear);
 //		System.out.println("minPublicationYear " + minPublicationYear);
 		/*

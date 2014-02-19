@@ -18,6 +18,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SCOPUS 정보 검색 플랫폼 - Research Front</title>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 <link rel="SHORTCUT ICON" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link href="<%=contextPath%>/css/nano_style.css" rel="stylesheet" type="text/css" />
 

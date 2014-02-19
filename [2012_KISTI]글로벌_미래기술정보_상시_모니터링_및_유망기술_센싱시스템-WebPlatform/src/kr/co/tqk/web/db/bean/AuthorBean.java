@@ -9,7 +9,7 @@ import kr.co.tqk.web.util.UtilString;
  * 
  */
 public class AuthorBean {
-	String authorID, authorName, email, delegateAuthorName;
+	String authorID, authorName, email, delegateAuthorName, countryCode;
 	int authorSeq, ranking, eidCnt;
 
 	public int getRanking() {
@@ -66,6 +66,14 @@ public class AuthorBean {
 
 	public void setEidCnt(int eidCnt) {
 		this.eidCnt = eidCnt;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 
 }

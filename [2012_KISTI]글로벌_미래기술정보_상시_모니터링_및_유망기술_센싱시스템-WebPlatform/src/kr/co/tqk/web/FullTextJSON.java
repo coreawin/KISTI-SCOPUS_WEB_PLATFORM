@@ -37,14 +37,14 @@ public class FullTextJSON {
 	}
 
 	public class OutputDataInfo {
-//		JournalInfo journalInfo;
-		JournalInfo articleInfo;
+		JournalInfo journalInfo;
+		JournalInfo[] articleInfo;
 //
-//		public JournalInfo getJournalInfo() {
-//			return journalInfo;
-//		}
+		public JournalInfo getJournalInfo() {
+			return journalInfo;
+		}
 //
-		public JournalInfo getArticleInfo() {
+		public JournalInfo[] getArticleInfo() {
 			return articleInfo;
 		}
 	}
@@ -56,7 +56,7 @@ public class FullTextJSON {
 	}
 
 	public static void main(String[] args) {
-		String url = "http://openapi.ndsl.kr/linkResolver.do?keyValue=02285882&returnType=json&version=3.0&Target=A&callback=aa&id=doi:10.1016%2Fj.ijheatfluidflow.2005.02.004";
+		String url = "http://openapi.ndsl.kr/linkResolver.do?keyValue=02285882&returnType=json&version=3.0&Target=A&callback=aa&id=doi:10.1016/j.sse.2009.01.006";
 		request(url);
 	}
 
@@ -75,25 +75,25 @@ public class FullTextJSON {
 					return "";
 				}
 			}
-			System.out.println(responseBody);
+//			System.out.println(responseBody);
 			Gson g = new Gson();
 			FullTextJSON f = g.fromJson(responseBody.trim(), FullTextJSON.class);
 			OutputDataInfo[] infos = f.getOutputData();
 			for (OutputDataInfo odi : infos) {
-				deeplink = UtilString.nullCkeck(odi.getArticleInfo().getDeepLink(), true);
-//				if ("".equals(deeplink)) {
-//					for (JournalInfo ai : odi.getArticleInfo()) {
-//						deeplink = UtilString.nullCkeck(ai.getDeepLink(), true);
-//						if (!"".equals(deeplink)) {
-//							break;
-//						}
-//					}
-//				}
+				deeplink = UtilString.nullCkeck(odi.getJournalInfo().getDeepLink(), true);
+				if ("".equals(deeplink)) {
+					for (JournalInfo ai : odi.getArticleInfo()) {
+						deeplink = UtilString.nullCkeck(ai.getDeepLink(), true);
+						if (!"".equals(deeplink)) {
+							break;
+						}
+					}
+				}
 				if (!"".equals(deeplink)) {
 					break;
 				}
 			}
-			System.out.println(deeplink);
+//			System.out.println("deeplink " + deeplink);
 			if (deeplink == null) {
 				deeplink = "";
 			} else {

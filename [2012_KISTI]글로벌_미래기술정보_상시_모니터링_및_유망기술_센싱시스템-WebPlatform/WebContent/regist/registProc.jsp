@@ -47,6 +47,7 @@
 			);
 		}catch(Exception e){
 			e.printStackTrace();
+			throw e;
 		}
 		out.println("alert(\"성공적으로 등록되었습니다. \\\n로그인 페이지로 이동합니다.\")");
 		out.println("location.href=\""+request.getContextPath()+"/login.jsp?id="+id+"\";");

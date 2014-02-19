@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="HCPMapper">
+
+	<select id="selectHCP" parameterType="HCPParameter" resultType="HCP">
+		<![CDATA[
+			select 
+				asjc_code, 
+				PUBLICATION_YEAR, 
+				total, 
+				document_count, 
+				threshold  
+			from SCOPUS_TOP_ASJCMIN_CIT_${tableRanking}
+			where regdate in (select distinct regdate from SCOPUS_TOP_ASJCMIN_CIT_0 where rownum=1)
+	  	]]>
+	</select>
+	
+	<select id="selectLargeHCP" parameterType="HCPParameter" resultType="HCP">
+		<![CDATA[
+			select 
+				CONCAT(SUBSTR(asjc_code, 0 , 2), '00'), 
+				PUBLICATION_YEAR, 
+				MIN(total_record) AS total, 
+				count(eid) document_count, 
+				MIN(cit_count) AS threshold  
+			from SCOPUS_TOP_ASJCMIN_CIT
+			where ranking <= 0.01 and regdate = ${regdate}
+			group by cube (CONCAT(SUBSTR(asjc_code, 0 , 2), '00'), PUBLICATION_YEAR)
+			order by CONCAT(SUBSTR(asjc_code, 0 , 2), '00'), PUBLICATION_YEAR
+	  	]]>
+	</select>
+	
+	<select id="selectDocument" parameterType="HCPParameter" resultType="HCPDocument">
+		<![CDATA[
+			select distinct eid 
+			from SCOPUS_TOP_ASJCMIN_CIT
+			where ranking <= #{ranking} and PUBLICATION_YEAR=#{publication_year} and asjc_code=#{asjc_code} and regdate = ${regdate}
+	  	]]>
+	</select>
+	
+	<select id="yearInfo" resultType="HCPYearInfo">
+		<![CDATA[
+			select PUBLICATION_YEAR 
+			from SCOPUS_TOP_ASJCMIN_YEAR
+	  	]]>
+	</select>
+	
+</mapper>

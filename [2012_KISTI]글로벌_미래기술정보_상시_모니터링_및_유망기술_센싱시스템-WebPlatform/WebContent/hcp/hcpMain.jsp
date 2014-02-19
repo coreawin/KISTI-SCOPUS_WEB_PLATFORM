@@ -721,14 +721,16 @@ function setCheckboxChecked(elementName, name, checked){
 											for(double i=0.01d; i<=0.1d ; i=i+0.02d){
 												String selected = "";
 												if(i==ranking){
-													selected = "selected=\"selected\"";													
+													selected = "selected=\"selected\"";	
 												}
 												int percent = (int)(i * 100);
 												if(percent==9) {
 													i = 0.1d;
 													percent=10;
+													if(ranking == 0.1d){
+														selected = "selected=\"selected\"";	
+													}
 												}
-												
 												out.println("<option value=\""+i+"\" "+selected+" >"+(percent)+"%</option>");
 											}
 										%>

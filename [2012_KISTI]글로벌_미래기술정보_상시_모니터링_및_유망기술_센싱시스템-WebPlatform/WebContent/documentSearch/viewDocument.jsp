@@ -23,6 +23,7 @@
 <%@include file="../common/auth.jsp" %>
 <%@include file="../common/linkInfo.jsp" %>
 <%
+try{
 	String eid = baseRequest.getParameter("eid", null);
 	if(eid==null){
 		out.println();
@@ -249,23 +250,45 @@ $(document).ready(function() {
 							int affiliactionCnt = 0;
 							Map<String, String> affiliationAlphabet = new HashMap<String, String>();
 							LinkedHashMap<String, String> authorAlphabet = new LinkedHashMap<String, String>();
+							//out.println(affilationList.size());
+							int alphabetLength = DescriptionCode.ALPHABET.length;
 							for(AffilationBean e :affilationList){
-								String alph = null;
+								String alph = "";
 								if(!affiliationAlphabet.containsKey(e.getAfid() + e.getDftid())){
-									alph = DescriptionCode.ALPHABET[affiliactionCnt++];
+									affiliactionCnt += 1;
+									int mok = affiliactionCnt / alphabetLength;
+									int mod = affiliactionCnt % alphabetLength;
+									if(mok != 0){
+										alph = DescriptionCode.ALPHABET[mok];
+									}
+									//out.println(mod +"==");
+									if(mod>0){
+										mod = mod -1 ;
+									}
+									alph += DescriptionCode.ALPHABET[mod];									
 									affiliationAlphabet.put(e.getAfid() + e.getDftid(), alph);
 								}else{
 									alph = affiliationAlphabet.get(e.getAfid() + e.getDftid());
 								}
+								
+								String talph = alph;
 								for(AuthorBean bean : e.getAuthorList()){
 									if(authorAlphabet.containsKey(bean.getAuthorID())){
 										String tm = authorAlphabet.get(bean.getAuthorID());
-										alph = tm + alph;
+										String[] tms = tm.split(",");
+										for(String t : tms){
+											if(t.trim().equals(alph.trim())){
+												continue;
+											}
+										}
+										talph = tm + "," + alph;
+									//out.println(bean.getAuthorID() +" Alph :  " + "--"+alph +"<BR>");
 									}
-									authorAlphabet.put(bean.getAuthorID(), alph);
+									authorAlphabet.put(bean.getAuthorID(), talph);
 								}
 							}
 							out.println("<p>");
+							int authorCnt = 0;
 							for(AffilationBean e :affilationList){
 								for(AuthorBean bean : e.getAuthorList()){
 									if(authorAlphabet.containsKey(bean.getAuthorID())){
@@ -292,6 +315,7 @@ $(document).ready(function() {
 											}
 										}
 										out.println(",&nbsp;&nbsp;");
+										authorCnt += 1; 
 									}
 								}
 							}
@@ -394,6 +418,7 @@ $(document).ready(function() {
 										String rVolumn = rBean.getVolumn();
 										String doi = "";
 										if(sdbRBean!=null){
+											rTitle = sdbRBean.getTitle();
 											rPage = sdbRBean.getPage();
 											rYear = sdbRBean.getPublicationYear();
 											rIssue = sdbRBean.getIssue();
@@ -469,3 +494,9 @@ $(document).ready(function() {
 
 </body>
 </html>
+<%
+}catch(Exception e){
+e.printStackTrace();
+}
+
+%>

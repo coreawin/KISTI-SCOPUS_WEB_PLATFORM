@@ -5,6 +5,10 @@ public class HCPParameter {
 	int tableRanking = 1;
 	double ranking = 0;
 	String publication_year, asjc_code;
+	/**
+	 * 구축 차수를 기록
+	 */
+	int regdate = 201303;
 
 	public int getTableRanking(){
 		tableRanking = (int)(getRanking()*100); 
@@ -33,6 +37,14 @@ public class HCPParameter {
 
 	public void setAsjc_code(String asjc_code) {
 		this.asjc_code = asjc_code;
+	}
+
+	public int getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(int regdate) {
+		this.regdate = regdate;
 	}
 
 }

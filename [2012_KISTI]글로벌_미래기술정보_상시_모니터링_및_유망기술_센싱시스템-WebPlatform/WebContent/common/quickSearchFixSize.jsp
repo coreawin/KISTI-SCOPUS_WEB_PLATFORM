@@ -16,7 +16,7 @@ function quicksearch(){
 		return;
 	}
 	form.currentPage.value = "1";
-	form.searchRule.value = "se={title,abs,keyword:"+keyword+":1:32}&ft=";
+	form.searchRule.value = "se={title,abs,keyword:"+keyword+":1:103}&ft=";
 	//(TITLE-ABS-KEY("+keyword+"))";
 	form.searchTerm.value = keyword;
 	//form.searchRule.value = "(TITLE-ABS-KEY("+keyword+"))";

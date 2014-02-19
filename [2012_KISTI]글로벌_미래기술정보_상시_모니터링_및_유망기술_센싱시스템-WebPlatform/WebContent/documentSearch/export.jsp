@@ -47,6 +47,7 @@
 <script type="text/javascript" src="<%=contextPath%>/js/jquery.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/alphanumeric.js"></script>
 <script type="text/javascript">
+var popupwin;
 function PopupWindow(pageName) {
 	var cw=640;
 	var ch=150;
@@ -54,7 +55,7 @@ function PopupWindow(pageName) {
 	var sh=screen.availHeight;
 	var px=Math.round((sw-cw)/2);
 	var py=Math.round((sh-ch)/2);
-	window.open(pageName,"exportProcPopup","left="+px+",top="+py+",width="+cw+",height="+ch+",toolbar=no,menubar=no,status=yes,resizable=no,scrollbars=yes");
+	return window.open(pageName,"exportProcPopup","left="+px+",top="+py+",width="+cw+",height="+ch+",toolbar=no,menubar=no,status=yes,resizable=no,scrollbars=yes");
 }
 
 function exportPopup(){
@@ -106,7 +107,12 @@ function exportPopup(){
 			return;
 		}
 	}
-	PopupWindow("");
+	if(!popupwin){
+		popupwin = PopupWindow("");
+	}else{
+		popupwin.close();
+		popupwin = PopupWindow("");
+	}
 	form.action = "<%=request.getContextPath()%>/common/exportProc.jsp"; // '팝업주소.jsp' 를 form1이 실행될 action 으로 지정한다.
 	form.target = "exportProcPopup"; // 이 부분이 핵심! 열어놓은 빈 창(mypop)을 form1이 날아갈 target으로 정한다.
 	form.submit(); // target에 쏜다.
@@ -176,6 +182,7 @@ $(document).ready(function() {
 	   		  });
     	}else if(id == "textType"){
     		$("input:checkbox").each(function() {
+    			$(this).attr("disabled", false);
 	   			$(this).attr("checked", "checked");
 	   		  });
     	} else{
@@ -183,6 +190,7 @@ $(document).ready(function() {
     			$(this).attr("disabled", true);
     		});
     	}
+    	$("input[name=eid]:checkbox").attr("disabled", true);
     });
     
 });
@@ -227,7 +235,7 @@ $(document).ready(function() {
 				<input type="hidden" name="totalSize" value="<%=totalSize%>"/>
 				<input type="hidden" name="selectDocSize" value="<%=selectDocSet.size()%>"/>
 				<input type="hidden" name="cn" value="<%=searchParameter.get("cn") %>" />
-		    	<input type="hidden" name="se" value="<%=searchParameter.get("se") %>" />
+		    	<input type="hidden" name="se" value="<%=searchParameter.get("se").replaceAll("\"", "&quot;") %>" />
 		    	<input type="hidden" name="fl" value="<%=searchParameter.get("fl") %>" />
 		    	<input type="hidden" name="sn" value="<%=searchParameter.get("sn") %>" />
 		    	<input type="hidden" name="ln" value="<%=searchParameter.get("ln") %>" />
@@ -289,13 +297,19 @@ $(document).ready(function() {
                                                         <td class="txt1"><img alt="" src="../images/001_25.png" align="middle" width="12" height="12"> Documents to export (Max 10,000)</td>
                                                     </tr>
                                                 </table>
+                                                <%
+                                                	boolean isSelected = false;
+                                                	if(selectDocSet.size() > 0){
+                                                		isSelected = true;
+                                                	}
+                                                %>
                                                 <table class="Table1_7" border="0" cellpadding="0" cellspacing="0">
                                                     <tr>
                                                         <td valign="top">
                                                             <table class="Table1_5" border="0" cellpadding="0" cellspacing="0" align="center" summary="Export 화면 테이블">
                                                                 <tr>
                                                                     <td valign="middle" class="txt3">
-                                                                    	<input id="searchResultRange" type="radio" name="data_range" value="<%=totalSize %>" /> Search result (<%=NumberFormatUtil.getDecimalFormat(totalSize)%>) 
+                                                                    	<input id="searchResultRange" type="radio" name="data_range" value="<%=totalSize %>" <%=!isSelected?"checked='checked'":"" %>/> Search result (<%=NumberFormatUtil.getDecimalFormat(totalSize)%>) 
                                                                     	<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From <input type="text" id="start_data_range" size="10" name="start_data_range" value="1"/> to 
 			                                                        	<input type="text" id="end_data_range" size="10" name="end_data_range" value="<%=totalSize > 10000 ? 10000 : totalSize %>"/>
 			                                                        	　
@@ -303,7 +317,7 @@ $(document).ready(function() {
                                                                 </tr>
                                                                 <tr>
                                                                     <td valign="middle" class="txt3">
-                                                                    	<input id="selectDocument" type="radio" name="data_range" checked="checked" value="-1"/> Selected documents (<%=selectDocSet.size() %>) 
+                                                                    	<input id="selectDocument" type="radio" name="data_range" <%=isSelected?"checked='checked'":"" %> value="-1"/> Selected documents (<%=selectDocSet.size() %>) 
                                                                     </td>
                                                                 </tr>
                                                             </table></td>
@@ -418,9 +432,11 @@ $(document).ready(function() {
                                                                 <tr>
                                                                     <td valign="middle" class="txt2"> <input name="SOUCRCE_CHECK" type="checkbox" value="SOURCE_TYPE" /> Source-Type</td>
                                                                 <tr>
+                                                                <!-- 
                                                                 <tr>
                                                                     <td valign="middle" class="txt2"> <input name="SOUCRCE_CHECK" type="checkbox" value="SOURCE_PUBLICSHERNAME" /> Publisher name</td>
                                                                 <tr>
+                                                                 -->
                                                                 <tr>
                                                                     <td valign="middle" class="txt2"> <input name="SOUCRCE_CHECK" type="checkbox" value="SOURCE_COUNTRY" /> Country</td>
                                                                 <tr>

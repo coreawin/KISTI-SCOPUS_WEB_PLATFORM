@@ -14,7 +14,7 @@
 
 	<!-- jar »ý¼º -->
 	<target name="makeJar" depends="makeDir">
-		<jar destfile="${target.dir}/WEB-INF/lib/scopus_web_platform-1.4.jar" update="true">
+		<jar destfile="${target.dir}/WEB-INF/lib/scopus_web_platform-2.1.1.jar" update="true">
 			<fileset dir="${src.dir}/build/classes">
 				<!--exclude name="**/test/**" /-->
 			</fileset>

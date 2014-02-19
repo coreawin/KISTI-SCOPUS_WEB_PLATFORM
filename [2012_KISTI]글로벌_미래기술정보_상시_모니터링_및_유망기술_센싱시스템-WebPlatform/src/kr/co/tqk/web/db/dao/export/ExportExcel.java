@@ -19,7 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author Á¤½ÂÇÑ
  * 
  */
-public class ExportExcel extends ExportDocument {
+public class ExportExcel extends ExportDocumentSax {
 
 	FileOutputStream fs = null;
 	FileInputStream inputStream = null;
@@ -80,40 +80,47 @@ public class ExportExcel extends ExportDocument {
 			for (ExportBean eb : exportDataList) {
 				int cellCnt = 0;
 				XSSFRow row = sheet.createRow(countRowNumber++);
+//				write(row, cellCnt++, "EID", eb.getEid());
 				row.createCell(cellCnt++).setCellValue(eb.getEid());
-				row.createCell(cellCnt++).setCellValue(exportField.get("TITLE") ? eb.getTitle() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("ABSTRACT") ? eb.getAbstractTitle() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("YEAR") ? eb.getYear() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("DOI") ? eb.getDoi() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("KEYWORD") ? eb.getAuthorKeyword() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("INDEX_KEYWORD") ? eb.getIndexKeyword() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("ASJC") ? eb.getAsjcCode() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("NUMBER_CITATION") ? String.valueOf(eb.getNumberOfCitation()) : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("CITATION") ? eb.getCitationList() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("NUMBER_REFERENCE") ? String.valueOf(eb.getNumberOfReference()) : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("REFERENCE") ? eb.getReferenceList() : "");
+				write(row, cellCnt++, "TITLE", eb.getTitle());
+				write(row, cellCnt++, "ABSTRACT", eb.getAbs());
+				write(row, cellCnt++, "YEAR", eb.getYear());
+				write(row, cellCnt++, "DOI", eb.getDoi());
+				write(row, cellCnt++, "KEYWORD", eb.getAuthorKeyword());
+				write(row, cellCnt++, "INDEX_KEYWORD", eb.getIndexKeyword());
+				write(row, cellCnt++, "ASJC", eb.getAsjcCode());
+				write(row, cellCnt++, "NUMBER_CITATION", String.valueOf(eb.getNumberOfCitation()));
+				write(row, cellCnt++, "CITATION", eb.getCitationList());
+				write(row, cellCnt++, "NUMBER_REFERENCE", String.valueOf(eb.getNumberOfReference()));
+				write(row, cellCnt++, "REFERENCE", eb.getReferenceList());
+				
+				write(row, cellCnt++, "AUTHOR_NAME", eb.getAuthor_authorName());
+				write(row, cellCnt++, "AUTHOR_EMAIL", eb.getAuthor_email());
+				write(row, cellCnt++, "AUTHOR_COUNTRYCODE", eb.getAuthor_country());
+				write(row, cellCnt++, "AUTHOR_COUNTRYCODE", eb.getAuthor_affilation());
+				
+				write(row, cellCnt++, "SOURCE_SOURCETITLE", eb.getSource_sourceTitle());
+				write(row, cellCnt++, "SOURCE_VOLUMN", eb.getSource_volumn());
+				write(row, cellCnt++, "SOURCE_ISSUE", eb.getSource_issue());
+				write(row, cellCnt++, "SOURCE_PAGE", eb.getSource_page());
+				write(row, cellCnt++, "SOURCE_TYPE", eb.getSource_type());
+//				write(row, cellCnt++, "", eb.getSource_publisher());
+				write(row, cellCnt++, "SOURCE_COUNTRY", eb.getSource_country());
+				write(row, cellCnt++, "SOURCE_PISSN", eb.getSource_pissn());
+				write(row, cellCnt++, "SOURCE_EISSN", eb.getSource_eissn());
 
-				row.createCell(cellCnt++).setCellValue(exportField.get("AUTHOR_AUTHORNAME") ? eb.getAuthor_authorName() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("AUTHOR_EMAIL") ? eb.getAuthor_email() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("AUTHOR_COUNTRYCODE") ? eb.getAuthor_country() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("AUTHOR_AFFILIATION") ? eb.getAuthor_affilation() : "");
-
-				row.createCell(cellCnt++).setCellValue(exportField.get("SOURCE_SOURCETITLE") ? eb.getSource_sourceTitle() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("SOURCE_VOLUMN") ? eb.getSource_volumn() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("SOURCE_ISSUE") ? eb.getSource_issue() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("SOURCE_PAGE") ? eb.getSource_page() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("SOURCE_TYPE") ? eb.getSource_type() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("SOURCE_PUBLICSHERNAME") ? eb.getSource_publisher() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("SOURCE_COUNTRY") ? eb.getSource_country() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("SOURCE_PISSN") ? eb.getSource_pissn() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("SOURCE_EISSN") ? eb.getSource_eissn() : "");
-
-				row.createCell(cellCnt++).setCellValue(exportField.get("CORR_AUTHORNAME") ? eb.getCorr_authorName() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("CORR_COUNTRYCODE") ? eb.getCorr_country() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("CORR_EMAIL") ? eb.getCorr_email() : "");
-				row.createCell(cellCnt++).setCellValue(exportField.get("CORR_AFFILIATION") ? eb.getCorr_affilation() : "");
+				write(row, cellCnt++, "CORR_AUTHORNAME", eb.getCorr_authorName());
+				write(row, cellCnt++, "CORR_COUNTRYCODE", eb.getCorr_country());
+				write(row, cellCnt++, "CORR_EMAIL", eb.getCorr_email());
+				write(row, cellCnt++, "CORR_AFFILIATION", eb.getCorr_affilation());
 			}
 		}
 		exportDataList = null;
+	}
+	
+	private void write(XSSFRow row, int cellIdx, String field, String contents) {
+		if (selectedCheck.contains(field)) {
+			row.createCell(cellIdx).setCellValue(contents);
+		}
 	}
 }

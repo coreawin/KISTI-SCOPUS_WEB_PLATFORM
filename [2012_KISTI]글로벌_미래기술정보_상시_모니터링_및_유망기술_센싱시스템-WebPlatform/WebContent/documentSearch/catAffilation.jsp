@@ -88,7 +88,6 @@ try{
 	nvps.add(new BasicNameValuePair("gr", gr));
 	nvps.add(new BasicNameValuePair("timeout", "60"));
 
-
 	//2. 통계검색
 	JSONObject jsonobj2 = null;
 	ArrayList<NameValuePair> nvps2 = new ArrayList<NameValuePair>();

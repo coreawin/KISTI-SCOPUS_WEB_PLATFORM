@@ -1,6 +1,7 @@
 package kr.co.topquadrant.db.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.topquadrant.db.bean.ClusterDocument;
 import kr.co.topquadrant.db.bean.ClusterResultSummary;
@@ -41,7 +42,7 @@ public interface IResearchFrontDao {
 	 * @return
 	 */
 	RFAnalysis selectAnalysis(int seq);
-	
+
 	/**
 	 * 등록된 분석항목의 ASJC 코드를 가져온다.
 	 * 
@@ -49,7 +50,7 @@ public interface IResearchFrontDao {
 	 *            분석 항목 아이디.
 	 * @return
 	 */
-	List<String> selectAnalysisAsjc(int seq); 
+	List<String> selectAnalysisAsjc(int seq);
 
 	/**
 	 * 분석항목을 등록한다.
@@ -117,4 +118,39 @@ public interface IResearchFrontDao {
 	 */
 	void updateShowMirian(MyBatisParameter parameter);
 
+	/**
+	 * 불용어를 삭제한다.
+	 * 
+	 * @param seq
+	 */
+	void deleteStopWord(int seq);
+
+	/**
+	 * 불용어를 추가한다.
+	 * 
+	 * @param keyword
+	 */
+	void insertStopWord(String keyword);
+	
+	/**
+	 * 등록된 불용어 항목을 페이징 해서 가져온다.
+	 * 
+	 * @param requestPage
+	 *            요청 페이지 번호
+	 * @param rows
+	 *            한화면에 출력되는 row개수
+	 * @param orderColumn
+	 *            정렬 칼럼
+	 * @param sord
+	 *            정렬 인자.
+	 * @return
+	 */
+	Map<Integer, String> selectStopWord(MyBatisParameter parameter);
+	
+	/**
+	 * 등록된 불용어의 총 개수를 가져온다.
+	 * @return
+	 */
+	int selectTotalStopWord();
+	
 }

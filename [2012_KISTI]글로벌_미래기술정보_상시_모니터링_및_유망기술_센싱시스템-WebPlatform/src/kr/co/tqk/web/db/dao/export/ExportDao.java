@@ -31,7 +31,7 @@ public class ExportDao {
 	StringBuffer query = new StringBuffer();
 	HashMap<ExportField, Boolean> exportField = null;
 
-	static final String DATA_DELIM = ";";
+	public static final String DATA_DELIM = ";";
 
 	/**
 	 * 임시 변수용
@@ -337,7 +337,7 @@ public class ExportDao {
 		query.append("	AND AG.EID in (%s)  ");
 		query.append("	GROUP BY ag.ORG_NAME, ag.afid, COUNTRY_CODE, ag.eid  ");
 		try {
-			System.out.println("EID SIZE = " + eidSet.size());
+//			System.out.println("EID SIZE = " + eidSet.size());
 			String sql = null;
 			try {
 				sql = String.format(query.toString(), preparePlaceHolders(eidSet.size()));
@@ -605,8 +605,9 @@ public class ExportDao {
 					tmpSB.append(DATA_DELIM);
 				}
 				bean = exportList.get(eid);
-				if (bean == null)
+				if (bean == null){
 					bean = new ExportBean(eid, this.exportField);
+				}
 				bean.setRefCitList(tmpSB.toString());
 				exportList.put(eid, bean);
 				bean = null;
@@ -721,7 +722,7 @@ public class ExportDao {
 				while (rs.next()) {
 					bean = new ExportBean(rs.getString("EID"), this.exportField);
 					bean.setTitle(rs.getString("TITLE"));
-					bean.setAbstractTitle(rs.getString("abstract"));
+					bean.setAbs(rs.getString("abstract"));
 					bean.setYear(rs.getString("publication_year"));
 					bean.setSource_volumn(rs.getString("volumn"));
 					bean.setSource_issue(rs.getString("issue"));
@@ -741,8 +742,8 @@ public class ExportDao {
 						bean.setCorr_affilation(rs.getString("organization"));
 						bean.setCorr_email(rs.getString("email"));
 						bean.setCorr_country(rs.getString("country_code"));
-						exportList.put(bean.getEid(), bean);
 					}
+					exportList.put(bean.getEid(), bean);
 				}
 			}
 		} catch (SQLException e) {

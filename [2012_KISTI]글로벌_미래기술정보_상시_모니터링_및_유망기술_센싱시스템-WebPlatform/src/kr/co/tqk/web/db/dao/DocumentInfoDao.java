@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -372,8 +374,8 @@ public class DocumentInfoDao {
 	public LinkedList<ReferenceBean> getScopusReference() {
 		LinkedList<ReferenceBean> result = new LinkedList<ReferenceBean>();
 		ReferenceBean bean = null;
-		String query = "select * " + "	from SCOPUS_REFERENCE"
-				+ "	where EID = ? order by  title asc, text ASC, publication_year desc ";
+		String query = "select * from SCOPUS_REFERENCE"
+				+ "	where EID = ? order by publication_year desc, title asc, text ASC";
 		try {
 			conn = cf.getConnection();
 			psmt = conn.prepareStatement(query);
@@ -396,12 +398,20 @@ public class DocumentInfoDao {
 
 			if(refSet.size() > 0){
 				LinkedList<ScopusDocumentBean> list = getScopusDocuments(conn, refSet.keySet());
+				Map<String, ScopusDocumentBean> maps = new HashMap<String, ScopusDocumentBean>();
 				for(ScopusDocumentBean sdBean : list){
-					bean = refSet.get(sdBean.getEid());
-					bean.setDocumentBean(sdBean);
-					result.add(bean);
+					maps.put(sdBean.getEid(), sdBean);
+				}
+				
+				for(ReferenceBean rb : refSet.values()){
+					ScopusDocumentBean sdBean = maps.get(rb.getRefEid());
+					if(sdBean!=null){
+						rb.setDocumentBean(sdBean);
+					}
+					result.add(rb);
 				}
 			}
+			
 //			for (String eid : refSet.keySet()) {
 //				ScopusDocumentBean sdBean = getScopusDocument(conn, eid);
 //				bean = refSet.get(eid);

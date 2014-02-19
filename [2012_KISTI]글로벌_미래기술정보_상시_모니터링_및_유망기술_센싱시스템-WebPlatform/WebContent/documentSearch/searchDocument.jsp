@@ -334,6 +334,7 @@ function changeYearInit(selObj, startYear, endYear){
 }
 
 function search(){
+
 	var form = document.getElementById("frm");
 	var searchTerm = "";
 	var searchOption = "";
@@ -373,28 +374,24 @@ function search(){
 	var searchRule = "";
 	var filterRule = "";
 	
-	for(var idx=0; idx<searchTermValues.length-1; idx++){
-		if(searchTermValues.length > 1 && idx > 0 ){
+	var searchTermCount = searchTermValues.length;
+
+	for(var idx=0; idx < searchTermCount - 2 ; idx++){
+		searchRule += "{";
+	}	
+	
+	for(var idx=0; idx < searchTermCount - 1 ; idx++){
+		if(searchTermCount > 1 && idx > 0 ){
+			if(idx-1 > 0){
+				searchRule += "}";
+			}
 			searchRule += searchTermBooleanValues[idx-1];
 		}
-		searchRule += "{"+searchOptionValues[idx] + ":" + searchTermValues[idx] + ":1:32}";
-		//if(searchTermValues[idx].indexOf("*") != -1){
-		//	var fieldArray = searchOptionValues[idx].split(",");
-		//	var tempSearchRule = "{";
-		//	for(var ii=0; ii<fieldArray.length;ii++){
-		//		if(ii != (fieldArray.length-1))
-		//			tempSearchRule += "{"+fieldArray[ii] + ":EXT(" + searchTermValues[idx] + ")}OR";
-		//		else 
-		//			tempSearchRule += "{"+fieldArray[ii] + ":EXT(" + searchTermValues[idx] + ")}}";
-		//	}
-		//	
-		//	searchRule += tempSearchRule;
-		//	
-		//}else{
-		
-		//}
+		searchRule += "{"+searchOptionValues[idx] + ":" + searchTermValues[idx] + ":1:103}";	
 	}
-//	searchRule += "}";
+	if(searchTermCount-1 > 1){
+		searchRule += "}";	
+	}
 
 	
 	if($("input:checked[name=\"publicationChecked\"]").length>0){
@@ -472,7 +469,8 @@ function search(){
 	}else{
 		form.searchRule.value= "se="+searchRule+"&ft="+filterRule;
 	}
-	
+	if(window.console) console.log("searchDocument.jsp : " + searchRule);
+	//console.log("searchDocument.jsp : " + searchRule);
 	//alert(form.searchRule.value);
 	form.action="./catresult.jsp";
 	form.submit();
@@ -586,6 +584,19 @@ function searchFormReset(){
 	form.submit();
 }
 
+function fnMore(_id){
+	var data = document.getElementById("_more_"+_id);
+	var btnLabel = document.getElementById("_more_buttn_label_"+_id);
+	if (data.style.display == 'none') {
+		data.style.display = '';
+		btnLabel.innerText = "close";
+	} else {
+		data.style.display = 'none';
+		btnLabel.innerText = "more";
+	}
+}
+
+
 
 </script>
 </head>
@@ -627,7 +638,7 @@ function searchFormReset(){
 								<td bgcolor="#d9dce1" class="txt2" style="padding:5px 5px 5px 10px;text-align:left;"><strong>Search for</strong> : 
 									<input type="text" id="searchTerm" value="<%=searchTerm %>" name="searchTerm" size='100' class='input_txt1 tipTipClass' title="검색어를 입력하세요." >&nbsp;&nbsp;in
 									<select name="searchOption">
-										<option value="eid,title,abs,keyword,authorname,affiliation,doi,sourcetitle"  <%=(searchOption.equals("eid,title,abs,keyword,authorname,affiliation,doi,sourcetitle")?"selected=\"selected\"":"") %>>All Field</option>
+										<option value="eid-title-abs-keyword-authorname-affiliation-doi-sourcetitle"  <%=(searchOption.equals("eid,title,abs,keyword,authorname,affiliation,doi,sourcetitle")?"selected=\"selected\"":"") %>>All Field</option>
 										<option value="eid" <%=(searchOption.equals("eid")?"selected=\"selected\"":"") %>>EID</option>
 										<option value="title,abs,keyword" <%=(searchOption.equals("title,abs,keyword") || searchOption.equals("")?"selected=\"selected\"":"") %>>Article Title + Abstract + Keyword</option>
 										<option value="title" <%=(searchOption.equals("title")?"selected=\"selected\"":"") %>>Article Title</option>
@@ -891,7 +902,24 @@ function searchFormReset(){
                                  	<td scope="row"><input name="historySearchRule" id="check1" type="checkbox" value="<%=usrBean.getSeq() %>" /></td>
                                     <td><%=usrBean.getInsertDate() %></td>
                                  	<td  style="color:#2a87d5; text-align:center;"><%=NumberFormatUtil.getDecimalFormat(usrBean.getSearchCount()) %></td>
-                                    <td style="color:#005eac; text-align:left;"><a href="javascript:research('sendSearchRule_<%=usrBean.getSeq()%>');" class="tipTipClass" title="선택된 검색식으로 논문 검색을 진행합니다."><%=usrBean.getSearchRule().replaceAll("\\\\:",":").replaceAll("\\\\,",",").replaceAll("\\\\&","&").replaceAll("\\\\=","=") %></a><input type="hidden" id="sendSearchRule_<%=usrBean.getSeq()%>" value="<%=usrBean.getSearchRule()%>"/></td>
+                                    <td style="color:#005eac; text-align:left;">
+                                    	<a href="javascript:research('sendSearchRule_<%=usrBean.getSeq()%>');" class="tipTipClass" title="선택된 검색식으로 논문 검색을 진행합니다.">
+                                    		<%
+											String searchRules = usrBean.getSearchRule().replaceAll("\\\\:",":").replaceAll("\\\\,",",").replaceAll("\\\\&","&").replaceAll("\\\\=","=").replaceAll("\"","&quot;");
+											if(searchRules.length() > 512){
+												out.print(searchRules.substring(0, 512));
+												out.print("<span id='_more_"+usrBean.getSeq()+"' style='display:none;'>");
+												out.print(searchRules.substring(512, searchRules.length()));
+												out.print("</span>");
+												out.print("<a href=\"javascript:fnMore('"+usrBean.getSeq()+"');\"><span id=\"_more_buttn_label_"+usrBean.getSeq()+"\">more</span></a>");
+											}else{
+												out.println(searchRules);
+											}
+											%>
+                                    		
+                                    	</a>
+                                    	<input type="hidden" id="sendSearchRule_<%=usrBean.getSeq()%>" value="<%=usrBean.getSearchRule()%>"/>
+                                    </td>
                        	 	 	</tr>
                                     
 <%

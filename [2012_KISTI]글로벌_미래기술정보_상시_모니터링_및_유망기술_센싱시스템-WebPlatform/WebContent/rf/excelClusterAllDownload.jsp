@@ -112,8 +112,8 @@ td {text-align: left; vertical-align: top; vertical-align: text-top;}
 			out.println("	<td valign='top'>"+printKeyValue(cd.getLargeAsjcInfo())+"</td>");
 			out.println("	<td valign='top'>"+printKeyValue(cd.getAsjcInfo())+"</td>");
 			out.println("	<td valign='top'>"+cd.getDocumentCount()+"</td>");
-			out.println("	<td valign='top'>"+cd.getDocumentReferenceCount()+"</td>");
-			out.println("	<td valign='top'>"+cd.getReferenceCountPerDocument()+"</td>");
+			out.println("	<td valign='top'>"+cd.getCitationCount()+"</td>");
+			out.println("	<td valign='top'>"+cd.getCitationPerCount()+"</td>");
 			out.println("	<td valign='top'>"+cd.getAveragePubYearDocument()+"</td>");
 			out.println("	<td valign='top'>"+printKeyValue(cd.getKeywordInfo())+"</td>");
 			out.println("	<td valign='top'>"+printKeyValue(cd.getDocumentList(), true)+"</td>");
